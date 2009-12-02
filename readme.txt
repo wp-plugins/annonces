@@ -10,26 +10,26 @@ Affiche vos annonces sur votre blog.
 
 == Description ==
 
-Annonces est un plugin de publication de petite annonce permettant d'ajouter facilement des annonces immobilières sur son blog. Il suffit d'ajouter cette balise <div rel="annonces" id="annonces" ></div> dans le code html de votre page.
+Annonces est un plugin de publication de petite annonce permettant d'ajouter facilement des annonces immobili&egrave;res sur son blog. Il suffit d'ajouter cette balise <div rel="annonces" id="annonces" ></div> dans le code html de votre page.
 
 
 == Installation ==
 
-1. Telecharger l’extension.
-2. Decompresser dans le repertoire "/wp-content/plugins/".
-3. Activer l’extension dans l’interface administrateur de wordpress.
+1. T&eacute;l&eacute;charger l'extension.
+2. D&eacute;compresser dans le repertoire "/wp-content/plugins/".
+3. Activer l&#39;extension dans l'interface administrateur de Wordpress.
 4. Placer <div rel="annonces" id="annonces" ></div> dans votre page.
 
 
 == Frequently Asked Questions ==
 
-= Message erreur: Ce site Web nécessite une autre clé d'API Google Maps. =
+= Message erreur: Ce site Web n&eacute;cessite une autre cl&eacute; d'API Google Maps. =
 
-Lorsque vous activez l'extension pour la première fois, vous pouvez vous retrouver face à cette erreur, il vous faut générer une clé API Google Maps puis l'insérer dans les options de l'extension (Réglages > Annonces).
+Lorsque vous activez l'extension pour la premi&egrave;re fois, vous pouvez vous retrouver face &agrave; cette erreur, il vous faut g&eacute;n&eacute;rer une cl&eacute; API Google Maps puis l'ins&eacute;rer dans les options de l'extension (R&eacute;glages > Annonces).
 
 = L'extension ne trouve pas mes annonces. =
 
-Si vous avez l'impression que l'extension ne retrouve pas vos annonces et que vous êtes sûr qu'elles existent et en mode valid, essayez d'actualiser le moteur de recherche (option disponible dans l'onglet Annonces de l'interface administrateur).
+Si vous avez l'impression que l'extension ne retrouve pas vos annonces et que vous &ecirc;tes s&ucirc;r qu'elles existent et en mode valid, essayez d'actualiser le moteur de recherche (option disponible dans l'onglet Annonces de l'interface administrateur).
 
 
 == Screenshots ==
