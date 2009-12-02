@@ -1,0 +1,272 @@
+.resultats_annonces table
+{
+	line-height:100%;
+	border:0;
+}
+.resultats_annonces th
+{
+	padding-right:30px;
+	text-align: left;
+}
+.resultats_annonces td
+{
+	border-bottom:1px solid #333333;
+	border-left:0 none;
+	border-right:0 none;
+	padding-bottom:20px;
+	padding-right:20px;
+	padding-top:10px;
+}
+.resultats_annonces
+{
+	margin-top:20px;
+}
+.resultats_annonces thead
+{
+	text-transform:uppercase;
+}
+.annonce-ligne
+{
+	height:160px;
+}
+.annonce-date
+{	
+	text-align:center;
+	color:#999;
+}
+.annonce-titre
+{
+	font-weight:bold;
+	float:left;
+	text-transform:uppercase;
+	font-size:120%;
+	text-decoration:underline;
+	width:208px;
+}
+.annonce-titre2
+{
+	font-weight:bold;
+	float:left;
+	text-transform:uppercase;
+	font-size:140%;
+	text-decoration:underline;
+}
+.annonce-titre a 
+{
+	color:#fff;
+}
+.annonce-price-list
+{
+	font-weight:bold;
+	float:right;
+	font-size:150%;
+}
+.adresse-show-bulle
+{
+	text-align:left;
+}
+.annonce-price-show
+{
+	font-weight:bold;
+	padding-bottom:10px;
+	float:right;
+	font-size:170%;
+}
+.annonce-surface 
+{
+	color:#3399CC;
+	padding-bottom:5px;
+	padding-top:5px;
+	clear:both;
+}
+.annonce-description
+{
+	text-decoration:underline;
+	font-weight:bold;
+}
+.annonce-texte
+{
+	margin-top: 3px;
+}
+.annonce-images img
+{
+	padding:3px;
+}
+.annonce-container
+{
+	margin-top:13px;
+	/*width:300px;*/
+	width:100%;
+	line-height:120%;
+}
+.annonce-images 
+{
+	display:inline;
+}
+.annonce-img img
+{
+	border:3px solid #434343;
+	margin-right:10px;	
+}
+.annonce-photos 
+{
+	width: 140px;
+	height: 132px;
+	margin-top: 3px;
+}
+.annonce-photos img
+{
+	border:3px solid #434343;
+	line-height:200%;
+}
+.infocomp
+{
+	margin-bottom:10px;
+	margin-top:25px;
+}
+.infocomp fieldset
+{
+	border-color:#333;
+}
+.infocomp legend
+{
+	margin-left:10px;
+	text-transform:uppercase;
+	font-weight:bold;
+	padding-left:5px;
+	padding-right:5px;
+}
+.published-date
+{
+	color:#999;
+}
+.infoscomp-titre 
+{
+	text-transform:uppercase;
+	font-weight:bold;
+}
+.infos
+{
+	padding:10px;
+}
+.retour
+{
+	padding-bottom:0px;
+}
+.fond-annonce
+{
+	width:2000px;
+	height:2000px;
+	background:#fff;
+	color:#000;
+}
+.pagination_desc strong
+{
+  color: #176f94;
+}
+.pagination_desc
+{
+  margin-left: 15px;
+  margin-top: 20px;
+  font-style: italic;
+  color: #828f95;
+}
+.pagination_desc strong
+{
+  color: #176f94;
+}
+
+.sidebar_search
+{
+	font-size:12px;
+	margin-top:20px;
+}
+.budget
+{
+	clear:both;
+	float:left;
+	margin-right:20px;
+	height:50px;
+	width:267px;
+}
+.budget label
+{
+	display:inline;
+}
+.budget img
+{
+	display:inline;
+}
+ 
+.budget input
+{
+	margin-bottom:7px;
+	display:inline;
+	width:70px;
+}
+.superficie
+{
+	float:left;
+	height:50px;
+	width:267px;
+}
+.superficie label
+{
+	display:inline;
+}
+.superficie input
+{
+	margin-bottom:7px;
+	display:inline;
+	width:70px;
+}
+.sidebar_search input
+{
+	margin-bottom:7px;
+	display:inline;
+	margin-left:3px;
+	margin-right:5px;
+}
+#map
+{
+	border:3px solid #434343;
+}
+.carte-annonce
+{
+	float:right;
+}
+.carte-annonce-text
+{
+	display:inline;
+	font-size:130%;
+	font-weight:bold;
+	line-height:140%;
+}
+.carte-seule-img 
+{
+	background:url(../../medias/images/carte_seule.jpg) no-repeat;
+	width:40px;
+	height:26px;
+	margin-left:10px;
+	display:inline;
+	float:right;
+}
+.annonces-img
+{
+	background:url(../../medias/images/liste_annonces.jpg) no-repeat;
+	width:40px;
+	height:26px;
+	margin-left:10px;
+	display:inline;
+	float:right;
+}
+.empty-annonces
+{
+	clear:both;
+	margin-bottom:20px;
+	padding-top:20px;
+}	
+.filtre label
+{
+	display:inline;
+}

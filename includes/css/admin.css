@@ -1,0 +1,122 @@
+img
+{
+	border:0px solid black;
+}
+table
+{
+	border-collapse:collapse;
+}
+
+.button_img
+{
+	cursor:pointer;
+}
+
+.margin18px
+{
+	margin:18px;
+}
+.floatleft
+{
+	float:left;
+}
+.floatright
+{
+	float:right;
+}
+.textalignleft
+{
+	text-align:left;
+}
+
+.sub_admin_menu form
+{
+	float:left;
+}
+
+.annonce_form th
+{
+	text-align: left;
+	vertical-align: top;
+}
+.annonce_form td
+{
+	text-align: left;
+	vertical-align: top;
+}
+
+.attribut_listing
+{
+	border-collapse:collapse;
+}
+.attribut_listing td
+{
+	border:1px solid #333333;
+	padding:6px;
+}
+.attribut_listing label
+{
+	cursor:pointer;
+}
+.attribut_listing checkbox
+{
+	vertical-align:middle;
+}
+
+#annonce_filter th
+{
+	text-align:right;
+}
+
+.listing
+{
+	border-collapse:collapse;
+	width:95%;
+}
+.listing td
+{
+	border:1px solid #333333;
+	padding-left:6px;
+}
+.listing_header
+{
+	text-align:center;
+	color: #000000;
+	background-color:#DDDDDD;
+}
+
+.no_result
+{
+	color:red;
+	font-weight:bold;
+	font-size:12px;
+	text-align:center;
+}
+
+.admin_notices_class_ok
+{
+	background-color:#99FF99;
+	color:#000000;
+	font-weight:bold;
+	font-size:12px;
+	text-align:center;
+	width:50%;
+}
+.admin_notices_class_notok 
+{
+	background-color:#FF3333;
+	color:#000000;
+	font-weight:bold;
+	font-size:12px;
+	text-align:center;
+	width:50%;
+}
+.error_list li
+{
+	background-color:#FF3333;
+	color:#000000;
+	font-weight:bold;
+	font-size:12px;
+	text-align:center;
+	width:50%;
+}

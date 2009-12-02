@@ -1,0 +1,3 @@
+Version=4.06
+Application= eoxia / 0001
+Devise=Euro
