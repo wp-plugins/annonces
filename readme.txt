@@ -10,7 +10,7 @@ Affiche vos annonces sur votre blog.
 
 == Description ==
 
-Annonces est un plugin de publication de petite annonce permettant d'ajouter facilement des annonces immobili&egrave;res sur son blog. Il suffit d'ajouter cette balise <div rel="annonces" id="annonces" ></div> dans le code html de votre page.
+Annonces est un plugin de publication de petite annonce permettant d'ajouter facilement des annonces immobili&egrave;res sur son blog. Il suffit d'ajouter cette balise <code><div rel="annonces" id="annonces" ></div></code> dans le code html de votre page.
 
 
 == Installation ==
@@ -18,7 +18,7 @@ Annonces est un plugin de publication de petite annonce permettant d'ajouter fac
 1. T&eacute;l&eacute;charger l'extension.
 2. D&eacute;compresser dans le repertoire "/wp-content/plugins/".
 3. Activer l&#39;extension dans l'interface administrateur de Wordpress.
-4. Placer <div rel="annonces" id="annonces" ></div> dans votre page.
+4. Placer <code><div rel="annonces" id="annonces" ></div></code> dans votre page.
 
 
 == Frequently Asked Questions ==
