@@ -202,7 +202,7 @@
 {
 	margin-bottom:7px;
 	display:inline;
-	width:70px;
+	width:18%;
 }
 .superficie
 {
@@ -218,7 +218,7 @@
 {
 	margin-bottom:7px;
 	display:inline;
-	width:70px;
+	width:18%;
 }
 .sidebar_search input
 {
@@ -265,8 +265,15 @@
 	clear:both;
 	margin-bottom:20px;
 	padding-top:20px;
-}	
+}
+.filtre
+{
+	clear:both;
+}		
 .filtre label
 {
 	display:inline;
+}
+#annonceGmap{
+	width: 100%;
 }

@@ -378,7 +378,7 @@ class Frontend {
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="width: 550px; height: 300px">
+			<div id="annonceGmap" style="height: 300px">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -601,7 +601,7 @@ class Frontend {
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="width: 550px; height: 800px">
+			<div id="annonceGmap" style="height: 800px">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -755,7 +755,7 @@ class Frontend {
 							}
 						}
 					</script>
-					<div id="annonceGmap" style="width: 512px; height: 400px">
+					<div id="annonceGmap" style="height: 400px">
 						<script type="text/javascript">
 							show_map();
 						</script>
