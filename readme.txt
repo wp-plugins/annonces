@@ -49,6 +49,6 @@ v1.0.1:
 
 v1.1.1:
 
-* Corrige le probl&eagrave;me de m&eacute;moire manquante lors d'un export.
+* Corrige le probl&egrave;me de m&eacute;moire manquante lors d'un export.
 * N'affiche que les annonces de la page en cours sur la carte google
 * Les annonces sont tri&eacute;es par prix par d&eacute;faut
