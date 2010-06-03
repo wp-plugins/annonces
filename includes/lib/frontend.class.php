@@ -26,7 +26,7 @@ class Frontend {
 			return $content;
 		}
 	}
-	
+
 	public function generate($content){
 		global $tools;
 		$query        = isset($_REQUEST['query'])        ? $tools->IsValid_Variable($_REQUEST['query'])        : '' ;
@@ -332,9 +332,9 @@ class Frontend {
 		$markers = '';
 		$eav_value = new Eav();
 		//Afficher que les marqueurs de la page courante
-		//$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage());
+		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage());
 		//Afficher tout les marqueurs sans distinction de page
-		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
+		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
 		$sizei = count($annonces);
 		$icon = get_option('url_marqueur_courant');
 		for($i = 0; $i < $sizei; $i++)
@@ -342,9 +342,11 @@ class Frontend {
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
 				$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
+				$description = $eav_value->getDescription(null,'valid',null,$annonces[$i]->idpetiteannonce);
+
 				$markers .= 'var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\">&Agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>&nbsp;terrain&nbsp;&agrave;&nbsp;b&acirc;tir&nbsp;viabilis&eacute;&nbsp;surface&nbsp;<b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.',&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\'>'.__('En savoir plus','annonces').'</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"text-align:left;color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\'>'.__('En savoir plus','annonces').'</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\';
@@ -378,7 +380,7 @@ class Frontend {
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="height: 300px">
+			<div id="annonceGmap" style="width: 550px; height: 300px">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -386,6 +388,11 @@ class Frontend {
 		';
 		
 		return $list_map;
+	}
+	
+	public function search_engine()
+	{
+	
 	}
 	
 	public function getAnnonceContent()
@@ -564,10 +571,11 @@ class Frontend {
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
 				$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
-				$markers .='var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
+				$description = $eav_value->getDescription(null,'valid',null,$annonces[$i]->idpetiteannonce);
 
+				$markers .='var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'\">&Agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>&nbsp;terrain&nbsp;&agrave;&nbsp;b&acirc;tir&nbsp;viabilis&eacute;&nbsp;surface&nbsp;<b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.',&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'>'.__('En savoir plus','annonces').'</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'>En savoir plus</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\';
@@ -601,7 +609,7 @@ class Frontend {
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="height: 800px">
+			<div id="annonceGmap" style="width: 550px; height: 800px">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -618,6 +626,8 @@ class Frontend {
 	
 		$eav_value = new Eav();
 		$generate_annonce = '';
+		
+		$annonce = $eav_value->getAnnoncesEntete(' AND ANN.idpetiteannonce='.$id,"'valid'");
 		
 		$generate_annonce .= '<p class="retour">';
 		$generate_annonce .= '<a href="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').((!empty($show_mode) and ($show_mode == 'list'))? 'show_list=true' : 'show_map=true').'">';
@@ -754,6 +764,11 @@ class Frontend {
 								annoncemap.addOverlay(marker);
 							}
 						}
+					}
+				</script>
+				<div id="annonceGmap" style="width: 512px; height: 400px">
+					<script type="text/javascript">
+						show_map();
 					</script>
 					<div id="annonceGmap" style="height: 400px">
 						<script type="text/javascript">
@@ -767,6 +782,10 @@ class Frontend {
 			
 			$generate_annonce .= '</p>';
 		}
+		$generate_annonce .= '</center>';
+		$generate_annonce .= '<br/>';
+		
+		$generate_annonce .= '</p>';
 		$generate_annonce .= '<p class="retour"><a href="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').((!empty($show_mode) and ($show_mode == 'list'))? 'show_list=true' : 'show_map=true').'"><b>&laquo;&nbsp;'.__('Retour','annonces').'</b></a></p>';
 
 		return $generate_annonce;
@@ -775,7 +794,11 @@ class Frontend {
 	public function list_annonce($morequery = null)
 	{
 		$eav_value = new Eav();
-		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage(),null,null);
+		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage(),null,null);
+		/*
+		*	Modification Alex le 14/04/2010 pour tri par prix (mauvaise version à reprendre)
+		*/
+		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'valueattributdec',$this->getActualPage(),null,null);
 		$sizei = count($annonces);
 
 		$generate_annonce = '';

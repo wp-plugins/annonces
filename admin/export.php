@@ -20,6 +20,7 @@ $choosen_passerelle = isset($_REQUEST['passerelle_list']) ? $tools->IsValid_Vari
 
 if($choosen_passerelle != '')
 {
+	ini_set("memory_limit","2048M");
 	$file_to_zip = array();
 
 	$choosen_export = $available_passerelle->get_passerelle(" AND idpasserelle = '".mysql_real_escape_string($choosen_passerelle)."' ", "'valid'" , 0 , 'nolimit');

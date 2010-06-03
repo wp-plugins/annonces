@@ -127,7 +127,7 @@ class tools
 		{
 			$text = preg_replace($pattern, $rep_pat, utf8_decode($text));
 	  }
-	  
+
 	  return $text;
 	}
 

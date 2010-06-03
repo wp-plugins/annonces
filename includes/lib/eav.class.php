@@ -109,6 +109,7 @@ class Eav {
 			FROM ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce AS ANN
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__groupeattribut AS GRP_ATT ON ANN.idgroupeattribut = GRP_ATT.idgroupeattribut
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__geolocalisation AS GEO ON ANN.idpetiteannonce = GEO.iddest			
+				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributdec AS ATTRDEC ON ( (ATTRDEC.idpetiteannonce = ANN.idpetiteannonce) AND (ATTRDEC.idattribut = 11) )
 			WHERE 1 "
 				. $moreflag
 				.$this->getMorequery($morequery)
