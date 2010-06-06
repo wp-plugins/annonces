@@ -846,6 +846,15 @@ class Frontend {
 				$generate_annonce .= '</div>';
 				$generate_annonce .= '</td>';
 			}
+			else{
+				$generate_annonce .= '<td>';
+				$generate_annonce .= '<div class="annonce-date">';
+				$reference = $eav_value->getReference(null,'moderated',null,$annonces[$i]->idpetiteannonce);
+				$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.(is_null($reference[0]->valueattributchar) ? '-' : $reference[0]->valueattributchar);
+				$generate_annonce .= '</div>';
+				$generate_annonce .= '</td>';
+			}
+
 			$generate_annonce .= '</tr>';
 		}
 		$list_result = 
@@ -862,6 +871,9 @@ class Frontend {
 									$list_result .= '<th>'.__('Annonces','annonces').'</th>';
 									if(get_option('annonces_date_activation') == 1){
 										$list_result .= '<th>'.__('Date','annonces').'</th>';
+									}
+									else{
+										$list_result .= '<th>'.__('R&eacute;f&eacute;rence','annonces').'</th>';
 									}
 								$list_result .= '</tr>
 							</thead>
