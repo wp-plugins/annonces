@@ -633,12 +633,12 @@ class Frontend {
 		$generate_annonce .= '<a href="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').((!empty($show_mode) and ($show_mode == 'list'))? 'show_list=true' : 'show_map=true').'">';
 		$generate_annonce .= '<b>&laquo;&nbsp;'.__('Retour','annonces').'</b>';
 		$generate_annonce .= '</a>';
-		$reference = $eav_value->getReference(null,'moderated',null,$id);
-		$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.__('R&eacute;f&eacute;rence','annonces').':'.(is_null($reference[0]->valueattributchar) ? 'aucune' : $reference[0]->valueattributchar);
+		$reference = $annonce[0]->referenceagencedubien;
+		$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.__('R&eacute;f&eacute;rence','annonces').':'.(is_null($reference) ? 'aucune' : $reference);
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</p>';
 		
-		$annonce = $eav_value->getAnnoncesEntete(' AND idpetiteannonce='.$id,"'valid'");
+		$annonce = $eav_value->getAnnoncesEntete(' AND ANN.idpetiteannonce='.$id,"'valid'");
 
 		$generate_annonce .= '<div class="annonce-titre2" style="clear:both;">';
 		$generate_annonce .= $annonce[0]->titre;
@@ -849,8 +849,8 @@ class Frontend {
 			else{
 				$generate_annonce .= '<td>';
 				$generate_annonce .= '<div class="annonce-date">';
-				$reference = $eav_value->getReference(null,'moderated',null,$annonces[$i]->idpetiteannonce);
-				$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.(is_null($reference[0]->valueattributchar) ? '-' : $reference[0]->valueattributchar);
+				$reference = $annonces[$i]->referenceagencedubien;
+				$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.(is_null($reference) ? '-' : $reference);
 				$generate_annonce .= '</div>';
 				$generate_annonce .= '</td>';
 			}
