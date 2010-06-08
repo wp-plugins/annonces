@@ -637,8 +637,6 @@ class Frontend {
 		$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.__('R&eacute;f&eacute;rence','annonces').':'.(is_null($reference) ? 'aucune' : $reference);
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</p>';
-		
-		$annonce = $eav_value->getAnnoncesEntete(' AND ANN.idpetiteannonce='.$id,"'valid'");
 
 		$generate_annonce .= '<div class="annonce-titre2" style="clear:both;">';
 		$generate_annonce .= $annonce[0]->titre;
@@ -764,7 +762,6 @@ class Frontend {
 								annoncemap.addOverlay(marker);
 							}
 						}
-					}
 				</script>
 				<div id="annonceGmap" style="width: 512px; height: 400px">
 					<script type="text/javascript">
