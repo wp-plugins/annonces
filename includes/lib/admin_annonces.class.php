@@ -74,7 +74,7 @@ class annonce_form extends sfForm
 
 		  'unique_token'     	 	 => new sfValidatorString(array('required' => false)),
 
-			'ville'  => new sfValidatorString(array('max_length' => 20,'required' => false)),
+			'ville'  => new sfValidatorString(array('max_length' => 255,'required' => false)),
 		  'adresse'  => new sfValidatorString(array('max_length' => 255,'required' => false)),
 		  'cp'  => new sfValidatorString(array('max_length' => 11,'required' => false)),
 		  'departement'  => new sfValidatorString(array('max_length' => 255,'required' => false)),
