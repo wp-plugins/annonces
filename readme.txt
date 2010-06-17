@@ -44,7 +44,7 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 == Changelog ==
 v1.1.2.1:
 
-*	FIXED - La taille du champs ville était limitée à 20 caractères contre 255 dans la base
+*	FIXED - La taille du champs ville &eacute;tait limit&eacute;e &agrave; 20 caract&egrave;res contre 255 dans la base
 
 v1.1.2:
 
