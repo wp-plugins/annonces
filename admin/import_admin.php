@@ -1,3 +1,9 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../includes/css/admin.css" />
+</head>
+<body>
 <?php
 /***************************************************
 *Date: 05/11/2009      File:import_admin.php 	   *
@@ -29,11 +35,11 @@ if($_POST){
 			<form name="export_annonce" action="" method="POST" >
 				<center>
 					<textarea id="import_structure" name="import_structure" cols="70" rows="4"></textarea><br/>
-					<label style="font-size:0.9em;" ><?php echo _e('S&eacute;lectionner les attributs pr&eacute;sent dans les annonces &agrave; importer.','annonces') ?></label>
+					<label class="label_import_admin"><?php echo _e('S&eacute;lectionner les attributs pr&eacute;sent dans les annonces &agrave; importer.','annonces') ?></label>
 				</center>
 				<table class="attribut_listing" >
 					<tr>
-						<td colspan="10" style="text-align:center;" >
+						<td colspan="10" class="td_attribut_listing">
 							<?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important','annonces') ?>
 						</td>
 					</tr>
@@ -58,7 +64,7 @@ if($_POST){
 						}
 					?>
 				</table>
-				<center style="margin-top=10%;" >
+				<center>
 					<input type="hidden" name="step" value="<?php echo (($file_type == "csv")? '2' : '3') ?>" />
 					<input type="hidden" name="file_type" value="<?php echo $file_type; ?>" />
 					<input type="hidden" name="announcement_categorie" value="<?php echo $announcement_categorie; ?>" />
@@ -87,7 +93,7 @@ if($_POST){
 								<label for="import_separateurtexte"><?php _e('S&eacute;parateur de texte','annonces') ?></label>
 							</th>
 							<td>
-								<input id="import_separateurtexte" type="text" name="import_separateurtexte" value="<?php echo $import_separateurtexte; ?>"/><label style="font-size:70%"><?php _e('(exemple: ").','annonces') ?></label>
+								<input id="import_separateurtexte" type="text" name="import_separateurtexte" value="<?php echo $import_separateurtexte; ?>"/><label class="lblannonceform"><?php _e('(exemple: ").','annonces') ?></label>
 							</td>
 							
 						</tr>
@@ -96,7 +102,7 @@ if($_POST){
 								<label for="import_separateurchamp"><?php _e('S&eacute;parateur de champ','annonces') ?></label>
 							</th>
 							<td>
-								<input id="import_separateurchamp" type="text" name="import_separateurchamp" value="<?php echo $import_separateurchamp;  ?>"/><label style="font-size:70%"><?php _e('(exemple: ,).','annonces') ?></label>
+								<input id="import_separateurchamp" type="text" name="import_separateurchamp" value="<?php echo $import_separateurchamp;  ?>"/><label class="lblannonceform"><?php _e('(exemple: ,).','annonces') ?></label>
 							</td>
 							
 						</tr>
@@ -110,7 +116,7 @@ if($_POST){
 						</tr>
 					</tbody>
 				</table>
-				<center style="margin-top=10%;" >
+				<center class="center_export_annonce">
 					<input type="hidden" name="step" value="<?php echo ((count($attributs) <= 1) ? '1' : '4' ) ?>" />
 					<input type="hidden" name="import_structure" value="<?php echo $import_structure; ?>" />
 					<input type="hidden" name="announcement_categorie" value="<?php echo $announcement_categorie; ?>" />
@@ -131,7 +137,7 @@ if($_POST){
 			{
 			?>
 				<form name="export_annonce" action="" method="POST" >
-					<center style="margin-top=10%;" >
+					<center>
 						<input type="hidden" name="step" value="<?php echo ((count($attributs) <= 1) ? '1' : '5' ) ?>" />
 						<input type="hidden" name="import_structure" value="<?php echo $import_structure; ?>" />
 						<input type="hidden" name="announcement_categorie" value="<?php echo $announcement_categorie; ?>" />
@@ -150,8 +156,8 @@ if($_POST){
 			echo '<label>'.__('Attribut pr&eacute;sent dans le fichier:','annonces').'</label>&nbsp;'.$import_structure.'<br/>';
 ?>
 			<form name="export_annonce" action="" method="POST"  enctype="multipart/form-data">
-				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import" size="34"/>
-				<center style="margin-top=10%;" >
+				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import"/>
+				<center>
 					<input type="hidden" name="step" value="8" />
 					<input type="hidden" name="import_structure" value="<?php echo $import_structure; ?>" />
 					<input type="hidden" name="announcement_categorie" value="<?php echo $announcement_categorie; ?>" />
@@ -169,8 +175,8 @@ if($_POST){
 			echo '<label>'.__('Attribut pr&eacute;sent dans le fichier:','annonces').'</lable>&nbsp;'.$import_structure.'<br/><br/>';
 ?>
 			<form name="export_annonce" action="" method="POST"  enctype="multipart/form-data">
-				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import" size="34"/>
-				<center style="margin-top=10%;" >
+				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import"/>
+				<center>
 					<input type="hidden" name="step" value="6" />
 					<input type="hidden" name="import_structure" value="<?php echo $import_structure; ?>" />
 					<input type="hidden" name="announcement_categorie" value="<?php echo $announcement_categorie; ?>" />
@@ -667,7 +673,7 @@ if($_POST){
 		default:
 ?>
 			<form name="export_annonce" action="" method="POST" >
-				<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" style="border-collapse:collapse;" cellpadding="0" cellspacing="0" align="center" > 
+				<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
 					<tr>
 						<td>
 							<?php _e('Choix du type de fichier contenant les annonces','annonces') ?>&nbsp;:&nbsp;
@@ -682,7 +688,7 @@ if($_POST){
 					<tr>
 						<td>
 							<?php _e('Choix de la cat&eacute;gorie des annonces &agrave; importer','annonces') ?>&nbsp;:&nbsp;<br/>
-							<label style="font-size:70%;" >
+							<label class="lblannonceform">
 								<?php _e('*Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
 							</label>
 						</td>
@@ -698,7 +704,7 @@ if($_POST){
 						</td>
 					</tr>
 				</table>
-				<center style="margin-top=10%;" >
+				<center>
 					<input type="hidden" name="step" value="1" />
 					<input type="submit" name="exporter" value="<?php _e('Suivant','annonces') ?>" />
 				</center>
@@ -711,7 +717,7 @@ else{
 ?>
 <form name="export_annonce" action="" method="POST" >
 
-	<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" style="border-collapse:collapse;" cellpadding="0" cellspacing="0" align="center" > 
+	<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce"> 
 		<tr>
 			<td>
 				<?php _e('Choix du type de fichier contenant les annonces','annonces') ?>&nbsp;:&nbsp;
@@ -727,7 +733,7 @@ else{
 			<td>
 				<?php _e('Choix de la cat&eacute;gorie des annonces &agrave; importer&sup1;','annonces') ?>&nbsp;:&nbsp;<br/>
 				<?php _e('&sup1;','annonces'); ?>
-				<label style="font-size:70%;" >
+				<label class="lblannonceform">
 					<?php _e('Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
 				</label>
 			</td>
@@ -743,8 +749,10 @@ else{
 			</td>
 		</tr>
 	</table>
-	<center style="margin-top=10%;" ><input type="hidden" name="step" value="1" /><input type="submit" name="exporter" value="<?php _e('Suivant','annonces') ?>" /></center>
+	<center><input type="hidden" name="step" value="1" /><input type="submit" name="exporter" value="<?php _e('Suivant','annonces') ?>" /></center>
 </form>
 <?php
 }
 ?>
+</body>
+</html>

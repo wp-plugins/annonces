@@ -5,6 +5,9 @@
 *Comment:                                          *
 ***************************************************/
 
+echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/annonce.css" />';
+
+
 class tools
 {
 	
@@ -25,14 +28,13 @@ class tools
 		$pluriel='';if($nbitems>1)$pluriel='s';
 		$pluriel1='';if($nbpage>1)$pluriel1='s';
 
-		$pagination='<div style="display:table;width:100%;margin:3px 0 0 0;padding:3 0 3px 0;background:'.$background.';color:'.$color.';" >
-		<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-		'.str_replace('#PAGE#',1, $link).' 
-				style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;" >';
+		$pagination='<div class="paginationtoolsclass" style="background:'.$background.';color:'.$color.';" >
+		<span class="paginationspan1" onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
+		'.str_replace('#PAGE#',1, $link).'';
 				if($option==0)$pagination.=''.number_format($nbitems,0,'',' ').'&nbsp;';
 				if($option!=-1)$pagination.=__('r&eacute;sultat','annonces').$pluriel.'&nbsp;/';
 				$pagination.='&nbsp;'.$nbpage.'&nbsp;'.__('page','annonces').$pluriel1.'</span>
-				<span style="display:table;float:left;padding:1px;margin:0 3px;" >&nbsp;:&nbsp;</span>';
+				<span class="paginationspan2" >&nbsp;:&nbsp;</span>';
 
 		$min=$page-$offset;
 		if($min<1)$min=1;
@@ -49,31 +51,31 @@ class tools
 
 		if($option<2){	//	sens croissant
 			if($min>1)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$minto, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;" ><<</span>';
-			else $pagination.='<span style="display:table;float:left;padding:1px 6px;margin:0 3px;" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" ><<</span>';
+			else $pagination.='<span class="paginationspan3" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 
 			for($i=$min;$i<=$max;$i++){
 				$selected='';if($i==$page)$selected='color:'.$slctdcolor.';background:'.$slctdbackground.';font-weight:bold;';
 				$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-				'.str_replace('#PAGE#',$i, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;'.$selected.' " >'.$i.'</span>';
+				'.str_replace('#PAGE#',$i, $link).' class="paginationspan1" style="'.$selected.' " >'.$i.'</span>';
 			}
 
 			if($max<$nbpage)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$maxto, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;" >>></span>';
+			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" >>></span>';
 		}
 		else{						//	sens decroissant
 			if($max<$nbpage)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$maxto, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;" ><<</span>';
+			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" ><<</span>';
 
 			for($i=$max;$i>=$min;$i--){
 				$selected='';if($i==$page)$selected='color:'.$slctdcolor.';background:'.$slctdbackground.';font-weight:bold;';
 				$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$i, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;'.$selected.' " >'.$i.'</span>';
+			'.str_replace('#PAGE#',$i, $link).' class="paginationspan1" style="'.$selected.' " >'.$i.'</span>';
 			}
 
 			if($min>1)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$minto, $link).' style="display:table;cursor:pointer;float:left;padding:1px 6px;margin:0 3px;" >>></span>';
-			else $pagination.='<span style="display:table;float:left;padding:1px 6px;margin:0 3px;" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" >>></span>';
+			else $pagination.='<span class="paginationspan1" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 		}
 
 		$pagination.='</div >';

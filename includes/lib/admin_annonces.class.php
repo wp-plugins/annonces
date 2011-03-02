@@ -5,7 +5,6 @@
 *Comment:                                          *
 *	GENERATE UTILITIES FOR ANNONCES                *
 ***************************************************/
-
 class annonce_form extends sfForm
 {
 
@@ -884,19 +883,30 @@ class annonce
 		global $flag_visible_attribut_possibilities;
 		global $flag_a_exporter_possibilities;
 		global $flag_possibilities;
+		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
+					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
+					<script type="text/javascript" charset="utf-8">
+						$(document).ready(function() {
+							$(\'#example\').dataTable();
+						} );
+					</script>';
+		$entête .='<div id="container">
+					<div id="demo">
+					<div id="example_wrapper" class="dataTables_wrapper">';
 		$output = 
-			'<table summary="annonce listing" cellpadding="2" cellspacing="1" class="listing" >
-				<tr>
-					<td class="listing_header" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</td>
-					<td class="listing_header" >'.__('Exportable','annonces').'</td>
-					<td class="listing_header" >'.__('R&eacute;f&eacute;rence','annonces').'</td>
-					<td class="listing_header" >'.__('Titre','annonces').'</td>
-					<td class="listing_header" >'.__('Derni&egrave;re modification','annonces').'</td>
-					<td class="listing_header" colspan="3" >'.__('Op&eacute;ration','annonces').'</td>
-				</tr>';
+			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
+				<thead><tr class="titre_listing">
+					<th class="sorting" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</th>
+					<th class="sorting" >'.__('Exportable','annonces').'</th>
+					<th class="sorting" >'.__('R&eacute;f&eacute;rence','annonces').'</th>
+					<th class="sorting" >'.__('Titre','annonces').'</th>
+					<th class="sorting" >'.__('Derni&egrave;re modification','annonces').'</th>
+					<th class="sorting" colspan="3" >'.__('Op&eacute;ration','annonces').'</th>
+				</tr></thead>';
 
 		if( count($annonce_to_show) > 0 )
 		{
+			$output .= '<tbody>';
 			foreach($annonce_to_show as $key => $annonce_content)
 			{
 				$output .= 
@@ -906,20 +916,24 @@ class annonce
 					<td>'.$annonce_content->referenceagencedubien.'</td>
 					<td>'.$annonce_content->titre.'</td>
 					<td>'.date("d/m/Y",strtotime($annonce_content->autolastmodif)).'</td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/></td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
-					<td><input type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" style="cursor:pointer;" /></td>
+					<td>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/>
+					</td>
+					<td>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
+					<td><input class="attribut_annonce_content" type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" /></td>
 				</tr>';
 			}
 		}
 		else
 		{
+			$output .= '</tbody>';
 			$output .= '<tr><td colspan="20" class="no_result" >'.__('Aucun r&eacute;sultat','annonces').'</td></tr>';
 		}
+		
+		$output .= '</tbody></table></div></div></div>';
 
-		$output .= '</table>';
-
-		return $output;
+		return $entête.$output;
 	}
 	
 }

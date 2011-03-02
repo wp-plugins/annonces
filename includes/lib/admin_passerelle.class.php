@@ -195,24 +195,37 @@ class passerelle
 
 	function show_passerelle($passerelle_to_show)
 	{
+		$entete = '
+		<link rel="stylesheet" type="text/css" href="' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/css/admin.css" />
+				<script type="text/javascript" language="javascript" src="' . WP_PLUGIN_URL . '/' . Basename_Dirname_AOS . '/includes/js/jquery_002.js"></script>
+				<script type="text/javascript" language="javascript" src="' . WP_PLUGIN_URL . '/' . Basename_Dirname_AOS . '/includes/js/jquery.js"></script>
+				<script type="text/javascript" charset="utf-8">
+					$(document).ready(function() {
+						$(\'#example\').dataTable();
+					} );
+				</script>';
 		$output = 
-			'<table summary="passerelle listing" cellpadding="2" cellspacing="1" class="listing" >
-				<tr>';
+			'<div id="container">
+					<div id="demo">
+						<div id="example_wrapper" class="dataTables_wrapper">
+							<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
+								<thead><tr class="titre_listing">';
 		if(is_admin())$output .= '
-					<td class="listing_header" >ID</td>';
-		$output .= '
-					<td class="listing_header" >'.__('Nom de la passerelle','annonces').'</td>
-					<td class="listing_header" >'.__('Nom de l&#146;export','annonces').'</td>
-					<td class="listing_header" >'.__('H&ocirc;te','annonces').'</td>
-					<td class="listing_header" >'.__('Structure du fichier','annonces').'</td>
-					<td class="listing_header" >'.__('S&eacute;parateur de texte','annonces').'</td>
-					<td class="listing_header" >'.__('S&eacute;parateur de champ','annonces').'</td>
-					<td class="listing_header" >'.__('S&eacute;parateur de ligne','annonces').'</td>
-					<td class="listing_header" colspan="5" >'.__('Op&eacute;ration','annonces').'</td>
-				</tr>';
+					<th class="listing_header" >ID</th>';
+		$output .= '  
+					<th class="listing_header" >'.__('Nom de la passerelle','annonces').'</th>
+					<th class="listing_header" >'.__('Nom de l&#146;export','annonces').'</th>
+					<th class="listing_header" >'.__('H&ocirc;te','annonces').'</th>'.
+					/*<th class="listing_header" >'.__('Structure du fichier','annonces').'</th>
+					<th class="listing_header" >'.__('S&eacute;parateur de texte','annonces').'</th>
+					<th class="listing_header" >'.__('S&eacute;parateur de champ','annonces').'</th>
+					<th class="listing_header" >'.__('S&eacute;parateur de ligne','annonces').'</th>*/'
+					<th class="listing_header" colspan="5" >'.__('Op&eacute;ration','annonces').'</th>
+				</tr></thead>';
 
 		if( count($passerelle_to_show) > 0 )
 		{
+			$output .= '<tbody>';
 			foreach($passerelle_to_show as $key => $passerelle_content)
 			{
 				$output .= 
@@ -222,24 +235,25 @@ class passerelle
 		$output .= '
 					<td>'.$passerelle_content->nompasserelle.'</td>
 					<td>'.$passerelle_content->nomexport.'</td>
-					<td>'.$passerelle_content->host.'</td>
-					<td>'.substr($passerelle_content->structure,0,50).'...</td>
+					<td>'.$passerelle_content->host.'</td>'
+					/*<td>'.substr($passerelle_content->structure,0,50).'...</td>
 					<td>'.$passerelle_content->separateurtexte.'</td>
 					<td>'.$passerelle_content->separateurchamp.'</td>
-					<td>'.$passerelle_content->separateurligne.'</td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_pass" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$passerelle_content->idpasserelle.'\';document.forms.treat_passerelle.submit();"/></td>
+					<td>'.$passerelle_content->separateurligne.'</td>*/
+					.'<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_pass" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$passerelle_content->idpasserelle.'\';document.forms.treat_passerelle.submit();"/></td>
 					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_pass" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$passerelle_content->idpasserelle.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_passerelle.submit();}" /></td>
 				</tr>';
 			}
 		}
 		else
 		{
+			$output .= '</tbody>';
 			$output .= '<tr><td colspan="20" class="no_result" >Aucun r&eacute;sultat</td></tr>';
 		}
 
-		$output .= '</table>';
+		$output .= '</tbody></table></div></div></div>';
 
-		return $output;
+		return $entete.$output;
 	}
 	
 }

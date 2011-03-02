@@ -9,6 +9,10 @@
 /*															*/
 /*		ATTRIBUTE FORM CLASS			*/
 /*															*/
+require_once(dirname(__FILE__) . './sfform/require_once.php');
+
+echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/annonce.css" />';
+
 class attribut_annonce_form extends sfForm
 {
 
@@ -301,23 +305,34 @@ class attribut_annonce
 		global $attribute_type_possibilities;
 		global $flag_visible_attribut_possibilities;
 		global $flag_possibilities;
+		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
+					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
+					<script type="text/javascript" charset="utf-8">
+						$(document).ready(function() {
+							$(\'#example\').dataTable();
+						} );
+					</script>';
+		$entête .='<div id="container">
+					<div id="demo">
+					<div id="example_wrapper" class="dataTables_wrapper">';
 		$output = 
-			'<table summary="attribut_annonce listing" cellpadding="2" cellspacing="1" class="listing" >
-				<tr>';
+			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
+				<thead><tr class="titre_listing">';
 		if(is_admin())$output .= '
-					<td class="listing_header" >ID</td>';
-		$output .= '
-					<td class="listing_header" >'.__('Validit&eacute; de l&#146;attribut','annonces').'</td>
-					<td class="listing_header" >'.__('Visibilit&eacute; de l&#146;attribut','annonces').'</td>
-					<td class="listing_header" >'.__('Nom de l&#146;attribut','annonces').'</td>
-					<td class="listing_header" >'.__('Type de l&#146;attribut','annonces').'</td>
-					<td class="listing_header" >'.__('Groupe de l&#146;attribut','annonces').'</td>
-					<td class="listing_header" >'.__('Unit&eacute; de mesure','annonces').'</td>
-					<td class="listing_header" colspan="5" >'.__('Op&eacute;ration','annonces').'</td>
-				</tr>';
+					<th class="sorting" >ID</th>';
+		$output .= '          
+					<th class="sorting" >'.__('Validit&eacute; de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Visibilit&eacute; de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Nom de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Type de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Groupe de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Unit&eacute; de mesure','annonces').'</th>
+					<th class="sorting" colspan="5" >'.__('Op&eacute;ration','annonces').'</th>
+				</tr></thead>';
 
 		if( count($attribut_annonce_to_show) > 0 )
 		{
+			$output .= '<tbody>';
 			foreach($attribut_annonce_to_show as $key => $attribut_annonce_content)
 			{
 				$output .= 
@@ -333,18 +348,19 @@ class attribut_annonce
 					<td>'.$attribut_annonce_content->measureunit.'</td>
 					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_pass" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';document.forms.treat_attribut.submit();"/></td>
 					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_pass" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_attribut.submit();}" /></td>
-					<td><input type="checkbox" name="attribut['.$attribut_annonce_content->idattribut.']" id="'.$attribut_annonce_content->idattribut.'" value="'.$attribut_annonce_content->idattribut.'" style="cursor:pointer;" /></td>
+					<td><input class="attribut_annonce_content" type="checkbox" name="attribut['.$attribut_annonce_content->idattribut.']" id="'.$attribut_annonce_content->idattribut.'" value="'.$attribut_annonce_content->idattribut.'" /></td>
 				</tr>';
 			}
 		}
 		else
 		{
+			$output .= '</tbody>';
 			$output .= '<tr><td colspan="20" class="no_result" >Aucun r&eacute;sultat</td></tr>';
 		}
 
-		$output .= '</table>';
+		$output .= '</tbody></table></div></div></div>';
 
-		return $output;
+		return $entête.$output;
 	}
 	
 }

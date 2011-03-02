@@ -1,0 +1,603 @@
+# LANGUAGE (fr_FR) translation for WordPress.
+# Copyright (C) 2009 WordPress contributors.
+# This file is distributed under the same license as the WordPress package.
+# EOXIA <contact@eoxia.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Annonces 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-22 10:14-0600\n"
+"PO-Revision-Date: 2009-11-04 11:22+0100\n"
+"Last-Translator: EOXIA <contact@eoxia.com>\n"
+"Language-Team: fr_FR <contact@eoxia.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# options.php: line 117
+msgid "Cl&eacute; Google Maps"
+msgstr "Key Google Maps"
+
+# options.php: line 153
+msgid "Marqueur"
+msgstr "Marker"
+
+# options.php: line 129
+msgid "Activer G&eacute;olocalisation"
+msgstr "Activate Geolocalization"
+
+# options.php: line 120
+msgid "Cette cl&eacute; autorise Google Maps &agrave; afficher une carte pour g&eacute;olocaliser vos annocnes."
+msgstr "This key authorizes Google Maps to post a map for geolocalize your announcements."
+
+# options.php: line 132
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, utilise Google Maps pour g&eacute;olocaliser vos annonces sur une carte."
+msgstr "This option when it is activated, uses Google Maps for geolocalize your announcements on a map."
+
+# options.php: line 141
+msgid "Activer Photos"
+msgstr "Activate Picture"
+
+# options.php: line 144
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, affiche les photos de vos annonces si celles-ci sont d&eacute;finies."
+msgstr "This option when it is activated, posts the picture of your announcements if these are defined."
+
+# options.php: line 158
+msgid "Utiliser le marqueur par d&eacute;faut."
+msgstr "Use the default marker."
+
+# options.php: line 159
+msgid "Vous pouvez d&eacute;finir un marqueur diff&eacute;rent que celui de Google Maps pour r&eacute;f&eacute;rencer vos annnonces sur la carte."
+msgstr "You can define a different marker that one of Google Maps to refere your annnonces on the map."
+
+# options.php: line 168
+msgid "Th&egrave;me"
+msgstr "Theme"
+
+# options.php: line 174
+msgid "Utiliser le th&egrave;me par d&eacute;faut."
+msgstr "Use the default theme."
+
+# options.php: line 175
+msgid "Cette option permet de changer l&#146;apparence des boutons du bloc recherche."
+msgstr "This option allows to change the appearance of the buttons of the Search block."
+
+# options.php: line 180
+msgid "Envoyer"
+msgstr "Submit"
+
+# options.php: line 172
+msgid "Changer..."
+msgstr "Change..."
+
+# options.php: line 172
+msgid "Changer le th&egrave;me des boutons"
+msgstr "Change the theme buttons"
+
+# theme.php: line 125
+msgid "Type d&#146;annonce"
+msgstr "Type of announcement"
+
+# theme.php: line 131
+msgid "Toutes"
+msgstr "All"
+
+# theme.php: line 136
+msgid "Terrains"
+msgstr "Lands"
+
+# theme.php: line 141
+msgid "Maisons"
+msgstr "Houses"
+
+# theme.php: line 145
+msgid "Filtre"
+msgstr "Filter"
+
+# theme.php: line 149
+msgid "Votre budget"
+msgstr "Your budget"
+
+# theme.php: line 156
+msgid "Superficie terrain souhait&eacute;e"
+msgstr "Land area desired"
+
+# theme.php: line 156
+msgid "Recherche"
+msgstr "Search"
+
+# theme.php: line 156
+msgid "Annuler"
+msgstr "Cancel"
+
+# frontend.class.php: line 256
+msgid "R&eacute;glages"
+msgstr "Settings"
+
+# frontend.class.php: line 451
+# frontend.class.php: line 528
+msgid "(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)"
+msgstr "Enter some keywords (city, country, position, ...)"
+
+# frontend.class.php: line 432
+# frontend.class.php: line 509
+msgid "Recherchez une annonce"
+msgstr "Search announcement"
+
+# frontend.class.php: line 424
+msgid "Affichage carte"
+msgstr "Display map"
+
+# frontend.class.php: line 502
+msgid "Liste des annonces"
+msgstr "Display list"
+
+# frontend.class.php: line 502
+msgid "Consultez toutes les annonces"
+msgstr "See all announcements"
+
+# frontend.class.php: line 667
+msgid "Publi&eacute;e le"
+msgstr "Published"
+
+# frontend.class.php: line 840
+msgid "Photos"
+msgstr "Pictures"
+
+# frontend.class.php: line 842
+msgid "Annonces"
+msgstr "Announcements"
+
+# frontend.class.php: line 690
+msgid "INFORMATIONS COMPL&Eacute;MENTAIRES"
+msgstr "INFORMATIONS"
+
+# frontend.class.php: line 630
+msgid "Retour"
+msgstr "Return"
+
+# frontend.class.php: line 630
+msgid "Autres vues"
+msgstr "Other views"
+
+# tools.class.php: line 33
+msgid "r&eacute;sultat"
+msgstr "result"
+
+# frontend.class.php: line 33
+msgid "R&eacute;f&eacute;rence"
+msgstr "Reference"
+
+# frontend.class.php: line 33
+msgid "Localisation"
+msgstr "Placement"
+
+# frontend.class.php: line 191 et plus
+msgid "Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res."
+msgstr "No result."
+
+# frontend.class.php: line 576
+msgid "En savoir plus"
+msgstr "More"
+
+# admin.class.php: line 18
+msgid "Gestion des annonces"
+msgstr "Announcements management"
+
+# admin.class.php: line 20
+msgid "Attributs"
+msgstr "Attributes"
+
+# admin.class.php: line 20
+msgid "Gestion des attributs"
+msgstr "Attributes management"
+
+# admin.class.php: line 19
+msgid "Cat&eacute;gories"
+msgstr "Categories"
+
+# admin.class.php: line 19
+msgid "Gestion des cat&eacute;gories"
+msgstr "Categories management"
+
+# admin.class.php: line 21
+msgid "Passerelle"
+msgstr "Gateway"
+
+# admin.class.php: line 21
+msgid "Gestion des passerelles"
+msgstr "Gateway management"
+
+# admin.class.php: line 22
+msgid "Exporter"
+msgstr "Export"
+
+# admin.class.php: line 22
+msgid "Exporter les annonces"
+msgstr "Announcements export"
+
+# annonce_listing.php: line 144
+msgid "Actualiser moteur de recherche"
+msgstr "Update search engine"
+
+# annonce_listing.php: line 139
+msgid "Ajouter une annonce"
+msgstr "Add announcement"
+
+# annonce_listing.php: line 138
+msgid "Listing des annonces"
+msgstr "Announcements listing"
+
+# annonce_listing.php: line 138
+msgid "Adresse"
+msgstr "Address"
+
+# annonce_listing.php: line 205
+msgid "Ville"
+msgstr "City"
+
+# annonce_listing.php: line 213
+msgid "Code Postal"
+msgstr "Zip Code"
+
+# annonce_listing.php: line 261
+msgid "Rechercher des annonces"
+msgstr "Search announcements"
+
+# annonce_listing.php: line 265
+msgid "Filtrer les r&eacute;sultats"
+msgstr "Filter results"
+
+# annonce_listing.php: line 267
+msgid "Tout afficher"
+msgstr "Show all"
+
+# annonce_listing.php: line 281
+msgid "Effectuer"
+msgstr "Action"
+
+# annonce_listing.php: line 284
+msgid "Pour la s&eacute;lection"
+msgstr "Current select"
+
+# annonce_listing.php: line 293
+msgid "Aucun"
+msgstr "None"
+
+# annonce_listing.php: line 295
+msgid "Tout"
+msgstr "All"
+
+# annonce_listing.php: line 296
+msgid "S&eacute;lectionner"
+msgstr "Select"
+
+# config.php: line 49
+msgid "Exclure"
+msgstr "Moderated"
+
+# config.php: line 49
+msgid "Supprim&eacute;"
+msgstr "Deleted"
+
+# config.php: line 49
+msgid "Valide"
+msgstr "Valid"
+
+# config.php: Somewhere in the file
+msgid "Oui"
+msgstr "Yes"
+
+# config.php: Somewhere in the file
+msgid "Non"
+msgstr "No"
+
+# config.php: Somewhere in the file
+msgid "Caract&egrave;re"
+msgstr "Character"
+
+# config.php: Somewhere in the file
+msgid "D&eacute;cimal"
+msgstr "Decimal"
+
+# config.php: Somewhere in the file
+msgid "Entier"
+msgstr "Integer"
+
+# config.php: Somewhere in the file
+msgid "Texte"
+msgstr "Text"
+
+# config.php: Somewhere in the file
+msgid "Tous"
+msgstr "All"
+
+# image_galery.php: Somewhere in the file
+msgid "Ce fichier ne semble pas &ecirc;tre valide."
+msgstr "This file does not appear to be valid."
+
+# admin_annonces.class.php: line 40
+msgid "Validit&eacute;"
+msgstr "Validity"
+
+# admin_annonces.class.php: line 40
+msgid "Cat&eacute;gorie de l&#146;annonce"
+msgstr "Announcement category"
+
+# admin_annonces.class.php: line 40
+msgid "Titre"
+msgstr "Title"
+
+# admin_annonces.class.php: line 259
+msgid "Cr&eacute;ation effectu&eacute; avec succ&eacute;s"
+msgstr "Creating performed successfully"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur de g&eacute;olocalisation"
+msgstr "Geolocalization error"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur lors de la modification"
+msgstr "Error when editing"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur lors de l#146;insertion"
+msgstr "Error insertion"
+
+# admin_annonces.class.php: line 271
+msgid "Modification effectu&eacute;e avec succ&eacute;s"
+msgstr "Change completed successfully"
+
+# admin_annonces.class.php: line 271
+msgid "La s&eacute;lection a bien &eacute;t&eacute; modifi&eacute;e"
+msgstr "Select has been modified"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur lors de la modification de la s&eacute;lection"
+msgstr "Error when changing the selection"
+
+# admin_annonces.class.php: line 271
+msgid "Cet &eacute;l&eacute;ment a bien &eacute;t&eacute; supprim&eacute;"
+msgstr "This item has been deleted"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur lors de la suppression"
+msgstr "Error while deleting"
+
+# admin_annonces.class.php: line 271
+msgid "Erreur lors de la modification des informations compl&eacute;mentaires"
+msgstr "Error changing informations"
+
+# admin_annonces.class.php: line 271
+msgid "Aucun r&eacute;sultat"
+msgstr "No result"
+
+# image_galery.php: line 271
+msgid "Supprimer"
+msgstr "Delete"
+
+# image_galery.php: line 271
+msgid "Ajouter une photo"
+msgstr "Add picture"
+
+# admin_annonces.php: line 271
+msgid "Validit&eacute; de l&#146;annonce"
+msgstr "Announcement validity"
+
+# admin_annonces.php: line 271
+msgid "Derni&egrave;re modification"
+msgstr "Last modified"
+
+# admin_annonces.php: line 271
+msgid "Op&eacute;ration"
+msgstr "Action"
+
+# configs.php: line 271
+msgid "Valider"
+msgstr "Valid"
+
+# configs.php: line 271
+msgid "Non exportable"
+msgstr "Not exportable"
+
+# configs.php: line 271
+msgid "Non visible"
+msgstr "Not visible"
+
+# attribut_grp_listing.php: line 106
+msgid "Rechercher une cat&eacute;gorie"
+msgstr "Category search"
+
+# attribut_grp_listing.php: line 65
+msgid "Listing des cat&eacute;gories"
+msgstr "Categories listing"
+
+# attribut_grp_listing.php: line 67
+msgid "Ajouter un cat&eacute;gorie"
+msgstr "Add category"
+
+# admin_attributs_group.class.php: line 193
+msgid "Nom de la cat&eacute;gorie"
+msgstr "Category name"
+
+# admin_attributs_group.class.php: line 192
+msgid "Validit&eacute; de la cat&eacute;gorie"
+msgstr "Validity of the category"
+
+# export_admin.php: line 111
+msgid "Cr&eacute;er"
+msgstr "Create"
+
+# export_admin.php: line 111
+msgid "Modifier"
+msgstr "Edit"
+
+# attribut_listing.php: line 115
+msgid "Listing des attributs"
+msgstr "Attributes listing"
+
+# attribut_listing.php: line 117
+msgid "Ajouter un attribut"
+msgstr "Add attribute"
+
+# attribut_listing.php: line 151
+msgid "Rechercher un attribut"
+msgstr "Attribute search"
+
+# admin_attributs.php: line 25
+msgid "Visibilit&eacute;"
+msgstr "Visibility"
+
+# admin_attributs.php: line 33
+msgid "Groupe de l&#146;attribut"
+msgstr "Attribute group"
+
+# admin_attributs.php: line 37
+msgid "Type de l&#146;attribut"
+msgstr "Attribute type"
+
+# admin_attributs.php: line 40
+msgid "Nom de l&#146;attribut"
+msgstr "Attribute name"
+
+# admin_attributs.php: line 43
+msgid "Unit&eacute; de mesure"
+msgstr "Measurement Unit"
+
+# admin_attributs.class.php: line 310
+msgid "Validit&eacute; de l&#146;attribut"
+msgstr "Attribut validity"
+
+# admin_attributs.class.php: line 310
+msgid "Visibilit&eacute; de l&#146;attribut"
+msgstr "Attribut visibility"
+
+# admin_filters.class.php: line 195
+msgid "Nom de la passerelle"
+msgstr "Gateway name"
+
+# admin_filters.class.php: line 198
+msgid "Nom export"
+msgstr "Export name"
+
+# admin_filters.class.php: line 201
+msgid "H&ocirc;te de la passerelle"
+msgstr "Host Gateway"
+
+# admin_filters.class.php: line 204
+msgid "Identifiant"
+msgstr "Login"
+
+# admin_filters.class.php: line 207
+msgid "S&eacute;parateur de texte"
+msgstr "Spacer text"
+
+# admin_filters.class.php: line 210
+msgid "S&eacute;parateur de champ"
+msgstr "Field Separator"
+
+# admin_filters.class.php: line 213
+msgid "S&eacute;parateur de ligne"
+msgstr "Line separator"
+
+# admin_filters.class.php: line 216
+msgid "Structure de l&#146;export"
+msgstr "Structure of export"
+
+# export_admin.php: line 66
+msgid "Listing des passerelles existantes"
+msgstr "Existing gateways listing"
+
+# export_admin.php: line 67
+msgid "Ajouter une passerelle"
+msgstr "Add gateway"
+
+# export_admin.php: line 139
+msgid "Rechercher une passerelle"
+msgstr "Gateway search"
+
+# export_admin.php: line 83
+msgid "Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important"
+msgstr "To select an attribute click on its name. CAUTION: The order is important"
+
+# admin_export.class.php: line 170
+msgid "Erreur lors de l&#146;ouverture du fichier "
+msgstr "Error opening file "
+
+# admin_export.class.php: line 170
+msgid "Cr&eacute;ation du fichier r&eacute;ussi"
+msgstr "Creating file successfully"
+
+# admin_passerelle.class.php: line 35
+msgid "Mot de passe"
+msgstr "Password"
+
+# admin_passerelle.class.php: line 205
+msgid "Nom de l&#146;export"
+msgstr "Export name"
+
+# admin_passerelle.class.php: line 206
+msgid "H&ocirc;te"
+msgstr "Host"
+
+# admin_passerelle.class.php: line 207
+msgid "Structure du fichier"
+msgstr "File Structure"
+
+# export.php: line 126
+msgid "Fichier zip envoy&eacute; avec succ&egrave;s"
+msgstr "Zip file sent successfully"
+
+# export.php: line 131
+msgid "Erreur lors de l&#146;envoi du fichier zip "
+msgstr "Error sending the zip file "
+
+# export.php: line 140
+msgid "Aucune annonce &agrave; exporter nb : "
+msgstr "Nothing to export nb : "
+
+# export.php: line 151
+msgid "liste des passerelles pour l&#146;export des annonces"
+msgstr "list of gateways for export announcements"
+
+# export.php: line 154
+msgid "Exporter vers"
+msgstr "Export to"
+
+# admin.php: line 23
+msgid "Importer les annonces"
+msgstr "Announcements import"
+
+# admin.php: line 23
+msgid "Importer"
+msgstr "Import"
+
+# import_admin.php: line 14
+msgid "choix du type de fichier pour l&#146;import des annonces"
+msgstr "choice of file type to import announcements"
+
+# import_admin.php: line 17
+msgid "Choix du type de fichier contenant les annonces"
+msgstr "Choose the type of file containing the announcements"
+
+# import_admin.php: line 21
+msgid "Fichier Excel"
+msgstr "Excel file"
+
+# import_admin.php: line 22
+msgid "Fichier CSV"
+msgstr "CSV file"
+
+# import_admin.php: line 26
+msgid "Choix de la cat&eacute;gorie des annonces &agrave; importer"
+msgstr "Select category announcement for import"
+
+# import_admin.php: line 35
+msgid "Suivant"
+msgstr "Next"
+
+# import_admin.php: line 32
+msgid "Aucune"
+msgstr "Nothing"
+

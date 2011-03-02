@@ -5,9 +5,9 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.1.2.1
+	Version: 1.1.2.2
 */
-/*  Copyright 2009  EOXIA  (email : contact@eoxia.com)
+/*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
  
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@
 	* Fichier de configurations
 	*/
 	require_once('includes/configs.php');
-
+		
 	/**
 	* INCLUDES TOOLS
 	*/
@@ -72,54 +72,26 @@
 	* CREATE A TOOL INSTANCE
 	*/
 	$tools = new tools();
+	
+	
+	
+	
 	/**
-	* small_ad_install s'execute lorsqu'on active le plugin, Initialise la base de donnee si inexistante...
-	* @global array $wpdb variable permettant l'accès a la bd de Wordpress
+	*	Recherche de la version
 	*/
-	function small_ad_install()
-	{
-		global $wpdb;
-		require_once(Basename_Dirname_AOS. '/../includes/database_structure.php');
-		require_once(Basename_Dirname_AOS. '/../includes/database_data.php');
-		foreach($create_small_ad_table as $table_name => $sql){
-			if($wpdb->get_var("show tables like '$table_name'") != $table_name) 
-			{
-				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-				dbDelta($sql);
-				if(isset($create_small_ad_data_table[$table_name])){
-					dbDelta($create_small_ad_data_table[$table_name]);
-				}
-			}
-		}
-
-		add_option('annonces_api_key','');
-		add_option('annonces_maps_activation','1');
-		add_option('annonces_photos_activation','1');
-		add_option('annonces_date_activation','1');
-		add_option('url_marqueur_courant','red-dot_default.png');
-		add_option('url_marqueur_perso','red-dot_default.png');
-		add_option('annonces_marqueur_activation','1');
-		add_option('theme_activation','1');
-		add_option('url_radio_toutes_theme_courant','toutes_default.png');
-		add_option('url_radio_terrains_theme_courant','terrains_default.png');
-		add_option('url_radio_maisons_theme_courant','maisons_default.png');
-		add_option('url_budget_theme_courant','budget_default.png');
-		add_option('url_superficie_theme_courant','surface_default.png');
-		add_option('url_recherche_theme_courant','recherche_default.png');
-	}
-	/**
-	* Fonction de Wordpress qui appel la methode a activer
-	* @param string chemin du fichier contenant la fonction a inclure
-	* @param string nom de la methode a inclure
-	*/
-	register_activation_hook(__FILE__,'small_ad_install');
-
+	
+	
+	
 	/**
 	* INCLUDE LIBRAIRIES
 	*/
 	require_once(Basename_Dirname_AOS. '/../admin/admin.php');
+	require_once(Basename_Dirname_AOS. '/../includes/lib/options.class.php');
+	require_once(Basename_Dirname_AOS. '/../includes/lib/admin_annonces.class.php');
+	require_once(Basename_Dirname_AOS. '/../includes/lib/admin_attributs.class.php');
 	require_once(Basename_Dirname_AOS. '/../includes/lib/eav.class.php');
 	require_once(Basename_Dirname_AOS. '/../includes/lib/frontend.class.php');
+	require_once(Basename_Dirname_AOS. '/../includes/lib/installation.class.php');
 	require_once(Basename_Dirname_AOS. '/../includes/lib/Zend/Search/Lucene.php');
 
 	/**
@@ -148,3 +120,35 @@
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header Admin de Wordpress
 	*/
 	add_action('admin_head', array( $view, "add_gmap" ));
+		
+	/**
+	*	Ligne ajoutée suite à la structuration à la Evarisk
+	*/
+	DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
+	DEFINE('ANNONCES_HOME_DIR', WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/');
+	DEFINE('ANNONCES_INC_PLUGIN_DIR', ANNONCES_HOME_DIR . 'includes/');
+	DEFINE('ANNONCES_CONFIG', ANNONCES_INC_PLUGIN_DIR . 'config/config.php');
+	require_once(ANNONCES_CONFIG);
+	
+	require_once(ANNONCES_MODULES_PLUGIN_DIR . 'installation/creationTables.php');
+	annonces_creationTables();
+	
+	/**
+	* Defini chaque option
+	*/
+	define('url_budget_theme_courant', annonces_options::recupinfo('url_budget_theme_courant'));
+	define('url_superficie_theme_courant', annonces_options::recupinfo('url_superficie_theme_courant'));
+	define('url_radio_maisons_theme_courant', annonces_options::recupinfo('url_radio_maisons_theme_courant'));
+	define('url_recherche_theme_courant', annonces_options::recupinfo('url_recherche_theme_courant'));
+	define('theme_activation', annonces_options::recupinfo('theme_activation'));
+	define('annonces_marqueur_activation', annonces_options::recupinfo('annonces_marqueur_activation'));
+	define('url_radio_terrains_theme_courant', annonces_options::recupinfo('url_radio_terrains_theme_courant'));
+	define('url_radio_toutes_theme_courant', annonces_options::recupinfo('url_radio_toutes_theme_courant'));
+	define('url_marqueur_courant', annonces_options::recupinfo('url_marqueur_courant'));
+	define('annonces_maps_activation', annonces_options::recupinfo('annonces_maps_activation'));
+	define('annonces_photos_activation', annonces_options::recupinfo('annonces_photos_activation'));
+	define('annonces_date_activation', annonces_options::recupinfo('annonces_date_activation'));
+	
+	/**
+	*	Réécriture d'urls
+	*/

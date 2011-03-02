@@ -1,10 +1,10 @@
+
 <?php
 /***************************************************
 *Date: 01/10/2009      File:export_admin.php 	   *
 *Author: Eoxia							           *
 *Comment:                                          *
 ***************************************************/
-
 $passerelle = new passerelle();
 $form = new passerelle_form();
 $passerelle_filters_form = new passerelle_filters_form();
@@ -62,25 +62,30 @@ elseif(!empty($_POST) && is_array($_POST['passerelle_filter']) && ($act == 'filt
 	}
 }
 ?>
-<div class="sub_admin_menu" >
-	<form action="" method="POST" style="float:left;" ><input type="hidden" name="act" value="" /><input type="submit" name="submit_home" value="<?php _e('Listing des passerelles existantes','annonces') ?>" /></form>
-	<form action="" method="POST"><input type="hidden" name="act" value="add" /><input type="submit" name="submit_add" value="<?php _e('Ajouter une passerelle','annonces') ?>" /></form>
+<form action="" method="POST" name="treat_passerelle">
+	<input type="hidden" name="act" value="add" />
+<div class="wrap">
+	<h2>
+		<?php echo __('Passerelles','annonces') ?>
+		<a class="button add-new-h2" onclick="javascript:document.getElementById('act').value = 'add';document.forms.treat_passerelle.submit();"">
+		<?php echo __('Ajouter','annonces') ?></a>
+	</h2>
 </div>
-<hr style="clear:both;" /><br/>
+<br/>
 <div class="<?php echo $passerelle->class_admin_notice; ?>" ><?php echo $passerelle->error_message; ?></div>
 
 <?php
 if(($act == 'add') || ($act == 'edit'))
 {
 ?>
-<form action="" method="POST">
+
   <table class="annonce_form" >
     <?php echo $form ?>
     <tr>
       <td colspan="2">
        	<table class="attribut_listing" >
 					<tr>
-						<td colspan="10" style="text-align:center;" ><?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important','annonces') ?></td>
+						<td class="td_att_listing" colspan="10" ><?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important','annonces') ?></td>
 					</tr>
 					<?php
 						$attribut_annonce = new attribut_annonce();
@@ -123,40 +128,26 @@ elseif($act == 'delete')
 
 
 $nb_total_items = 0;$nb_total_items = $passerelle->get_passerelle($morequery, $flag , $actual_page, 'count');
-$Pagination = '';
-if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_passerelle.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF',-1);
+/*$Pagination = '';
+if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_passerelle.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF',-1);*/
 
 if(($act == '') || ($act == 'filter'))
 {
 ?>
-
 <form action="" method="POST" name="treat_passerelle" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-		<div id="passerelle_filter" class="margin18px" >
-			<table summary="admin passerelle filters" cellpadding="0" cellspacing="0" class="floatright margin18px" style="border:1px solid #333333;" >
-				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher une passerelle','annonces') ?></td></tr> 
-				<?php echo $passerelle_filters_form ;?>
-				<tr>
-					<td colspan="2" > 
-						<input type="button" value="<?php _e('Filtrer les r&eacute;sultats','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_passerelle.submit();" /> 
-						<input type="button" value="<?php _e('Tout afficher','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_passerelle.submit();" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="attribut_annonce_listing" style="clear:both;" >
-			<?php echo $Pagination ?>
+		
+		<div id="attribut_annonce_listing" >
+		<br/><br/>
+			<?php /*echo $Pagination */?>
 			<div class="margin18px" >
 				<?php echo $passerelle->show_passerelle($passerelle->get_passerelle($morequery, $flag , $actual_page)) ?>
 			</div>
-			<?php echo $Pagination ?>
+			<?php /*echo $Pagination */?>
 		</div>
 </form>
-
 <?php
 }
 ?>

@@ -1,3 +1,9 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../includes/css/admin.css" />
+</head>
+<body>
 <?php
 /***************************************************
 *Date: 01/10/2009      File:export.php 	 		   *
@@ -24,6 +30,7 @@ if($choosen_passerelle != '')
 	$file_to_zip = array();
 
 	$choosen_export = $available_passerelle->get_passerelle(" AND idpasserelle = '".mysql_real_escape_string($choosen_passerelle)."' ", "'valid'" , 0 , 'nolimit');
+	$writen_file="";
 
 	/*	FIELD FOR FILE SPECIFICATION	*/
 	$file_structure = explode(',',$choosen_export[0]->structure);
@@ -70,8 +77,6 @@ if($choosen_passerelle != '')
 			$annonce_array[$attribute_definition->ID_ANNONCE][strtolower($attribute_definition->ATTRIBUT_NAME)] = $attribute_definition->ATTRIBUT_VALUE;
 		}
 
-		/*	GENERATE CSV FILE	*/
-		$output_file = $export->generate_csv_file_content($annonce_array, $file_structure);
 		$photos_list = $annonce->get_photos_for_annonce($annonce_id_list);
 		$photos_for_export = array();
 		foreach($photos_list as $key => $photo_definition)
@@ -82,73 +87,32 @@ if($choosen_passerelle != '')
 			}
 		}
 
-		/*	SAVE FILE	*/
-		foreach($output_file as $line => $line_content)
+		if($choosen_export[0]->typeexport == 'csv')
 		{
-			$eachline[] = implode($file_field_separator,$line_content);
-		}
-		if($file_line_separator = "r\n")
-		{
-			$file_line_separator = "
+			/*	GENERATE FILE	*/
+			$output_file = $export->generate_csv_file_content($annonce_array, $file_structure);
+
+			/*	SAVE FILE	*/
+			foreach($output_file as $line => $line_content)
+			{
+				$eachline[] = implode($file_field_separator,$line_content);
+			}
+			if($file_line_separator == '\r\n')
+			{
+				$file_line_separator = "
 ";
-		}
-		$file_content = implode($file_line_separator,$eachline);
-		$writen_file="";$writen_file = $export->save_csv_file(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . 'Annonces.csv',$file_content);
+			}
+			$file_content = implode($file_line_separator,$eachline);
+			$writen_file = $export->save_file(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . 'Annonces.csv', $file_content);
 
-		if($writen_file != "")
-		{
-			$zip_file = $file_name.'.zip';
-			@unlink($zip_file);
-
-			$file_to_zip[] = $writen_file;
 			$file_to_zip[] = WP_PLUGIN_DIR . '/' . Basename_Dirname_AOS . '/includes/seloger/Config.txt';
 			$file_to_zip[] = WP_PLUGIN_DIR . '/' . Basename_Dirname_AOS . '/includes/seloger/Photos.cfg';
-
-			/*	GETTING PHOTOS TO ADD TO ZIP	*/
-			foreach($photos_list as $key => $photos_definition)
-			{
-				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original)
-						&&	(!in_array(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original, $file_to_zip)))
-				{
-					$file_to_zip[] = WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original;
-				}
-			}
-
-			/*	ZIP THE FILE	*/
-			$archive = new Zip($zip_file);
-			$archive->setFiles($file_to_zip);
-			$archive->compressToPath(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS);
-
-			$full_path_to_zip = WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . $zip_file;
-			$full_path_to_zip_url = WP_CONTENT_URL . WAY_TO_EXPORT_AOS;
-			
-			if($choosen_passerelle == 'local')
-			{
-				$name=$zip_file;
-				$file=$full_path_to_zip_url.$name;
-
-				header("content-type: application/octet-stream");
-				header("Content-Disposition: attachment; filename=".$name);
-				flush();
-				readfile($file);
-				header("Location:".$file);
-			}
-			else{
-				$ftp_instance = new Ftp($ftp_host, $ftp_user, $ftp_pass);
-				$path = "/";
-				if($check = $ftp_instance->uploadToServer($full_path_to_zip, $path))
-				{
-					$export->error_message = __('Fichier zip envoy&eacute; avec succ&egrave;s','annonces');
-					$export->class_admin_notice = 'admin_notices_class_ok';
-				}
-				else
-				{
-					$export->error_message = __('Erreur lors de l&#146;envoi du fichier zip ','annonces') . $full_path_to_zip;
-					$export->class_admin_notice = 'admin_notices_class_notok';
-				}
-			}
-			
-			@unlink($writen_file);
+		}
+		elseif($choosen_export[0]->typeexport == 'xml')
+		{
+			/*	GENERATE FILE	*/
+			$output_file = $export->generate_xml_file_content($annonce_array, $file_structure, $photos_list);
+			$writen_file = $export->save_file(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . 'Annonces.xml', $output_file);
 		}
 	}
 	else
@@ -156,6 +120,62 @@ if($choosen_passerelle != '')
 		$export->error_message = __('Aucune annonce &agrave; exporter nb : ','annonces').count($annonce_to_treat);
 		$export->class_admin_notice = 'admin_notices_class_notok';
 	}
+
+	if($writen_file != "")
+	{
+		$zip_file = $file_name.'.zip';
+		@unlink($zip_file);
+
+		$file_to_zip[] = $writen_file;
+
+		/*	GETTING PHOTOS TO ADD TO ZIP	*/
+		foreach($photos_list as $key => $photos_definition)
+		{
+			if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original)
+					&&	(!in_array(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original, $file_to_zip)))
+			{
+				$file_to_zip[] = WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original;
+			}
+		}
+
+		/*	ZIP THE FILE	*/
+		$archive = new Zip($zip_file);
+		$archive->setFiles($file_to_zip);
+		$archive->compressToPath(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS);
+
+		$full_path_to_zip = WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . $zip_file;
+		$full_path_to_zip_url = WP_CONTENT_URL . WAY_TO_EXPORT_AOS;
+
+		if(($choosen_passerelle == 'local') || ($ftp_host == '127.0.0.1'))
+		{
+			$name=$zip_file;
+			$file=$full_path_to_zip_url.$name;
+
+			header("content-type: application/octet-stream");
+			header("Content-Disposition: attachment; filename=".$name);
+			flush();
+			readfile($file);
+			header("Location:".$file);
+		}
+		else
+		{
+			$ftp_instance = new Ftp($ftp_host, $ftp_user, $ftp_pass);
+			$path = "/";
+			if($check = $ftp_instance->uploadToServer($full_path_to_zip, $path))
+			{
+				$export->error_message = __('Fichier zip envoy&eacute; avec succ&egrave;s','annonces');
+				$export->class_admin_notice = 'admin_notices_class_ok';
+			}
+			else
+			{
+				$export->error_message = __('Erreur lors de l&#146;envoi du fichier zip ','annonces') . $full_path_to_zip;
+				$export->class_admin_notice = 'admin_notices_class_notok';
+			}
+		}
+
+		@unlink($writen_file);
+	}
+
 	unset($choosen_export);
 }
 
@@ -164,7 +184,7 @@ if($choosen_passerelle != '')
 
 <form name="export_annonce" action="" method="POST" >
 
-	<table summary="<?php _e('liste des passerelles pour l&#146;export des annonces','annonces') ?>" style="border-collapse:collapse;" cellpadding="0" cellspacing="0" align="center" > 
+	<table summary="<?php _e('liste des passerelles pour l&#146;export des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
 		<tr>
 			<td>
 				<?php _e('Exporter vers','annonces') ?>&nbsp;:&nbsp;
@@ -174,13 +194,14 @@ if($choosen_passerelle != '')
 					<?php
 						foreach($available_export as $key => $passerelle_definition)
 						{
-							echo '<option value="' . $passerelle_definition->idpasserelle . '" >' . $passerelle_definition->nompasserelle . '</option>';
+							$selected = (isset($choosen_passerelle) && ($choosen_passerelle != '')) ? ' selected="selected" ' : '' ;
+							echo '<option value="' . $passerelle_definition->idpasserelle . '" ' . $selected . ' >' . $passerelle_definition->nompasserelle . '</option>';
 						}
 					?>
 					<!--<option value="local"><?php //_e('l&#146;ordinateur (Bureau)','annonces') ?></option>-->
 				</select>
 			</td>
-			<td colspan="2" align="center" ><input type="submit" name="exporter" value="<?php _e('Exporter','annonces') ?>" /></td>
+			<td colspan="2" ><input type="submit" name="exporter" value="<?php _e('Exporter','annonces') ?>" /></td>
 		</tr>
 	</table>
 

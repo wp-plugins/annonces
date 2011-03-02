@@ -6,12 +6,12 @@
 ***************************************************/
 require_once dirname(__FILE__).'/eav.class.php';
 require_once dirname(__FILE__).'/gmap.class.php';
-
+require_once dirname(__FILE__).'/options.class.php';
 
 global $content;
 
 class Frontend {
-
+	
 	private $annonce_content = '';
 	/*---- Parse page content looking for RegEx matches and add modify HTML to acomodate display ----*/
 	/**
@@ -65,7 +65,7 @@ class Frontend {
 
 				$result_search = ' AND ANN.idpetiteannonce IN ('.$id.') ';
 
-				if($show_map == 'true' and (get_option('annonces_maps_activation') == 1)){
+				if($show_map == 'true' and (annonces_maps_activation == 1)){
 					/*---- Show map ----*/
 					$this->concatAnnonceContent($this->generate_search_map());
 					if(!empty($id)){
@@ -82,8 +82,8 @@ class Frontend {
 					
 				/*---- Show search filter ----*/
 				$this->concatAnnonceContent($this->generate_search());
-				if(get_option('annonces_maps_activation') == 1){
-					$this->concatAnnonceContent('<br/><center style="margin-top:80px;" id="annonces_listing" >');
+				if(annonces_maps_activation == 1){
+					$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 
 					if(empty($id))
 						{$result_search = ' AND ANN.idpetiteannonce IN (0) ';}
@@ -181,8 +181,8 @@ class Frontend {
 					
 					/*---- Show search filter ----*/
 					$this->concatAnnonceContent($this->generate_search());
-					if(get_option('annonces_maps_activation') == 1){
-						$this->concatAnnonceContent('<br/><center style="margin-top:80px;" id="annonces_listing" >');
+					if(annonces_maps_activation == 1){
+						$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 						if(empty($id))
 							{$result_search = ' AND ANN.idpetiteannonce IN (0) ';}
 						$this->concatAnnonceContent($this->generate_map($result_search));
@@ -202,7 +202,7 @@ class Frontend {
 				}else{
 					/*---- Show search filter ----*/
 					$this->concatAnnonceContent($this->generate_search());
-					$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><p style="font-size:140%">Recherche momentanement indisponible.</p>');
+					$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><p class="rechercheindispo">Recherche momentanement indisponible.</p>');
 			
 					/*---- Show annonce plugin ----*/
 					return $this->addAnnoncesToContent($content);
@@ -219,7 +219,7 @@ class Frontend {
 			return $this->addAnnoncesToContent($content);
 		}
 	
-		if(!empty($show_map) and (get_option('annonces_maps_activation') == 1))
+		if(!empty($show_map) and (annonces_maps_activation == 1))
 		{
 			/*---- Show map ----*/
 			$this->concatAnnonceContent($this->generate_search_map());
@@ -232,8 +232,8 @@ class Frontend {
 	
 		/*---- Show search filter ----*/
 		$this->concatAnnonceContent($this->generate_search());
-		if(get_option('annonces_maps_activation') == 1){
-			$this->concatAnnonceContent('<br/><center style="margin-top:80px;" id="annonces_listing" >');
+		if(annonces_maps_activation == 1){
+			$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 			$this->concatAnnonceContent($this->generate_map());
 			$this->concatAnnonceContent('</center><br/><br/>');
 		}else{
@@ -336,7 +336,7 @@ class Frontend {
 		//Afficher tout les marqueurs sans distinction de page
 		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
 		$sizei = count($annonces);
-		$icon = get_option('url_marqueur_courant');
+		$icon = url_marqueur_courant;
 		for($i = 0; $i < $sizei; $i++)
 		{
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
@@ -346,7 +346,7 @@ class Frontend {
 
 				$markers .= 'var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"text-align:left;color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\'>'.__('En savoir plus','annonces').'</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\'>'.__('En savoir plus','annonces').'</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\';
@@ -373,14 +373,14 @@ class Frontend {
 						annoncemap.setCenter(new GLatLng(43.604262,3.768311), 8);
 						var icon = new GIcon();
 						icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-						icon.iconSize=new GSize(18,26);
+						icon.iconSize=new GSize(32,32);
 						icon.iconAnchor=new GPoint(16,16);
 						
 						'.$markers.'
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="width: 550px; height: 300px">
+			<div id="annonceGmap" class="GMAP1">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -422,7 +422,7 @@ class Frontend {
 		$mode = isset($_REQUEST['mode']) ? $tools->IsValid_Variable($_REQUEST['mode']) : '' ;
 	
 		$filter_search = '';
-		if(get_option('annonces_maps_activation') == 1){
+		if(annonces_maps_activation == 1){
 			$filter_search .= '		
 			<div class="carte-annonce">
 				<div class="carte-annonce-text">
@@ -434,32 +434,32 @@ class Frontend {
 						<input type="hidden" name="query3" value="'.$query3.'"> 
 						<input type="hidden" name="query4" value="'.$query4.'"> 
 						<input type="hidden" name="mode" value="'.$mode.'"> 
-						<a onclick="javascript:document.forms.lien.submit();" href=\'#\'>'.__('Affichage carte','annonces').'<div class="carte-seule-img"></div></a>
+						<div class="carte-seule-texte"><a onclick="javascript:document.forms.lien.submit();" href=\'#\'>'.__('Affichage carte','annonces').'</div><div class="carte-seule-image">&nbsp;</div></a>
 					</form>
 				</div>
 			</div>';
 		}
 		$filter_search .= '
-		<form action="#annonces_listing" method="POST" style="margin-bottom:35px;" name="navigation_form" >
+		<form action="#annonces_listing" method="POST" class="navigation_form" name="navigation_form" >
 			<input type="hidden" name="page_nav_annonces" id="page_nav_annonces" value="" />
 			<h5>'.__('Recherchez une annonce','annonces').'</h5>
 			<div class="filtre">
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_toutes_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
 				<input type="radio" id="toutes" name="mode" '.(($mode == 'all' or $mode == '')? 'checked': '').' value="all">&nbsp;
-				<label for="toutes" style="cursor:pointer;">'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_terrains_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
+				<label for="toutes" >'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
 				<input type="radio" id="terrains" name="mode" '.(($mode == 'terrain')? 'checked': '').' value="terrain">&nbsp;
-				<label for="terrains" style="cursor:pointer;">'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_maisons_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
+				<label for="terrains" >'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
-				<label for="maisons" style="cursor:pointer;">'.__('Maisons','annonces').'</label><BR/>
+				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
 			<div class="sidebar_search">    
 				<b>'.__('Recherche','annonces').'&nbsp;:</b><input type="text" name="query" value="'.$query.'" id="search_keywords" /><i>'.__('(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)','annonces').'</i>
 			</div>
 			<div class="budget">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_budget_theme_courant").'" style="float:left;margin-right:2px;width:44px;height:44px;" alt="'.__('Votre budget','annonces').'"/>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
 					<b>'.__('Votre budget','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_3">Min. : </label>
 						<input type="text" name="query3" value="'.$query3.'" id="search_keywords_3"/>
@@ -469,7 +469,7 @@ class Frontend {
 			</div>
 			<div class="superficie">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_superficie_theme_courant").'" style="float:left;margin-right:2px;width:44px;height:44px;" alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_superficie_theme_courant.'" '.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
 						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
@@ -478,7 +478,7 @@ class Frontend {
 				</p>
 			</div>
 			<div>
-				<input style="border-width:0px;float:right;margin-top:20px;background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_recherche_theme_courant").') no-repeat;width:168px;height:47px; cursor:pointer;" type="submit" value="" />
+				<input class="inputrecherche" style="background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
 			</div>
 		</form>';
 		return $filter_search;
@@ -511,26 +511,26 @@ class Frontend {
 			</div>
 		</div>
 		
-		<form action="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_map=true#annonces_listing" method="POST" style="margin-bottom:35px;" name="navigation_form" >
+		<form action="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_map=true#annonces_listing" method="POST" class="navigation_form" name="navigation_form" >
 			<input type="hidden" name="page_nav_annonces" id="page_nav_annonces" value="" />
 			<h5>'.__('Recherchez une annonce','annonces').'</h5>
 			<div class="filtre">
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_toutes_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
 				<input type="radio" id="toutes" name="mode" '.(($mode == 'all' or $mode == '')? 'checked': '').' value="all">&nbsp;
-				<label for="toutes" style="cursor:pointer;">'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_terrains_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
+				<label for="toutes" >'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
 				<input type="radio" id="terrains" name="mode" '.(($mode == 'terrain')? 'checked': '').' value="terrain">&nbsp;
-				<label for="terrains" style="cursor:pointer;">'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_radio_maisons_theme_courant").'" style="margin-right:4px;vertical-align:middle;cursor:pointer;width:43px;height:43px;" onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
+				<label for="terrains" >'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
+				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
-				<label for="maisons" style="cursor:pointer;">'.__('Maisons','annonces').'</label><BR/>
+				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
 			<div class="sidebar_search">    
 				<b>'.__('Recherche','annonces').'&nbsp;:</b><input type="text" name="query" value="'.$query.'" id="search_keywords" /><i>'.__('(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)','annonces').'</i>
 			</div>
 			<div class="budget">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_budget_theme_courant").'" style="float:left;margin-right:2px;width:44px;height:44px;" alt="'.__('Votre budget','annonces').'"/>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
 					<b>'.__('Votre budget','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_3">Min. : </label>
 						<input type="text" name="query3" value="'.$query3.'" id="search_keywords_3"/>
@@ -540,7 +540,7 @@ class Frontend {
 			</div>
 			<div class="superficie">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_superficie_theme_courant").'" style="float:left;margin-right:2px;width:44px;height:44px;" alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
+					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_superficie_theme_courant.'"  alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
 						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
@@ -549,7 +549,7 @@ class Frontend {
 				</p>
 			</div>
 			<div>
-				<input style="border-width:0px;float:right;margin-top:20px;background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.get_option("url_recherche_theme_courant").') no-repeat;width:168px;height:47px; cursor:pointer;" type="submit" value="" />
+				<input class="inputrecherche" style="background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
 			</div>
 		</form>';
 		return $filter_search_map;
@@ -575,7 +575,7 @@ class Frontend {
 
 				$markers .='var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div style=\"color:black;cursor:pointer;\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a style=\"float: right;\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'>En savoir plus</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle2\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'>En savoir plus</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\';
@@ -584,7 +584,7 @@ class Frontend {
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
-		$icon = get_option('url_marqueur_courant');
+		$icon = url_marqueur_courant;
 		$generate_map = '
 			<script type="text/javascript">
 				<!-- Google map -->
@@ -602,14 +602,14 @@ class Frontend {
 						annoncemap.setCenter(new GLatLng(43.496768,3.674927), 9);
 						var icon = new GIcon();
 						icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-						icon.iconSize=new GSize(18,26);
+						icon.iconSize=new GSize(32,32);
 						icon.iconAnchor=new GPoint(16,16);
 						
 						'.$markers.'
 					}
 				}
 			</script>
-			<div id="annonceGmap" style="width: 550px; height: 800px">
+			<div id="annonceGmap" class="GMAP2">
 				<script type="text/javascript">
 					show_map();
 				</script>
@@ -634,11 +634,11 @@ class Frontend {
 		$generate_annonce .= '<b>&laquo;&nbsp;'.__('Retour','annonces').'</b>';
 		$generate_annonce .= '</a>';
 		$reference = $annonce[0]->referenceagencedubien;
-		$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.__('R&eacute;f&eacute;rence','annonces').':'.(is_null($reference) ? 'aucune' : $reference);
+		$generate_annonce .= '<div class="GAreference">'.__('R&eacute;f&eacute;rence','annonces').':'.(is_null($reference) ? 'aucune' : $reference);
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</p>';
 
-		$generate_annonce .= '<div class="annonce-titre2" style="clear:both;">';
+		$generate_annonce .= '<div class="annonce-titre2">';
 		$generate_annonce .= $annonce[0]->titre;
 		$generate_annonce .= '<br/>';
 		$generate_annonce .= '</div>';
@@ -662,7 +662,7 @@ class Frontend {
 		/*** Attention ici faut mettre description longue et non la courte ***/
 		$generate_annonce .= stripslashes($description[0]->valueattributtextcourt);
 		$generate_annonce .= '</div>';
-		if(get_option('annonces_date_activation') == 1){
+		if(annonces_date_activation == 1){
 			$generate_annonce .= '<div class="published-date">';
 			$generate_annonce .= '<p id="img-date">';
 			$generate_annonce .= __('Publi&eacute;e le','annonces').'&nbsp;:&nbsp;'.date("d/m/Y",strtotime($annonce[0]->autolastmodif));
@@ -671,7 +671,7 @@ class Frontend {
 		}else{
 			$generate_annonce .= '<br/><br/>';
 		}
-		if(get_option('annonces_photos_activation') == 1){
+		if(annonces_photos_activation == 1){
 			$generate_annonce .= '<div class="annonce-img">';
 			$generate_annonce .= '<h5>'.__('Autres vues','annonces').'</h5><br/>';
 			
@@ -682,7 +682,7 @@ class Frontend {
 				{
 					$generate_annonce .= '<a title="'. $photos[$i]->original .'" href="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $photos[$i]->original .'" rel="lightbox[roadtrip]">';
 					
-					$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[$i]->original.'" alt="'.$annonces[$i]->titre.'" width="140" height="132"/>';
+					$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[$i]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/>';
 					
 					
 					$generate_annonce .=  '</a>';
@@ -732,11 +732,11 @@ class Frontend {
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</fieldset>';
 		$generate_annonce .= '</div>';
-		if(get_option('annonces_maps_activation') == 1){
+		if(annonces_maps_activation == 1){
 			$generate_annonce .= '<p>';
 			$generate_annonce .= '<h5>'.__('Localisation','annonces').'</h5><br/>';
 			$generate_annonce .= '<center>';
-			$icon = get_option('url_marqueur_courant');
+			$icon = url_marqueur_courant;
 			if(!is_null($annonce[0]->latitude) AND !is_null($annonce[0]->longitude)){
 				$generate_annonce .= '
 					<script type="text/javascript">
@@ -755,7 +755,7 @@ class Frontend {
 								annoncemap.setCenter(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'), 12);
 								var icon = new GIcon();
 								icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-								icon.iconSize=new GSize(18,26);
+								icon.iconSize=new GSize(32,32);
 								icon.iconAnchor=new GPoint(16,16);
 								
 								var marker = new GMarker(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),icon);
@@ -763,11 +763,11 @@ class Frontend {
 							}
 						}
 				</script>
-				<div id="annonceGmap" style="width: 512px; height: 400px">
+				<div id="annonceGmap" class="GMAP3">
 					<script type="text/javascript">
 						show_map();
 					</script>
-					<div id="annonceGmap" style="height: 400px">
+					<div id="annonceGmap" class="GMAP4">
 						<script type="text/javascript">
 							show_map();
 						</script>
@@ -802,17 +802,17 @@ class Frontend {
 		for($i = 0; $i < $sizei; $i++)
 		{
 			$generate_annonce .= '<tr class="annonce-ligne">';
-			if(get_option('annonces_photos_activation') == 1){
+			if(annonces_photos_activation == 1){
 				$generate_annonce .= '<td><div class="annonce-photos">';
 				$generate_annonce .= '<a href="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list">';
 				$photos = $eav_value->getPhotos($annonces[$i]->idpetiteannonce);
 				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original))
-				$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original.'" alt="'.$annonces[$i]->titre.'" width="140" height="132"/>';
+				$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/>';
 				$generate_annonce .= '</a></div></td>';
 			}
 			$attributs = $eav_value->getAnnoncesAttributs(null,'moderated',null,$annonces[$i]->idpetiteannonce);
 			
-			$generate_annonce .= '<td valign="top"><div class="annonce-container" >';
+			$generate_annonce .= '<td class="annonce-cont"><div class="annonce-container" >';
 			$generate_annonce .= '<div class="annonce-titre">';
 			$generate_annonce .= '<a href="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'&show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list">';
 			$generate_annonce .= $annonces[$i]->titre;
@@ -835,7 +835,7 @@ class Frontend {
 			$generate_annonce .= stripslashes($description[0]->valueattributtextcourt);
 			$generate_annonce .= '</div></td>';
 			
-			if(get_option('annonces_date_activation') == 1){
+			if(annonces_date_activation == 1){
 				$generate_annonce .= '<td>';
 				$generate_annonce .= '<div class="annonce-date">';
 				$generate_annonce .= __('Publi&eacute;e le','annonces').'<br/>';
@@ -847,7 +847,7 @@ class Frontend {
 				$generate_annonce .= '<td>';
 				$generate_annonce .= '<div class="annonce-date">';
 				$reference = $annonces[$i]->referenceagencedubien;
-				$generate_annonce .= '<div style="float:right;font-size:120%;margin-top:-29px;">'.(is_null($reference) ? '-' : $reference);
+				$generate_annonce .= '<div class="GAreference">'.(is_null($reference) ? '-' : $reference);
 				$generate_annonce .= '</div>';
 				$generate_annonce .= '</td>';
 			}
@@ -862,11 +862,11 @@ class Frontend {
 						<table>
 							<thead>
 								<tr>';
-									if(get_option('annonces_photos_activation') == 1){
+									if(annonces_photos_activation == 1){
 										$list_result .= '<th>'.__('Photos','annonces').'</th>';
 									}
 									$list_result .= '<th>'.__('Annonces','annonces').'</th>';
-									if(get_option('annonces_date_activation') == 1){
+									if(annonces_date_activation == 1){
 										$list_result .= '<th>'.__('Date','annonces').'</th>';
 									}
 									else{

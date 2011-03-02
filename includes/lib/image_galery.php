@@ -8,7 +8,7 @@
 	$url_for_uploaded_file_thumbnail = WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS;
 	$button_text_del = 'Supprimer';
 	$onload = '';
-
+	
 	function make_recursiv_dir($dir){
 		$tab=explode('/',$dir);
 		$str='';
@@ -44,6 +44,31 @@
 				$photo='img'.date('YmdHis').$extension;
 				if(move_uploaded_file($_FILES['photo']['tmp_name'],$url_for_uploaded_file.$photo))
 				{
+					if ($idgallery == -1)
+					{
+						$sqltemp = "SELECT numphoto FROM `".$wpdb->prefix.small_ad_table_prefix_AOS."petiteannonce__tempphoto`";
+						$reqtemp = mysql_query($sqltemp) or die(mysql_error());
+						while($datatemp = mysql_fetch_array($reqtemp))
+						{
+							$temp = $datatemp[0];
+						}
+						
+						$sqlphotos = "SELECT max(idpetiteannonce)+1 FROM `".$wpdb->prefix.small_ad_table_prefix_AOS."petiteannonce`";
+						$reqphotos = mysql_query($sqlphotos) or die(mysql_error());
+						while($dataphotos = mysql_fetch_array($reqphotos))
+						{
+							$photos = $dataphotos[0];
+						}
+						
+						if ($temp == $photos || $photos == 0)
+						{
+							$idgallery = $temp;
+						}
+						else
+						{
+							$idgallery = $photos;
+						}
+					}
 					$sql = 
 						"INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos
 								(idphotos, flagvalidphotos, idpetiteannonce, lot, original, titre, description, autoinsert, token)
@@ -54,7 +79,7 @@
 
 					list($width, $height, $type, $attr) = getimagesize($url_for_uploaded_file.$photo);
 
-					//	RETAILLAGE DE L'IMAGE
+						//RETAILLAGE DE L'IMAGE
 					if($width > MAX_PICTURE_WIDTH_AOS)
 					{
 						$ImageChoisie = imagecreatefromjpeg($url_for_uploaded_file.$photo);

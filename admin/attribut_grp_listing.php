@@ -62,13 +62,13 @@ elseif(!empty($_POST) && is_array($_POST['attribut_group_filter']) && ($act == '
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-<div class="sub_admin_menu" >
-	<input type="submit" name="submit_home" value="<?php _e('Listing des cat&eacute;gories','annonces') ?>" 
-			onclick="javacsript:document.getElementById('act').value = '';document.getElementById('actual_page').value = '';document.forms.treat_group_att.submit();"/>
-	<input type="submit" name="submit_add" value="<?php _e('Ajouter un cat&eacute;gorie','annonces') ?>" 
-			onclick="javacsript:document.getElementById('act').value = 'add';document.getElementById('actual_page').value = '';document.forms.treat_group_att.submit();"/>
+<div class="wrap">
+	<h2>
+		<?php echo __('Cat&eacute;gorie','annonces') ?>
+		<a class="button add-new-h2" onclick="javascript:document.getElementById('act').value = 'add';document.getElementById('actual_page').value = '';document.forms.treat_group_att.submit();"><?php echo __('Ajouter','annonces') ?></a>
+	</h2>
 </div>
-<hr style="clear:both;" /><br/>
+<br/><br/><br/><br/><br/>
 <div class="<?php echo $attribut_group->class_admin_notice; ?>" ><?php echo $attribut_group->error_message; ?></div>
 
 <?php
@@ -102,26 +102,12 @@ if(($act == '') || ($act == 'filter'))
 
 ?>
 
-		<div id="attribute_grp_filter" class="margin18px" >
-			<table summary="attribute group filters" cellpadding="0" cellspacing="0" class="floatright margin18px" style="border:1px solid #333333;" >
-				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher une cat&eacute;gorie','annonces') ?></td></tr> 
-				<?php echo $attribut_group_filters_form ;?>
-				<tr>
-					<td colspan="2" > 
-						<input type="button" value="<?php _e('Filtrer les r&eacute;sultats','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_group_att.submit();" /> 
-						<input type="button" value="<?php _e('Tout afficher','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_group_att.submit();" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="attribut_group_listing" style="clear:both;" class="margin18px" >
-			<?php echo $Pagination ?>
+		<div id="attribut_group_listing" class="margin18px" >
+			<?php /*echo $Pagination*/ ?>
 			<div class="margin18px" >
 				<?php echo $attribut_group->show_attribut_group($attribut_group->get_attribut_group($morequery, $flag , $actual_page)) ?>
 			</div>
-			<?php echo $Pagination ?>
+			<?php /*echo $Pagination*/?>
 		</div>
 
 <?php

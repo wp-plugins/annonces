@@ -183,20 +183,31 @@ class attribut_group
 	function show_attribut_group($attribut_group_to_show)
 	{
 		global $flag_possibilities;
+		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
+					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
+					<script type="text/javascript" charset="utf-8">
+						$(document).ready(function() {
+							$(\'#example\').dataTable();
+						} );
+					</script>';
+		$entête .='<div id="container">
+					<div id="demo">
+					<div id="example_wrapper" class="dataTables_wrapper">';
 		$output = 
-			'<table summary="attribut_group listing" cellpadding="2" cellspacing="1" class="listing" >
-				<tr>';
+			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
+				<thead><tr class="titre_listing">';
 		if(is_admin())$output .= '
-					<td class="listing_header" >ID</td>';
+					<th class="sorting" >ID</th>';
 		$output .= '
-					<td class="listing_header" >'.__('Validit&eacute; de la cat&eacute;gorie','annonces').'</td>
-					<td class="listing_header" >'.__('Nom de la cat&eacute;gorie','annonces').'</td>
-					<td class="listing_header" >'.__('Description','annonces').'</td>
-					<td class="listing_header" colspan="5" >'.__('Op&eacute;ration','annonces').'</td>
-				</tr>';
+					<th class="sorting" >'.__('Validit&eacute; de la cat&eacute;gorie','annonces').'</th>
+					<th class="sorting" >'.__('Nom de la cat&eacute;gorie','annonces').'</th>
+					<th class="sorting" >'.__('Description','annonces').'</th>
+					<th class="sorting" colspan="5" >'.__('Op&eacute;ration','annonces').'</th>
+				</tr></thead>';
 
 		if( count($attribut_group_to_show) > 0 )
 		{
+			$output .= '<tbody>';
 			foreach($attribut_group_to_show as $key => $attribut_group_content)
 			{
 				$output .= 
@@ -214,12 +225,13 @@ class attribut_group
 		}
 		else
 		{
+			$output .= '</tbody>';
 			$output .= '<tr><td colspan="20" class="no_result" >'.__('Aucun r&eacute;sultat','annonces').'</td></tr>';
 		}
 
-		$output .= '</table>';
+		$output .= '</tbody></table></div></div></div>';
 
-		return $output;
+		return $entête.$output;
 	}
 	
 }

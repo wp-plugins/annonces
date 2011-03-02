@@ -87,8 +87,8 @@
 	{
 		var pro_icon = new GIcon();
 		pro_icon.image = image_icon;
-		pro_icon.iconSize = new GSize(18,26);
-		pro_icon.iconAnchor = new GPoint(9,16);
+		pro_icon.iconSize = new GSize(32,32);
+		pro_icon.iconAnchor = new GPoint(32,32);
 
 		marker = new GMarker(coordinates,{draggable: true, icon:pro_icon});
 

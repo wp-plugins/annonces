@@ -40,7 +40,6 @@
 	float:left;
 	text-transform:uppercase;
 	font-size:120%;
-	text-decoration:underline;
 	width:208px;
 }
 .annonce-titre2
@@ -50,10 +49,12 @@
 	text-transform:uppercase;
 	font-size:140%;
 	text-decoration:underline;
+	clear:both;
 }
 .annonce-titre a 
 {
-	color:#fff;
+	color:#000;
+	text-decoration:none;
 }
 .annonce-price-list
 {
@@ -95,7 +96,6 @@
 .annonce-container
 {
 	margin-top:13px;
-	/*width:300px;*/
 	width:100%;
 	line-height:120%;
 }
@@ -234,6 +234,7 @@
 .carte-annonce
 {
 	float:right;
+	margin-right:25%;
 }
 .carte-annonce-text
 {
@@ -242,15 +243,21 @@
 	font-weight:bold;
 	line-height:140%;
 }
-.carte-seule-img 
+.carte-seule-texte
 {
-	background:url(../../medias/images/carte_seule.jpg) no-repeat;
-	width:40px;
+	width:165px;
 	height:26px;
-	margin-left:10px;
+	margin-right:-50%;
 	display:inline;
 	float:right;
 }
+.carte-seule-image
+{
+	background:url(../../medias/images/carte_seule.jpg) no-repeat;
+	margin-right:-100%;
+	float:right;
+	width:100px;
+}	
 .annonces-img
 {
 	background:url(../../medias/images/liste_annonces.jpg) no-repeat;
@@ -274,6 +281,181 @@
 {
 	display:inline;
 }
-#annonceGmap{
+#annonceGmap
+{
 	width: 100%;
+}
+
+/*-----Fichier : frontend.class.php-----*/
+.annonces_listing 
+{
+	margin-top:80px;
+}
+.rechercheindispo 
+{
+	font-size:140%;
+}
+
+.markersgoogle 
+{
+	text-align:left;
+	color:black;
+	cursor:pointer;
+}
+.markersgoogle2 
+{
+	color:black;
+	cursor:pointer;
+}
+.amarkers 
+{
+	float: right;
+}
+.GMAP1 
+{
+	width: 550px;
+	height: 300px;
+}
+.GMAP2 
+{
+	width: 550px;
+	height: 800px;
+}
+.GMAP3
+{
+	width: 512px;
+	height: 400px;
+}
+.GMAP4
+{
+	height: 400px;
+}
+.navigation_form
+{
+	margin-bottom:35px;
+}
+.filtre img
+{
+	margin-right:4px;
+	vertical-align:middle;
+	cursor:pointer;
+	width:43px !important;
+	height:43px !important;
+}
+.filtre label 
+{
+	cursor:pointer;
+}
+.budget img, .superficie img 
+{
+	float:left;
+	margin-right:2px;
+	width:44px !important;
+	height:44px !important;
+}
+.inputrecherche 
+{
+	border-width:0px;
+	float:right;
+	margin-top:20px;
+	width:168px;
+	height:47px;
+	cursor:pointer;
+}
+.GAreference 
+{
+	float:right;
+	font-size:120%;
+	margin-top:-29px;
+}
+.GAimg 
+{
+	width: 140px;
+	height: 132px;
+}
+.annonce-cont 
+{
+	vertical-align: text-top;
+}
+
+/*-----Fin Fichier : frontend.class.php-----*/
+
+/*-----Fichier : admin_attributs.class.php-----*/
+.attribut_annonce_content
+{
+	cursor:pointer;
+}
+/*-----Fin du fichier : admin_attributs.class.php-----*/
+
+.paginationtoolsclass
+{
+	display:table;
+	width:100%;
+	margin:3px 0 0 0;
+	padding:3 0 3px 0;
+}
+.paginationspan1
+{
+	display:table;
+	cursor:pointer;
+	float:left;
+	padding:1px 6px;
+	margin:0 3px;
+}
+.paginationspan2
+{
+	display:table;
+	float:left;
+	padding:1px;
+	margin:0 3px;
+}
+.paginationspan3
+{
+	display:table;
+	float:left;
+	padding:1px 6px;
+	margin:0 3px;
+}
+.bodyimagegalery
+{
+	margin:0px;
+	font-size:11px;
+	padding:0;
+}
+
+#btn_galerie
+{
+	clear:both;
+}
+
+.tableimagegalery
+{
+	border-collapse:collapse;
+}
+
+.imagegaleryoutput
+{
+	border:0px solid red;
+}
+
+.inputgaleryoutput
+{
+	border:0px solid red;
+	color:red;
+	font-size:11px;
+	background-color:#FFFFFF;
+}
+.ajout_effectue {
+    background-color: #99FF99;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.erreur_attribut
+{
+    background-color: red;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+	color:white;
 }

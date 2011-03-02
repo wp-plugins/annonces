@@ -51,7 +51,7 @@ function geocode()
 				
 				var icon = new GIcon();
 				icon.image = "/images/red-dot_default.png";
-				icon.iconSize = new GSize(18, 25);
+				icon.iconSize = new GSize(32, 32);
 				icon.iconAnchor = new GPoint(0, 0);
 				icon.infoWindowAnchor = new GPoint(9, 25);
 				

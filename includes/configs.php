@@ -16,7 +16,7 @@
 	$TABALLOWEDEXT['.bmp']=1;
 	$TABALLOWEDEXT['.png']=1;
 
-	DEFINE('NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS',15);
+	DEFINE('NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS',10000);
 	DEFINE('PAGINATION_OFFSET_ADMIN_AOS',4);
 	DEFINE('DEFAULT_FLAG_ADMIN_AOS',"'valid','moderated'");
 	DEFINE('WAY_TO_EXPORT_AOS',"/uploads/small_ad/export/");
@@ -46,6 +46,7 @@
 			$id_attribute_by_type['text'] = 'idattributtext';
 
 
+	$type_export = array('csv'=>__('Csv','annonces'),'xml'=>__('Xml','annonces'));
 	$flag_possibilities = array('valid'=>__('Valide','annonces'),'moderated'=>__('Exclure','annonces'),'deleted'=>__('Supprim&eacute;','annonces'));
 	$flag_possibilities_for_filters = array(DEFAULT_FILTERS_EMPTY_VALUE_AOS=>__('Tous','annonces'),'valid'=>__('Valide','annonces'),'moderated'=>__('Exclure','annonces'));
 

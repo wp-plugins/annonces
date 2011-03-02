@@ -134,20 +134,14 @@ if(isset($_POST['annonce']) && is_array($_POST['annonce']))
 }
 
 ?>
-
-<div class="sub_admin_menu" >
-	<button name="submit_home" onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();"><?php _e('Listing des annonces','annonces') ?></button>
-	<button name="submit_add" onclick="javascript:document.getElementById('act').value='add';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();"><?php _e('Ajouter une annonce','annonces') ?></button>
-<?php
-if($current_user->user_level == 10)
-{
-?>
-	<form action="" method="POST" name="form_update_lucene" ><input name="update_lucene" type="submit" value="<?php _e('Actualiser moteur de recherche','annonces') ?>" /></form>
-<?php 
-}
-?>
+<div class="wrap">
+	<h2>
+		<?php echo __('Annonces','annonces') ?>
+		<a class="button add-new-h2" href="<?php echo 'admin.php?page=pannonce/admin/add_annonce.php' ?>">
+		<?php echo __('Ajouter','annonces') ?></a>
+	</h2>
 </div>
-<hr style="clear:both;" /><br/>
+<br/>
 <div style="clear:both;" class="<?php echo $annonce->class_admin_notice; ?>" ><?php echo $annonce->error_message; ?></div>
 
 
@@ -172,7 +166,7 @@ if(($act == 'add') || ($act == 'edit'))
       <td rowspan="3" >
 				<div id="annonceGmap" style="width: 512px; height: 400px">
 					<script type="text/javascript">
-						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo get_option('url_marqueur_courant') ?>';
+						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo url_marqueur_courant ?>';
 						var input_country = 'annonce_form[pays]';
 						var input_dept = 'annonce_form[departement]';
 						var input_region = 'annonce_form[region]';
@@ -251,35 +245,20 @@ else
 {
 
 $nb_total_items = 0;$nb_total_items = $eav_annonce->getAnnoncesEntete($morequery,$flag,'autolastmodif',$actual_page,'nolimit','count');
-$Pagination = '';
+/*$Pagination = '';
 if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_annonce.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF');
-
+*/
 ?>
-
-		<div id="annonce_filter" class="margin18px" >
-			<table summary="annonce filters" cellpadding="0" cellspacing="0" class="floatright margin18px" style="border:1px solid #333333;" >
-				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher des annonces','annonces') ?></td></tr> 
-				<?php echo $annonce_filters_form ;?>
-				<tr>
-					<td colspan="2" > 
-						<input type="button" value="<?php _e('Filtrer les r&eacute;sultats','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();" /> 
-						<input type="button" value="<?php _e('Tout afficher','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();" />
-					</td>
-				</tr>
-			</table>
-		</div>
 		<div id="annonce_listing" style="clear:both;" >
 			<div >
 				<div class="floatleft" >
 				<?php
-					echo $Pagination 
+					/*echo $Pagination */
 				?>
 				</div>
 				<div class="floatright margin18px" style="width:40%;" >
 					<input type="button" name="general_submit" value="<?php _e('Effectuer','annonces') ?>" id="general_submit" 
-						onclick="javacsript:document.getElementById('act').value = document.getElementById('general_action').options[document.getElementById('general_action').selectedIndex].value;document.forms.treat_annonce.submit();" class="floatright" />
+						onclick="javascript:document.getElementById('act').value = document.getElementById('general_action').options[document.getElementById('general_action').selectedIndex].value;document.forms.treat_annonce.submit();" class="floatright" />
 					<select name="general_action" id="general_action" class="floatright" >
 						<option value="" ><?php _e('Pour la s&eacute;lection','annonces') ?>&nbsp;</option>
 					<?php
@@ -300,7 +279,7 @@ if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $to
 			<div class="margin18px" style="clear:both;" >
 				<?php echo $annonce->show_annonce($eav_annonce->getAnnoncesEntete($morequery,$flag,'autolastmodif DESC',$actual_page,'','',NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS)) ?>
 			</div>
-			<?php echo $Pagination ?>
+			<?php /*echo $Pagination */?>
 		</div>
 
 <?php

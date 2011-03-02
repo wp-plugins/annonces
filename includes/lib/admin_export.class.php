@@ -29,6 +29,99 @@ class export
 		return $file_content;
 	}
 
+	function generate_xml_file_content($annonce, $structure, $listPhoto)
+	{
+		global $tools;
+		$photos_for_export = array();
+		foreach($listPhoto as $key => $photo_definition)
+		{
+			if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photo_definition->original))
+			{
+				$photos_for_export[$photo_definition->idpetiteannonce][] = WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $photo_definition->original;
+			}
+		}
+
+		$ignoreFieldList = array('identifianttechnique');
+		$mandatoryField = array('idpetiteannonce', 'referenceagencedubien', 'titre', 'descriptif', 'autoinsert', 'prixloyerprixdecession', 'adresse', 'cp', 'ville');
+
+		$xmlFile_TPL = 
+'<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<annonces>
+	#ANNONCESLIST#
+</annonces>';
+		$annonce_TPL = 
+'
+<annonce id="#ANNONCEID#" >
+	<reference>#REFERENCE#</reference>
+	<titre>#TITRE#</titre>
+	<texte>#DESCRIPTION#</texte>
+	<date_integration>#DATECREATION#</date_integration>
+	<photos>
+		#LISTPHOTOS#
+	</photos>
+	<rubrique>#RUBRIQUE#</rubrique>
+	<prix>#PRIX#</prix>
+	<adresse>#ADRESSE#</adresse>
+	<code_postal>#CODEPOSTAL#</code_postal>
+	<ville>#VILLE#</ville>
+	<email>#EMAIL#</email>
+	<tel>#TELEPHONE#</tel>
+
+	#SPECIFICANNONCEFIELD#
+</annonce>';
+
+		$listeAnnonces = '';
+		foreach($annonce as $idannonce => $annonce_definition)
+		{
+			$specialFieldList = '';
+			foreach($structure as $label => $column_number)
+			{
+				if(!in_array($label, $mandatoryField))
+				{
+					$value = '';
+					$value = $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field($label,$annonce_definition)));
+					if(($value != '') && (!in_array($label, $ignoreFieldList)))
+					{
+						$specialFieldList .= '<' . $label . '>' . $value . '</' . $label . '>
+	';
+					}
+				}
+			}
+			$Lannonce = str_replace('#ANNONCEID#', $idannonce, $annonce_TPL);
+			$Lannonce = str_replace('#REFERENCE#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('referenceagencedubien',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#TITRE#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('titre',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#DESCRIPTION#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('descriptif',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#DATECREATION#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('autoinsert',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#RUBRIQUE#', 'IMO003002', $Lannonce);
+			$Lannonce = str_replace('#PRIX#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('prixloyerprixdecession',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#ADRESSE#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('adresse',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#CODEPOSTAL#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('cp',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#VILLE#', $tools->slugify_accent_ut8(stripslashes($this->check_for_special_field('ville',$annonce_definition))), $Lannonce);
+			$Lannonce = str_replace('#EMAIL#', '', $Lannonce);
+			$Lannonce = str_replace('#TELEPHONE#', '', $Lannonce);
+
+			$annoncePicture = '';
+			if(isset($photos_for_export[$idannonce]))
+			{
+				foreach($photos_for_export[$idannonce] as $pictureIndex => $picturePath)
+				{
+					$annoncePicture .= '<photo>' . $picturePath . '</photo>
+		';
+				}
+			}
+			$Lannonce = str_replace('#LISTPHOTOS#', $annoncePicture, $Lannonce);
+
+			$Lannonce = str_replace('#SPECIFICANNONCEFIELD#', $specialFieldList, $Lannonce);
+
+			$listeAnnonces .= $Lannonce . '
+';
+		}
+
+		$listeAnnonces = str_replace('#ANNONCESLIST#', $listeAnnonces, $xmlFile_TPL);
+
+		return $listeAnnonces;
+	}
+
 	function check_for_special_field($field_to_check, $value_to_put)
 	{
 		global $file_name;
@@ -107,7 +200,7 @@ class export
 				$output_value = $identifiantagence;
 			break;
 			case 'photo1':
-		$photos = $eav_annonce->getPhotos($value_to_put['idpetiteannonce']);
+				$photos = $eav_annonce->getPhotos($value_to_put['idpetiteannonce']);
 				$output_value = $photos[0]->original;
 			break;
 			case 'photo2':
@@ -157,7 +250,7 @@ class export
 		return $output_value;
 	}
 
-	function save_csv_file($file, $content)
+	function save_file($file, $content)
 	{
 		global $tools;
 

@@ -16,6 +16,7 @@ class admin
 		{
 			add_menu_page('Gestion des annonces', 'Annonces', 'level_2', Basename_Dirname_AOS.'/admin/annonce_listing.php', '', WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/icon_menu.gif' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des annonces','annonces'), __('Annonces','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/annonce_listing.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Ajouter une annonce','annonces'), __('Ajouter','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/add_annonce.php' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des cat&eacute;gories','annonces'), __('Cat&eacute;gories','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/attribut_grp_listing.php' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des attributs','annonces'), __('Attributs','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/attribut_listing.php' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des passerelles','annonces'), __('Passerelle','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/export_admin.php' );

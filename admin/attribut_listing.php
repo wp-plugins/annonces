@@ -16,20 +16,28 @@ $id_to_treat = isset($_REQUEST['id_to_treat']) ? $tools->IsValid_Variable($_REQU
 $actual_page = isset($_REQUEST['actual_page']) ? $tools->IsValid_Variable($_REQUEST['actual_page']) : '' ;
 
 //	IF ACTION IS ADD (ADD OR UPDATE) ATTRIBUTE
-if(!empty($_POST) && is_array($_POST['attribut_annonce']) && ($act != ''))
+if(!empty($_POST) && is_array($_POST['attribut_annonce']) && ($act != '') )
 {
 	$attribut_annonce_form->bind($_POST['attribut_annonce']);
-	if ($attribut_annonce_form->isValid())
+	if (strip_tags($_POST['attribut_annonce']['nomattribut']) != '')
 	{
-		$values = $attribut_annonce_form->getValues();
-		
-		if($values['idattribut'] == '')$attribut_annonce->create_attribut_annonce($values);
-		elseif($values['idattribut'] != '') $attribut_annonce->update_attribut_annonce($values);
-		$act = '';
+		if ($attribut_annonce_form->isValid())
+		{
+			$values = $attribut_annonce_form->getValues();
+			
+			if($values['idattribut'] == '')$attribut_annonce->create_attribut_annonce($values);
+			elseif($values['idattribut'] != '') $attribut_annonce->update_attribut_annonce($values);
+			$act = '';
+		}
+		else
+		{
+			$act = 'add';
+		}
 	}
 	else
 	{
 		$act = 'add';
+		$erreur_attribut = '<div class="erreur_attribut">' . __('Le nom de l\'attribut est incorrect','annonces') . '</div>';
 	}
 }
 
@@ -111,20 +119,21 @@ if(isset($_POST['attribut']) && is_array($_POST['attribut']))
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-<div class="sub_admin_menu" >
-	<input type="submit" name="submit_home" value="<?php _e("Listing des attributs","annonces") ?>" 
-			onclick="javacsript:document.getElementById('act').value = '';document.getElementById('actual_page').value = '';document.forms.treat_attribut.submit();"/>
-	<input type="submit" name="submit_add" value="<?php _e("Ajouter un attribut","annonces") ?>" 
-			onclick="javacsript:document.getElementById('act').value = 'add';document.getElementById('actual_page').value = '';document.forms.treat_attribut.submit();"/>
+<div class="wrap">
+	<h2>
+		<?php echo __('Attributs','annonces') ?>
+		<a class="button add-new-h2" onclick="javascript:document.getElementById('act').value = 'add';document.getElementById('actual_page').value = '';document.forms.treat_attribut.submit();"><?php echo __('Ajouter','annonces') ?></a>
+	</h2>
 </div>
-<hr style="clear:both;" /><br/>
+<br/><br/><br/><br/><br/>
 <div class="<?php echo $attribut_annonce->class_admin_notice; ?>" ><?php echo $attribut_annonce->error_message; ?></div>
 
 <?php
 if(($act == 'add') || ($act == 'edit'))
 {
 ?>
-
+	
+	<?php echo $erreur_attribut; ?>
   <table class="annonce_form" >
     <?php echo $attribut_annonce_form ?>
     <tr>
@@ -138,38 +147,24 @@ if(($act == 'add') || ($act == 'edit'))
 }
 
 $nb_total_items = 0;$nb_total_items = $attribut_annonce->get_attribut_annonce($morequery, $flag , $actual_page, 'count');
-$Pagination = '';
-if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_attribut.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF');
+/*$Pagination = '';
+if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_attribut.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF');*/
 
 if(($act == '') || ($act == 'filter'))
 {
 
 ?>
 
-		<div id="attribute_filter" class="margin18px" >
-			<table summary="attribute filters" cellpadding="0" cellspacing="0" class="floatright margin18px" style="border:1px solid #333333;" >
-				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher un attribut','annonces') ?></td></tr> 
-				<?php echo $attribut_filters_form ;?>
-				<tr>
-					<td colspan="2" > 
-						<input type="button" value="<?php _e("Filtrer les r&eacute;sultats","annonces") ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_attribut.submit();" /> 
-						<input type="button" value="<?php _e("Tout afficher","annonces") ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_attribut.submit();" />
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="attribut_annonce_listing" style="clear:both;" >
+		<div id="attribut_annonce_listing">
 			<div >
 				<div class="floatleft" >
 				<?php
-					echo $Pagination 
+					/*echo $Pagination ;*/
 				?>
 				</div>
-				<div class="floatright margin18px" style="width:40%;" >
+				<div class="floatright_4">
 					<input type="button" name="general_submit" value="<?php _e("Effectuer","annonces") ?>" id="general_submit" 
-						onclick="javacsript:document.getElementById('act').value = document.getElementById('general_action').options[document.getElementById('general_action').selectedIndex].value;document.forms.treat_attribut.submit();" class="floatright" />
+						onclick="javascript:document.getElementById('act').value = document.getElementById('general_action').options[document.getElementById('general_action').selectedIndex].value;document.forms.treat_attribut.submit();" class="floatright" />
 					<select name="general_action" id="general_action" class="floatright" >
 						<option value="" ><?php _e("Pour la s&eacute;lection","annonces") ?>&nbsp;</option>
 					<?php
@@ -179,18 +174,18 @@ if(($act == '') || ($act == 'filter'))
 						}
 					?>
 					</select>
-					<div class="floatright" style="clear:both;margin-right:64px;">
-						<div class="floatright" onclick="javascript:check_selection(document.forms.treat_attribut,'uncheck_all');" style="cursor:pointer;" ><?php _e("Aucun","annonces") ?></div>
+					<div class="floatright_5">
+						<div class="floatright_6" onclick="javascript:check_selection(document.forms.treat_attribut,'uncheck_all');"><?php _e("Aucun","annonces") ?></div>
 						<div class="floatright" onclick="javascript:check_selection(document.forms.treat_attribut,'check_all');" >&nbsp;/&nbsp;</div>
-						<div class="floatright" onclick="javascript:check_selection(document.forms.treat_attribut,'check_all');" style="cursor:pointer;" ><?php _e("Tout","annonces") ?></div>
+						<div class="floatright_6" onclick="javascript:check_selection(document.forms.treat_attribut,'check_all');" ><?php _e("Tout","annonces") ?></div>
 						<div class="floatright" onclick="javascript:check_selection(document.forms.treat_attribut,'check_all');" ><?php _e("S&eacute;lectionner","annonces") ?>&nbsp;</div>
 					</div>
 				</div>
 			</div>
-			<div class="margin18px" style="clear:both;" >
+			<div class="lst_attribut">
 				<?php echo $attribut_annonce->show_attribut_annonce($attribut_annonce->get_attribut_annonce($morequery, $flag , $actual_page)) ?>
 			</div>
-			<?php echo $Pagination ?>
+			<?php /*echo $Pagination */?>
 		</div>
 
 <?php
