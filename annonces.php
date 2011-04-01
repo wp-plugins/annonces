@@ -5,7 +5,7 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.1.2.2
+	Version: 1.1.2.3
 */
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
  
@@ -29,9 +29,9 @@
 	* Annonces est un plugin OpenSource permettant d'ajouter facilement des annonces sur son blog (ex: annonce immobilere, automobile...).
 	* Il suffit d'ajouter cette balise <b><div rel="annonces" id="annonces" ></div></b> dans le code html de votre page.
 	* @author Eoxia <contact@eoxia.com>
-	* @version 1.1.2.1
+	* @version 1.1.2.3
 	*/
-
+	
 	/**
 	* VARIABLES DE CONFIGURATIONS
 	*/
@@ -59,7 +59,6 @@
 	* Fichier de configurations
 	*/
 	require_once('includes/configs.php');
-		
 	/**
 	* INCLUDES TOOLS
 	*/
@@ -111,7 +110,9 @@
 	/**
 	* Ajoute le CSS dans le Header de Wordpress
 	*/
+	
 	add_action('wp_head', array( $view, "add_css" ));
+	
 	/**
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header de Wordpress
 	*/
@@ -120,22 +121,31 @@
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header Admin de Wordpress
 	*/
 	add_action('admin_head', array( $view, "add_gmap" ));
-		
+	
 	/**
-	*	Ligne ajoutée suite à la structuration à la Evarisk
+	*	Ajoute la biblothèque JQuery dans le Header (même admin) de WordPress
 	*/
+	add_action('admin_head', array( $view, "add_js" ));
+	add_action('wp_head', array( $view, "add_js" ));
+		
+	
+	
 	DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
 	DEFINE('ANNONCES_HOME_DIR', WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/');
 	DEFINE('ANNONCES_INC_PLUGIN_DIR', ANNONCES_HOME_DIR . 'includes/');
 	DEFINE('ANNONCES_CONFIG', ANNONCES_INC_PLUGIN_DIR . 'config/config.php');
 	require_once(ANNONCES_CONFIG);
 	
+	/**
+	*	Création des tables
+	**/
 	require_once(ANNONCES_MODULES_PLUGIN_DIR . 'installation/creationTables.php');
 	annonces_creationTables();
 	
 	/**
 	* Defini chaque option
 	*/
+	define('annonces_api_key', annonces_options::recupinfo('annonces_api_key'));
 	define('url_budget_theme_courant', annonces_options::recupinfo('url_budget_theme_courant'));
 	define('url_superficie_theme_courant', annonces_options::recupinfo('url_superficie_theme_courant'));
 	define('url_radio_maisons_theme_courant', annonces_options::recupinfo('url_radio_maisons_theme_courant'));
@@ -148,7 +158,45 @@
 	define('annonces_maps_activation', annonces_options::recupinfo('annonces_maps_activation'));
 	define('annonces_photos_activation', annonces_options::recupinfo('annonces_photos_activation'));
 	define('annonces_date_activation', annonces_options::recupinfo('annonces_date_activation'));
+	define('annonces_email_reception', annonces_options::recupinfo('annonces_email_reception'));
+	define('annonces_nom_reception', annonces_options::recupinfo('annonces_nom_reception'));
+	define('annonces_sujet_reception', annonces_options::recupinfo('annonces_sujet_reception'));
+	define('annonces_txt_reception', annonces_options::recupinfo('annonces_txt_reception'));
+	define('annonces_html_reception', annonces_options::recupinfo('annonces_html_reception'));
+	define('annonces_email_activation', annonces_options::recupinfo('annonces_email_activation'));
+	define('annonces_expression_url', annonces_options::recupinfo('annonces_expression_url'));
+	define('annonces_page_install', annonces_options::recupinfo('annonces_page_install'));
+	define('annonces_url_activation', annonces_options::recupinfo('annonces_url_activation'));
 	
 	/**
-	*	Réécriture d'urls
-	*/
+	*	Réécriture des URLs
+	**/
+	
+		
+		add_filter('rewrite_rules_array','wp_insertMyRewriteRules');
+		add_filter('query_vars','wp_insertMyRewriteQueryVars');
+		add_filter('wp_loaded','flushRules');
+
+		// Remember to flush_rules() when adding rules
+		function flushRules(){
+			global $wp_rewrite;
+			$wp_rewrite->flush_rules();
+		}
+
+		// Adding a new rule
+		function wp_insertMyRewriteRules($rules)
+		{
+			$page_annonce = Eav::recupPageAnnonce();
+		
+			$newrules = array();
+			$newrules['(.+).html?'] = 'index.php?&pagename='.$page_annonce;
+			$newrules['(.+)/'] = 'index.php?&pagename='.$page_annonce;
+			return $newrules + $rules;
+		}
+
+		// Adding the show_annonce var so that WP recognizes it
+		function wp_insertMyRewriteQueryVars($vars)
+		{
+			array_push($vars, 'show_annonce');
+			return $vars;
+		}

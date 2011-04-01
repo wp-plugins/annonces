@@ -197,11 +197,13 @@ class passerelle
 	{
 		$entete = '
 		<link rel="stylesheet" type="text/css" href="' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/css/admin.css" />
-				<script type="text/javascript" language="javascript" src="' . WP_PLUGIN_URL . '/' . Basename_Dirname_AOS . '/includes/js/jquery_002.js"></script>
-				<script type="text/javascript" language="javascript" src="' . WP_PLUGIN_URL . '/' . Basename_Dirname_AOS . '/includes/js/jquery.js"></script>
 				<script type="text/javascript" charset="utf-8">
-					$(document).ready(function() {
-						$(\'#example\').dataTable();
+						annoncejquery(document).ready(function() {
+						annoncejquery(\'#example\').dataTable({
+								"oLanguage": {
+									"sUrl": "' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS . '/includes/js/dataTables.french.txt"
+								}
+							});
 					} );
 				</script>';
 		$output = 

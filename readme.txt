@@ -3,8 +3,8 @@ Contributors: Eoxia
 Tags: annonce, passerelle, administration, immobilier, map, carte google maps, geolocalisation, georeferencement, google maps, gateway, announcement, annonces, carte, maison, batiment, vendre, prix, surface
 Donate link: http://www.eoxia.com/site-web/pluginannonces/
 Requires at least: 2.8.4
-Tested up to: 3.0.5
-Stable tag: 1.1.2.2
+Tested up to: 3.1
+Stable tag: 1.1.2.3
 
 Affiche vos annonces sur votre blog.
 
@@ -43,21 +43,31 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 
 == Changelog ==
 
+v1.1.2.3:
+
+* FIXED - Mise &agrave; du pictogramme de l'onglet "Annonces"
+* FIXED - R&eacute;solution du conflit jQuery avec d'autres plugins
+* FIXED - Le nombre de pages et d'annonces s'affiche dans le listing des annonces
+* FIXED - Url personnalisable lors de l'ajout et la modification de l'annonce
+* FIXED - Mise en place de la r&eacute;&eacute;criture d'URL avec URL type personnalisable
+* CHANGE - Changement du type du "nomoption" dans la base, on est pass&eacute; du char(70) au varchar(1000)
+
 v1.1.2.2:
-* FIXED - Mise à jour du fichier langue POEdit
+
+* FIXED - Mise &agrave; jour du fichier langue POEdit
 * FIXED - Listing via JQueryDataTable pour les annonces, les cat&eacute;gorie et les attributs
-* FIXED - Ajout du bouton "Effacer tout" qui réinitialise le formulaire
+* FIXED - Ajout du bouton "Effacer tout" qui r&eacute;initialise le formulaire
 * FIXED - Ajout de 4 monnaies via l'interface option du plugin : Euro, Dollar US, Livre Sterling et Yen
 * FIXED - Validation de l'annonce puis ajout de l'image
 * FIXED - Toutes les images ne sont plus en dur
 * FIXED - Les styles sont maintenant dans des CSS
 * FIXED - Mise en place du dico avec POEdit
 * FIXED - L'ic&ocirc;ne google a retrouver sa forme normale et est changeable
-* FIXED - Mise en place des passerelles deja cod&eacute;es et par défaut
+* FIXED - Mise en place des passerelles deja cod&eacute;es et par d&eacute;faut
 
 v1.1.2.1:
 
-* FIXED - La taille du champs ville était limitée à 20 caractères contre 255 dans la base
+* FIXED - La taille du champs ville &eacute;tait limit&eacute;e &agrave; 20 caract&egrave;res contre 255 dans la base
 
 v1.1.2:
 
@@ -78,3 +88,8 @@ v1.1.0:
 v1.0.1:
 
 * Am&eacute;liore l'habillage et les feuilles de style pour diff&eacute;rentes tailles de th&egrave;mes.
+
+
+== Upgrade Notice ==
+
+* Mise &agrave; jour directe depuis wordpress.org

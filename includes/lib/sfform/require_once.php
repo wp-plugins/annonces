@@ -70,3 +70,11 @@ require_once dirname(__FILE__).'/widget/i18n/sfWidgetFormI18nSelectCountry.class
 require_once dirname(__FILE__).'/widget/i18n/sfWidgetFormI18nSelectCurrency.class.php';
 require_once dirname(__FILE__).'/widget/i18n/sfWidgetFormI18nSelectLanguage.class.php';
 require_once dirname(__FILE__).'/widget/i18n/sfWidgetFormI18nTime.class.php';
+
+require_once dirname(__FILE__).'/routing/sfObjectRoute.class.php';
+require_once dirname(__FILE__).'/routing/sfObjectRouteCollection.class.php';
+require_once dirname(__FILE__).'/routing/sfPatternRouting.class.php';
+require_once dirname(__FILE__).'/routing/sfRequestRoute.class.php';
+require_once dirname(__FILE__).'/routing/sfRoute.class.php';
+require_once dirname(__FILE__).'/routing/sfRouteCollection.class.php';
+require_once dirname(__FILE__).'/routing/sfRouting.class.php';

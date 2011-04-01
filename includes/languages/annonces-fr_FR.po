@@ -1,0 +1,1203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugin Annonce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-28 17:57+0100\n"
+"PO-Revision-Date: 2011-03-28 17:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: Eoxia <contact@eoxia.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__;_c\n"
+"X-Poedit-Basepath: E:\\wamp\\www\\b_plugin_annonces\\wordpress\\wp-content\\plugins\\pannonce\n"
+"Plural-Forms: nplurals=2;plural=n>2\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: E:\\wamp\\www\\b_plugin_annonces\\wordpress\\wp-content\\plugins\\pannonce\n"
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:64
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:98
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:64
+msgid "L'Url personnalis&eacute;e choisie : "
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:66
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:100
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:66
+msgid " est d&eacute;j&agrave; utilis&eacute;e"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:169
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:169
+msgid "Actualiser moteur de recherche"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:175
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:175
+msgid "Votre annonce a &eacute;t&eacute; ajout&eacute;."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:224
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:162
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:258
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:18
+msgid "Annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:226
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:163
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:260
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_grp_listing.php:68
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:125
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export_admin.php:71
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:19
+msgid "Ajouter"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:277
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:220
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:311
+msgid "Adresse"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:285
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:228
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:319
+msgid "Ville"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:293
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:236
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:327
+msgid "Code Postal"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:322
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:267
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:355
+msgid "Enregistrer les modifications"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:338
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:371
+msgid "Rechercher des annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:342
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:375
+msgid "Filtrer les r&eacute;sultats"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:344
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:377
+msgid "Tout afficher"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:358
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:391
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:166
+msgid "Effectuer"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:361
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:394
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:169
+msgid "Pour la s&eacute;lection"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:370
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:403
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:178
+msgid "Aucun"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:372
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:405
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:180
+msgid "Tout"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/--annonce_listing.php:373
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:406
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:181
+msgid "S&eacute;lectionner"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:188
+msgid "Cr&eacute;ation effectu&eacute; avec succ&eacute;s"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:188
+msgid "Modification effectu&eacute; avec succ&eacute;s"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/add_annonce.php:267
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_grp_listing.php:83
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:141
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export_admin.php:116
+msgid "Cr&eacute;er"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/admin.php:48
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:5
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:52
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:58
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:60
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:62
+msgid "Tous"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/annonce_listing.php:194
+msgid "Ajouter une image"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_grp_listing.php:67
+msgid "Cat&eacute;gorie"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_grp_listing.php:83
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:141
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export_admin.php:116
+msgid "Modifier"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:40
+msgid "Le nom de l'attribut est incorrect"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/attribut_listing.php:124
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:21
+msgid "Attributs"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:114
+msgid "Aucune annonce &agrave; exporter nb : "
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:160
+msgid "Fichier zip envoy&eacute; avec succ&egrave;s"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:165
+msgid "Erreur lors de l&#146;envoi du fichier zip "
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:181
+msgid "liste des passerelles pour l&#146;export des annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:184
+msgid "Exporter vers"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export.php:198
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:23
+msgid "Exporter"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export_admin.php:69
+msgid "Passerelles"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/export_admin.php:88
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:37
+msgid "Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:32
+msgid "S&eacute;lectionner les attributs pr&eacute;sent dans les annonces &agrave; importer."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:68
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:118
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:139
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:703
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:746
+msgid "Suivant"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:77
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:128
+msgid "Attention aucun attribut n&#146;a &eacute;t&eacute; s&eacute;lectionn&eacute;."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:87
+msgid "S&eacute;parateur de texte"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:90
+msgid "(exemple: \")."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:96
+msgid "S&eacute;parateur de champ"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:99
+msgid "(exemple: ,)."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:105
+msgid "S&eacute;parateur de ligne"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:118
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:139
+msgid "Retour"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:146
+msgid "Vous &ecirc;tes d&#146;importer un fichier CSV avec les param&egrave;tres suivant:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:147
+msgid "S&eacute;parateur de texte:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:148
+msgid "S&eacute;parateur de champ:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:149
+msgid "S&eacute;parateur de ligne:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:150
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:169
+msgid "Attribut pr&eacute;sent dans le fichier:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:153
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:172
+msgid "Fichier &agrave; importer:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:162
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:178
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:24
+msgid "Importer"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:168
+msgid "Vous &ecirc;tes sur le point d&#146;importer un fichier EXCEL avec les param&egrave;tres suivant:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:243
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:360
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:481
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:600
+msgid "Nouvelle annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:306
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:421
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:548
+msgid "Erreur sur le chemin du fichier."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:307
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:549
+msgid "Extension non compatible."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:308
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:550
+msgid "Erreur lors du chargement."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:309
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:551
+msgid "Fichier inconnu."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:670
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:714
+msgid "choix du type de fichier pour l&#146;import des annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:673
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:717
+msgid "Choix du type de fichier contenant les annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:677
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:721
+msgid "Fichier Excel"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:678
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:722
+msgid "Fichier CSV"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:684
+msgid "Choix de la cat&eacute;gorie des annonces &agrave; importer"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:686
+msgid "*Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:691
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:736
+msgid "Aucune"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:728
+msgid "Choix de la cat&eacute;gorie des annonces &agrave; importer&sup1;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:729
+msgid "&sup1;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/import_admin.php:731
+msgid "Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:315
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:33
+msgid "Annuler"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:331
+msgid "Options g&eacute;n&eacute;rales du Plugin d'Annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:335
+msgid "Cl&eacute; Google Maps"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:338
+msgid "Cette cl&eacute; autorise Google Maps &agrave; afficher une carte pour g&eacute;olocaliser vos annonces."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:347
+msgid "Monnaie"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:350
+msgid "Dollar US"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:351
+msgid "Euro"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:352
+msgid "Livre Sterling"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:353
+msgid "Yen"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:355
+msgid "Cette option permet de configurer la monnaie qui sera effective sur le site."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:364
+msgid "Activer G&eacute;olocalisation"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:367
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, utilise Google Maps pour g&eacute;olocaliser vos annonces sur une carte."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:376
+msgid "Activer Photos"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:379
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, affiche les photos de vos annonces si celles-ci sont d&eacute;finies."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:388
+msgid "Activer Date"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:391
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, affiche la date de derni&egrave;re modification de vos annonces."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:400
+msgid "Marqueur"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:405
+msgid "Utiliser le marqueur par d&eacute;faut."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:406
+msgid "Vous pouvez d&eacute;finir un marqueur diff&eacute;rent que celui de Google Maps pour r&eacute;f&eacute;rencer vos annnonces sur la carte."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:415
+msgid "Th&egrave;me"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:417
+msgid "Changer le th&egrave;me des boutons"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:417
+msgid "Changer..."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:419
+msgid "Utiliser le th&egrave;me par d&eacute;faut."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:420
+msgid "Cette option permet de changer l&#146;apparence des boutons du bloc recherche."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:426
+msgid "R&eacute;&eacute;criture des URLs"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:430
+msgid "Activer la r&eacute;&eacute;criture"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:433
+msgid "Cette option, lorsqu'elle est activ&eacute;e, permet de personnaliser les URLs pour visionner les annonces. N'oublier pas d'activer des permaliens autre que \"Valeur par d&eacute;faut\" si vous souhaitez que vos liens soit r&eacute;&eacute;crits. De plus, veuillez enlever le dernier slash de votre structure personnalis&eacute;e dans les permaliens pour ne pas qu'il se r&eacute;percute sur vos URLs."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:438
+msgid "La pr&eacute;sence de %idpetiteannonce% est obligatoire sous peine d'avoir des conflits d'URLs !"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:439
+msgid "Param&egrave;tres de r&eacute;&eacute;criture d'url"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:441
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:443
+msgid "%idpetiteannonce%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:442
+msgid "L'id de l'annonce :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:445
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:447
+msgid "%titre_annonce%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:446
+msgid "Titre de l'annonce :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:448
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:450
+msgid "%referenceagencedubien%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:449
+msgid "R&eacute;f&eacute;rence agence du bien:"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:451
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:453
+msgid "%nomgroupeattribut%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:452
+msgid "Nom du groupe d'attribut :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:454
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:456
+msgid "%descriptiongroupeattribut%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:455
+msgid "Description du groupe d'attribut :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:457
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:459
+msgid "%ville%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:458
+msgid "Ville :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:460
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:462
+msgid "%departement%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:461
+msgid "D&eacute;partement :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:463
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:465
+msgid "%region%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:464
+msgid "R&eacute;gion :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:466
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:468
+msgid "%cp%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:467
+msgid "Code Postal :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:469
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:471
+msgid "%pays%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:470
+msgid "Pays :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:472
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:474
+msgid "%date_publication%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:473
+msgid "Date de publication :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:475
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:477
+msgid "%type_bien%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:476
+msgid "Type de bien :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:483
+msgid "Personnalisation des liens"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:486
+msgid "Url Type<br/>"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:491
+msgid "Cette Url Type sera le mod&egrave;le des URLs de chaque annonce dans la liste des annonces visibles par les visiteurs. Dans le premier champ, uniquement le nom de la page dans lequel les annonces sont visibles est requis. Le deuxi&egrave;me champ, lui, sert &agrave; d&eacute;finir les URLs de chaque annonce."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:497
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:596
+msgid "Enregistrer les r&eacute;glages"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:503
+msgid "R&eacute;initalisation des URLs"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:506
+msgid "R&eacute;initaliser les URLs"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:515
+msgid "Formulaire de contact personnalisable"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:524
+msgid "Activer Contact"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:527
+msgid "Cette option lorsqu&#146;elle est activ&eacute;e, affiche un lien \"Contacter le vendeur par email\" sur chaque annonce et affiche un formulaire de contact comprenant Nom, T&eacute;l&eacute;phone, Email et Message sur la page de l'annonce s&eacute;lectionn&eacute;e. V&eacute;rifiez auparavant que votre h&eacute;bergement permet l'utilisation de la fonction \"mail()\" obligatoire pour le formulaire de contact, sans cela, n'activez pas cette fonctionnalit&eacute;."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:532
+msgid "Si vous souhaitez r&eacute;cup&eacute;rer les champs des demandes d'informations dans le sujet du mail ou le nom en ent&ecirc;te du mail ou encore, dans le corps des messages (TXT ou HTML), il vous suffit d'indiquer les champs comme tels dans les r&eacute;glages ci-dessous :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:534
+msgid "Nom : %nom%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:535
+msgid "T&eacute;l&eacute;phone : %tel%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:536
+msgid "Email : %mail%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:537
+msgid "Message : %message%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:538
+msgid "Id de l'annonce : %id_annonce%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:539
+msgid "Titre de l'annonce : %titre%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:540
+msgid "URL de l'annonce : %url_annonce%"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:541
+msgid "Par exemple :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:542
+msgid "%nom% : %tel% donnera par exemple Dupont : 0606060606 si le nom et le t&eacute;l&eacute;phone dans le formulaire sont respectivement Dupont et 0606060606."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:551
+msgid "Email"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:554
+msgid "Adresse email charg&eacute;e de recevoir les demandes d'informations."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:563
+msgid "Sujet du mail"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:566
+msgid "Sujet du mail visible lors de la r&eacute;ception des demandes d'informations."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:575
+msgid "Mod&egrave;le mail TXT"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:578
+msgid "C'est la version texte (TXT) du mod&egrave;le du formulaire qui sera envoy&eacute; &agrave; l'adresse mail de r&eacute;ception des demandes d'informations si votre client mail ne lit pas les formes HTML."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:587
+msgid "Mod&egrave;le mail HTML"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/options.php:590
+msgid "C'est la version HTML du mod&egrave;le du formulaire qui sera envoy&eacute; &agrave; l'adresse mail de r&eacute;ception des demandes d'informations. Vous pouvez y ajouter images ou figures de style."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:127
+msgid "Type d&#146;annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:130
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:133
+msgid "Toutes"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:135
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:138
+msgid "Terrains"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:140
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:143
+msgid "Maisons"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:147
+msgid "Filtre"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:151
+msgid "Votre budget"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:158
+msgid "Superficie terrain souhait&eacute;e"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/admin/theme.php:162
+msgid "Recherche"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:50
+msgid "Csv"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:50
+msgid "Xml"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:51
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:52
+msgid "Valide"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:51
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:52
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:262
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:263
+msgid "Exclure"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:51
+msgid "Supprim&eacute;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:54
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+msgid "Caract&egrave;re"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:54
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+msgid "Date"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:54
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+msgid "D&eacute;cimal"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:54
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+msgid "Entier"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:54
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:55
+msgid "Texte"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:57
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:58
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:59
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:60
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:61
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:62
+msgid "Oui"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:57
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:58
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:59
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:60
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:61
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:62
+msgid "Non"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:262
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:263
+msgid "Supprimer"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:262
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:263
+msgid "Valider"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:262
+msgid "Exportable"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:262
+msgid "Non exportable"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:263
+msgid "Visible"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/configs.php:263
+msgid "Non visible"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:18
+msgid "Gestion des annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:19
+msgid "Ajouter une annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:20
+msgid "Gestion des cat&eacute;gories"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:20
+msgid "Cat&eacute;gories"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:21
+msgid "Gestion des attributs"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:22
+msgid "Gestion des passerelles"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:22
+msgid "Passerelle"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:23
+msgid "Exporter les annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin.class.php:24
+msgid "Importer les annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:39
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:27
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:21
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:20
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:85
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:147
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:192
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:20
+msgid "Validit&eacute;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:43
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:24
+msgid "Cat&eacute;gorie de l&#146;annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:50
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:975
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:31
+msgid "Titre"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:53
+msgid "Url personnalis&eacute;e"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:56
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:974
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:34
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:897
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1199
+msgid "R&eacute;f&eacute;rence"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:281
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:565
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:778
+msgid "Erreur de g&eacute;olocalisation"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:295
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:549
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:180
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:195
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:117
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:142
+msgid "Erreur lors de la modification"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:312
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:137
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:82
+msgid "Erreur lors de l&#146;insertion"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:542
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:175
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:190
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:112
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:137
+msgid "Modification effectu&eacute;e avec succ&eacute;s"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:664
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:215
+msgid "La s&eacute;lection a bien &eacute;t&eacute; modifi&eacute;e"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:690
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:222
+msgid "Erreur lors de la modification de la s&eacute;lection"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:710
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:239
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:130
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:155
+msgid "Cet &eacute;l&eacute;ment a bien &eacute;t&eacute; supprim&eacute;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:715
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:244
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:135
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:160
+msgid "Erreur lors de la suppression"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:818
+msgid "Erreur lors de la modification des informations compl&eacute;mentaires"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:972
+msgid "Validit&eacute; de l&#146;annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:976
+msgid "Derni&egrave;re modification"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:977
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:330
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:207
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:225
+msgid "Op&eacute;ration"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_annonces.class.php:998
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:231
+msgid "Aucun r&eacute;sultat"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:31
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:89
+msgid "Visibilit&eacute;"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:35
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:328
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:93
+msgid "Groupe de l&#146;attribut"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:39
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:327
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:97
+msgid "Type de l&#146;attribut"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:42
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:326
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:100
+msgid "Nom de l&#146;attribut"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:45
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:329
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:103
+msgid "Unit&eacute; de mesure"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:324
+msgid "Validit&eacute; de l&#146;attribut"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs.class.php:325
+msgid "Visibilit&eacute; de l&#146;attribut"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:24
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:205
+msgid "Nom de la cat&eacute;gorie"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:27
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:206
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:153
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:918
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1157
+msgid "Description"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_attributs_group.class.php:204
+msgid "Validit&eacute; de la cat&eacute;gorie"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_export.class.php:263
+msgid "Erreur lors de l&#146;ouverture du fichier "
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_export.class.php:268
+msgid "Cr&eacute;ation du fichier r&eacute;ussi"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:195
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:23
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:218
+msgid "Nom de la passerelle"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:198
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:26
+msgid "Nom export"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:201
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:29
+msgid "H&ocirc;te de la passerelle"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:204
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:32
+msgid "Identifiant"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_filters.class.php:216
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:47
+msgid "Structure de l&#146;export"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:35
+msgid "Mot de passe"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:107
+msgid "Erreur lors de l#146;insertion"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:219
+msgid "Nom de l&#146;export"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/admin_passerelle.class.php:220
+msgid "H&ocirc;te"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:179
+msgid "Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:183
+msgid "L'envoi de votre demande d'information(s) n'a pu aboutir :"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:187
+msgid "Le nom est incomplet"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:191
+msgid "Le message est incomplet"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:195
+msgid "Le t&eacute;l&eacute;phone est incomplet ou incorrect"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:199
+msgid "L'adresse email est incompl&egrave;te ou incorrecte"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:202
+msgid "Veuillez rectifier ces champs pour que l'envoi de votre email se fasse"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:255
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:278
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:354
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:376
+msgid "Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:494
+msgid "R&eacute;glages"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:598
+msgid "En savoir plus"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:686
+msgid "Affichage carte"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:694
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:765
+msgid "Recherchez une annonce"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:707
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:778
+msgid "(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:758
+msgid "Liste des annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:928
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1166
+msgid "Publi&eacute;e le"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:936
+msgid "Autres vues"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:958
+msgid "Contacter le vendeur par email"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:965
+msgid "INFORMATIONS COMPL&Eacute;MENTAIRES"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1007
+msgid "Localisation"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1062
+msgid "Laissez un message au vendeur"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1072
+msgid "Nom"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1073
+msgid "Telephone"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1081
+msgid "Message"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1083
+msgid "Envoyer"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1184
+msgid "Consultez toutes les annonces"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/frontend.class.php:1192
+msgid "Photos"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/image_galery.php:102
+msgid "Ce fichier ne semble pas &ecirc;tre valide."
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/image_galery.php:182
+msgid "Ajouter une photo"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/tools.class.php:31
+msgid "r&eacute;sultat"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/tools.class.php:32
+msgid "page"
+msgstr ""
+
+#: E:\wamp\www\b_plugin_annonces\wordpress\wp-content\plugins\pannonce/includes/lib/tools.class.php:33
+msgid "Page"
+msgstr ""
+

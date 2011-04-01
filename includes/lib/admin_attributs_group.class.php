@@ -183,11 +183,13 @@ class attribut_group
 	function show_attribut_group($attribut_group_to_show)
 	{
 		global $flag_possibilities;
-		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
-					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
-					<script type="text/javascript" charset="utf-8">
-						$(document).ready(function() {
-							$(\'#example\').dataTable();
+		$entête =	'<script type="text/javascript" charset="utf-8">
+						annoncejquery(document).ready(function() {
+							annoncejquery(\'#example\').dataTable({
+								"oLanguage": {
+									"sUrl": "' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/js/dataTables.french.txt"
+								}
+							});
 						} );
 					</script>';
 		$entête .='<div id="container">

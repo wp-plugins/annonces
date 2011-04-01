@@ -10,12 +10,13 @@
 }
 .resultats_annonces td
 {
-	border-bottom:1px solid #333333;
+	border-bottom:0px solid #333333;
 	border-left:0 none;
 	border-right:0 none;
 	padding-bottom:20px;
 	padding-right:20px;
 	padding-top:10px;
+	vertical-align: top;
 }
 .resultats_annonces
 {
@@ -36,11 +37,13 @@
 }
 .annonce-titre
 {
+	
 	font-weight:bold;
 	float:left;
 	text-transform:uppercase;
 	font-size:120%;
 	width:208px;
+	
 }
 .annonce-titre2
 {
@@ -95,7 +98,6 @@
 }
 .annonce-container
 {
-	margin-top:13px;
 	width:100%;
 	line-height:120%;
 }
@@ -155,8 +157,8 @@
 }
 .fond-annonce
 {
-	width:2000px;
-	height:2000px;
+	/*width:2000px;*/
+	/*height:2000px;*/
 	background:#fff;
 	color:#000;
 }
@@ -376,6 +378,7 @@
 .annonce-cont 
 {
 	vertical-align: text-top;
+	padding: 6px 0px !important;
 }
 
 /*-----Fin Fichier : frontend.class.php-----*/
@@ -445,11 +448,12 @@
 	font-size:11px;
 	background-color:#FFFFFF;
 }
-.ajout_effectue {
-    background-color: #99FF99;
+.echec_option {
+    background-color: red;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
+	color:#FFF;
 }
 .erreur_attribut
 {
@@ -458,4 +462,31 @@
     font-weight: bold;
     text-align: center;
 	color:white;
+}
+.lien_contact
+{
+	text-align:center;
+}
+.lien_contact label
+{
+	font-size:15px;
+	font-weight:bold;
+}
+.contact_error
+{
+	color: red;
+	text-align:center;
+	font-weight:bold;
+}
+.contact_success
+{
+	color: green;
+	text-align:center;
+	font-weight:bold;
+	font-size:13px;
+}
+.lst_annonce
+{
+	color:red;
+	margin-right:-170px;
 }

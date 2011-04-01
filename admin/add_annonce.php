@@ -1,48 +1,162 @@
 <?php
-global $wpdb;
+/***************************************************
+*Date: 01/10/2009      File:annonce_listing.php    *
+*Author: Eoxia							           *
+*Comment:                                          *
+***************************************************/
+
+$eav_annonce = new Eav();
 $attribut_annonce = new attribut_annonce();
 $annonce_form = new annonce_form();
 $annonce = new annonce();
-echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL . '/' . Basename_Dirname_AOS. '/includes/css/add_annonce.css" />';
-require_once dirname(__FILE__).'./../includes/lib/options.class.php';
+$annonce_filters_form = new annonce_filters_form();
 
-/**
-*	Si on ajoute une annonce
-**/
-if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']))
+$morequery = $on_edit_load_map = '';
+$geoloc['adresse'] = $geoloc['ville'] = $geoloc['cp'] = $geoloc['region'] = $geoloc['departement'] = $geoloc['pays'] = $geoloc['latitude'] = $geoloc['longitude'] = '';
+$flag = DEFAULT_FLAG_ADMIN_AOS;
+$act = isset($_REQUEST['act']) ? $tools->IsValid_Variable($_REQUEST['act']) : '' ;
+$encours = isset($_REQUEST['encours']) ? $tools->IsValid_Variable($_REQUEST['encours']) : '' ;
+$id_to_treat = isset($_REQUEST['id_to_treat']) ? $tools->IsValid_Variable($_REQUEST['id_to_treat']) : (isset($_REQUEST['idpetiteannonce']) ? $tools->IsValid_Variable($_REQUEST['idpetiteannonce']) : '') ;
+$actual_page = isset($_REQUEST['actual_page']) ? $tools->IsValid_Variable($_REQUEST['actual_page']) : '' ;
+$actual_number_of_picture = isset($_REQUEST['actual_number_of_picture']) ? $tools->IsValid_Variable($_REQUEST['actual_number_of_picture']) : NB_PICTURES_ALLOWED_AOS ;
+$token = isset($_REQUEST['annonce_form']['unique_token']) ? $tools->IsValid_Variable($_REQUEST['annonce_form']['unique_token']) : date('dHis').rand(0,5) ;
+global $current_user;get_currentuserinfo();
+
+if ($act == '')
 {
-	$annonce_form->bind($_POST['annonce_form']);
-	if ($annonce_form->isValid())
-	{
-		$sql  = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_TEMPPHOTO . "
-								SET numphoto = numphoto + 1");
-		$requete = $wpdb->query($sql);
-		$numimage = annonces_options::recupNumImage();
-		
-		$values = $annonce_form->getValues();
-
-		if($values['idpetiteannonce'] == '')$annonce->create_annonce($values);
-		elseif($values['idpetiteannonce'] != '')$annonce->update_annonce($values);
-		
-		echo '<br/><br/>';
-		echo '<div class="ajout_effectue">'. __('Votre annonce a &eacute;t&eacute; ajout&eacute;, si vous souhaitez ajouter des images &agrave; votre annonce faites le ci-dessous sinon cliquez sur Terminer','annonces') .'</div><br/>';
-				
-		echo '<iframe src ="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/lib/image_galery.php?idgallery=' . $numimage . '" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
-		
-		echo '<input type="button" value="' . __('Terminer','annonces') .'" onclick="javascript:history.back()"/>';
-		
-	}
-	else
-	{
-		echo 'Votre annonce est incompl&egrave;te, veuillez saisir correctement les champs.';
-		echo '<div class="wrap"><h2>';
-		echo '<a class="button add-new-h2" onclick="javascript:history.back()">' . __('Retour','annonces') . '</a>';
-		echo '</h2></div>';
-	}
+	$act = 'add';
+}
+if ($encours == 'ajout' || $encours == '')
+{
+	$act = 'add';
 }
 else
 {
+	$act = 'edit';
+}
+
+//	UPDATE SEARCH ENGINE
+if(!empty($_POST['update_lucene']) && $_POST['update_lucene'])
+{
+	$annonce->rewriteSeachEngine();
+}
+
+//	IF ACTION IS ADD (ADD OR UPDATE) ANNONCE
+if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act != ''))
+{
+	$annonce_form->bind($_POST['annonce_form']);
+	
+	$values = $annonce_form->getValues();
+	
+		$idAnnonce = Eav::getLatestIDAnnonce()+1;
+		
+		$values[urlannonce] = stripslashes($values[urlannonce]);
+		
+		if (empty($values[urlannonce]))
+		{
+			$values[urlannonce] = Eav::set_type_url($values[urlannonce], $idAnnonce, $values);
+		}
+		else
+		{
+			$values[urlannonce] = str_replace(' ', '-', trim(annonces_options::slugify_noaccent($values[urlannonce])));
+			$values[urlannonce] = str_replace('\'', '-', $values[urlannonce]);
+			$values[urlannonce] = str_replace('"', '-', $values[urlannonce]);
+			$values[urlannonce] = str_replace('\\', '-', $values[urlannonce]);
+			$values[urlannonce] = str_replace('?', '', $values[urlannonce]);
+			$values[urlannonce] = str_replace('!', '', $values[urlannonce]);
+			$values[urlannonce] = str_replace('@', '', $values[urlannonce]);
+		}
+		
+		$is_Url = $values[urlannonce];
+		
+	
+		$isId = Eav::url_exist($is_Url);
+	
+	if ($annonce_form->isValid() && $isId == '')
+	{
+		$values = $annonce_form->getValues();
+		$values[urlannonce] = $is_Url;
+		
+		if ($act == 'add')
+		{
+			
+			
+			$annonce->create_annonce($values);
+			
+			echo '<form name="form_ajout" action="admin.php?page=' . Basename_Dirname_AOS . '/admin/annonce_listing.php" method="POST">';
+			echo '<input type="hidden" name="id_to_treat" id="id_to_treat" value="' . Eav::getLatestIDAnnonce() . '"/>';
+			echo '<input type="hidden" name="act" id="act" value="edit"/>';
+			echo '<input type="hidden" name="aj" id="aj" value="ok"/>';
+			echo '</form>';
+			echo'<script type="text/javascript">
+						document.forms.form_ajout.submit();
+					</script>';
+		}
+	}
+	else
+	{
+		$error = __('L\'Url personnalis&eacute;e choisie : ', 'annonces');
+		$error .= $is_Url;
+		$error .= __(' est d&eacute;j&agrave; utilis&eacute;e', 'annonces');
+	}
+}
+
+//	IF WE ASK TO EDIT A SMALL AD
+elseif($act == 'edit')
+{
+	$annonce_to_treat = $annonce->admin_get_annonce(" AND ANN.idpetiteannonce = '".$id_to_treat."'",DEFAULT_FLAG_ADMIN_AOS,0,'nolimit');
+
+	$annonce_form->setDefault('idpetiteannonce', stripslashes($annonce_to_treat[0]->idpetiteannonce));
+	$annonce_form->setDefault('flagvalidpetiteannonce', stripslashes($annonce_to_treat[0]->flagvalidpetiteannonce));
+	$annonce_form->setDefault('idgroupeattribut', stripslashes($annonce_to_treat[0]->idgroupeattribut));
+	$annonce_form->setDefault('aexporter', stripslashes($annonce_to_treat[0]->aexporter));
+	$annonce_form->setDefault('titre', stripslashes($annonce_to_treat[0]->titre));
+	$annonce_form->setDefault('urlannonce', stripslashes($annonce_to_treat[0]->urlannonce));
+	$annonce_form->setDefault('referenceagencedubien', stripslashes($annonce_to_treat[0]->referenceagencedubien));
+
+	////	ADD DYNIMICALLY ATTRIBUTE
+	foreach($geolocalisation_field as $geoloc_attribute_key => $geoloc_attribute_name )
+	{
+		$geoloc[$geoloc_attribute_name] = stripslashes($annonce_to_treat[0]->$geoloc_attribute_name);
+	}
+	$on_edit_load_map = 'the_new_coord = new GLatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map,geocoder);';
+
+	unset($annonce_to_treat[0]);
+
+	////	ADD DYNIMICALLY ATTRIBUTE
+	foreach($annonce_to_treat as $annonce_key => $annonce_definition )
+	{
+		$annonce_form->setDefault($annonce_definition->labelattribut, stripslashes($annonce_definition->ATTRIBUT_VALUE));
+	}
+}
 ?>
+<script type="text/javascript">
+	annoncejquery(document).ready(function() {
+	annoncejquery('#annonce_form_titre').bind('keyup', function() {
+	
+			annoncejquery('#annonce_form_urlannonce').val(annoncejquery('#annonce_form_titre').val());
+			
+			var txt = annoncejquery('#annonce_form_urlannonce').val();
+			
+				txt = txt.replace(new RegExp("[ ]", "g"),"-");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('èéêë'); ?>]", "g"),"e");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('àáâãäå'); ?>]", "g"),"a");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('æ'); ?>]", "g"),"ae");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ç'); ?>]", "g"),"c");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ìíîï'); ?>]", "g"),"i");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ñ'); ?>]", "g"),"n");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('òóôõö'); ?>]", "g"),"o");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('œ'); ?>]", "g"),"oe");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ùúûü'); ?>]", "g"),"u");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ýÿ'); ?>]", "g"),"y");
+			
+			var reg = new RegExp("[^0-9a-zA-Z-_]", "g");
+			txt = txt.replace(reg,"");
+			
+			annoncejquery('#annonce_form_urlannonce').val(txt.toLowerCase());
+		});
+	});
+</script>
 <div class="wrap">
 	<h2>
 		<?php echo __('Annonces','annonces') ?>
@@ -50,16 +164,29 @@ else
 	</h2>
 </div>
 <br/><br/>
-<div style="clear:both;" class="<?php echo $annonce->class_admin_notice; ?>" ><?php echo $annonce->error_message; ?></div>
+
 <form action="" method="POST" name="treat_annonce" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-
+	<input type="hidden" name="encours" id="encours" value="<?php echo $encours; ?>" />
+	
+<?php
+if(($act == 'add') || ($act == 'edit'))
+{
+	if ($error != '')
+	{?>
+		<div class="echec_annonce" id="erreur_ok"><?php echo $error ?></div><br/>
+	<?php
+	}
+	?>
   <table class="annonce_form" >
 		<tr>
       <td >
 				<table class="annonce_form" style="width:100%;" >
+				<tr><th colspan=2><div class="ajout_effectue" id="ajout_effectue" >
+				<?php  if ($encours != '' &&  $act != 'edit') {echo __('Cr&eacute;ation effectu&eacute; avec succ&eacute;s','annonces');} else { if ($act != 'add') echo __('Modification effectu&eacute; avec succ&eacute;s','annonces');} ?>
+				</div></th></tr>
     <?php echo $annonce_form ?>
 				</table>
 			</td>
@@ -67,7 +194,7 @@ else
       <td rowspan="3" >
 				<div id="annonceGmap" style="width: 512px; height: 400px">
 					<script type="text/javascript">
-						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo url_marqueur_courant ?>';
+						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo annonces_options::recupinfo('url_marqueur_courant') ?>';
 						var input_country = 'annonce_form[pays]';
 						var input_dept = 'annonce_form[departement]';
 						var input_region = 'annonce_form[region]';
@@ -93,7 +220,7 @@ else
 							<?php _e('Adresse','annonces') ?>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form[adresse]" value="<?php echo $geoloc['adresse']; ?>" /> 
+							<input type="text" name="annonce_form[adresse]" id="annonce_form[adresse]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" /> 
 						</td>
 					</tr>
 					<tr>
@@ -101,7 +228,7 @@ else
 							<?php _e('Ville','annonces') ?>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form[ville]" value="<?php echo $geoloc['ville']; ?>" onblur="javascript:getCoordonnees();" /> 
+							<input type="text" name="annonce_form[ville]" id="annonce_form[ville]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" /> 
 						</td>
 					</tr>
 					<tr>
@@ -109,36 +236,43 @@ else
 							<?php _e('Code Postal','annonces') ?>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form[cp]" value="<?php echo $geoloc['cp']; ?>" onkeyup="javascript:getCoordonnees() ;" /> 
+							<input type="text" name="annonce_form[cp]" id="annonce_form[cp]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" /> 
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="annonce_form[region]" id="annonce_form[region]" value="<?php echo $geoloc['region']; ?>" />
-				<input type="hidden" name="annonce_form[departement]" id="annonce_form[departement]" value="<?php echo $geoloc['departement']; ?>" />
-				<input type="hidden" name="annonce_form[pays]" id="annonce_form[pays]" value="<?php echo $geoloc['pays']; ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form[latitude]" value="<?php echo $geoloc['latitude']; ?>" /> 
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form[longitude]" value="<?php echo $geoloc['longitude']; ?>" /> 
+				<input type="hidden" name="annonce_form[region]" id="annonce_form[region]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
+				<input type="hidden" name="annonce_form[departement]" id="annonce_form[departement]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
+				<input type="hidden" name="annonce_form[pays]" id="annonce_form[pays]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form[latitude]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" /> 
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form[longitude]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" /> 
       </td>
     </tr>
 		<tr><td><hr/></td></tr>
     <tr>
       <td colspan="5" >
-		<?php
-			echo '<br/><br/>';
-		?>
+				<div id="galerie" style="width:100%;">
+				<?php
+					if ($act == 'edit')
+					{
+						$id_to_treat = Eav::getLatestIDAnnonce();
+						
+						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
+					}
+				?>
+				</div>
       </td>
     </tr>
 		<tr>
       <td colspan="5" style="text-align:center;"  >
-        <input type="button" value="<?php echo __('Cr&eacute;er','annonces') ?>" id="submit_annonce" onclick="javascript:document.getElementById('act').value='add';document.forms.treat_annonce.submit();"/>
-		<input type="reset" value="<?php echo __('Effacer tout','annonces') ?>" id="reset" />
+        <input type="button" value="<?php ( $act == 'add' ?_e('Cr&eacute;er','annonces') : _e('Enregistrer les modifications','annonces')) ?>" id="submit_annonce" onclick="document.forms.treat_annonce.submit();"/>
       </td>
     </tr>
   </table>
-</form>
+
 <?php
 }
 ?>
+</form>
 <div style="float:right;">
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="cmd" value="_s-xclick">

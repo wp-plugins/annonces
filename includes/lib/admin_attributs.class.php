@@ -9,9 +9,7 @@
 /*															*/
 /*		ATTRIBUTE FORM CLASS			*/
 /*															*/
-require_once(dirname(__FILE__) . './sfform/require_once.php');
-
-echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/annonce.css" />';
+require_once(dirname(__FILE__) . '/sfform/require_once.php');
 
 class attribut_annonce_form extends sfForm
 {
@@ -305,12 +303,14 @@ class attribut_annonce
 		global $attribute_type_possibilities;
 		global $flag_visible_attribut_possibilities;
 		global $flag_possibilities;
-		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
-					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
-					<script type="text/javascript" charset="utf-8">
-						$(document).ready(function() {
-							$(\'#example\').dataTable();
-						} );
+		$entête =	'<script type="text/javascript" charset="utf-8">
+							annoncejquery(document).ready(function() {
+							annoncejquery(\'#example\').dataTable({
+								"oLanguage": {
+									"sUrl": "' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/js/dataTables.french.txt"
+								}
+							});
+						});
 					</script>';
 		$entête .='<div id="container">
 					<div id="demo">

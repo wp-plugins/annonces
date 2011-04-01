@@ -26,8 +26,6 @@ function annonces_creationTables()
 		}
 	}
 	
-	if(version::getVersion() < 1)
-	{
 		$champversion = "id INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 					nomVersion VARCHAR( 255 ) NOT NULL UNIQUE,
 					version INT( 10 ) NOT NULL";
@@ -54,6 +52,7 @@ function annonces_creationTables()
 						referenceagencedubien varchar(20) collate utf8_unicode_ci default NULL,
 						autoinsert datetime default NULL,
 						autolastmodif datetime default NULL,
+						urlannonce varchar(200) collate utf8_unicode_ci,
 						PRIMARY KEY  (idpetiteannonce),
 						KEY idgroupeattribut_idx (idgroupeattribut)";
 			// On vérifie si la table petiteannonce n'existe pas
@@ -175,7 +174,7 @@ function annonces_creationTables()
 			$champoption = "idoption int(11) NOT NULL auto_increment,
 					flagvalidoption enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 					labeloption char(50) collate utf8_unicode_ci default NULL,
-					nomoption char(70) collate utf8_unicode_ci default NULL,
+					nomoption varchar(1000) collate utf8_unicode_ci default NULL,
 					PRIMARY KEY  (idoption)";
 			// On vérifie si la table option n'existe pas
 			createTable(ANNONCES_TABLE_OPTION,$champoption);
@@ -229,6 +228,5 @@ function annonces_creationTables()
 			createTable(ANNONCES_TABLE_TXT,$champtxt);
 		}
 		annonces_insertions();
-	}
 }
 ?>

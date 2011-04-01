@@ -515,3 +515,59 @@ table.display tr.odd.row_selected td {
 .paginate_enabled_next {
 	background-image: url('./../../medias/images/forward_enabled.jpg');
 }
+.entete_variable h3
+{
+    font-weight: bold;
+	font: italic 20px Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	color: #464646;
+}
+.entete_variable h4
+{
+    font-weight: bold;
+	font: 17px Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	color: #464646;
+}
+.entete_variable .p-obligatoire
+{
+	color:red;
+	font-size:12px;
+	font-weight:bold;
+}
+.entete_variable hr
+{
+	color:red;
+}
+.sous_titre_option h3
+{
+    font-weight: bold;
+	font: 17px Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	color: #464646;
+}
+.sous_titre_perso h3
+{
+    font-weight: bold;
+	font: 17px Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	color: #464646;
+}
+.sous_titre_option h3:hover
+{
+	cursor:pointer;
+    color: #B98C1F;
+}
+.ajout_effectue {
+    background-color: #99FF99;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.paginationspan1
+{
+	cursor:pointer;
+}
+.echec_annonce{
+    background-color: red;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+	color:#000;
+}

@@ -42,7 +42,6 @@
 				}
 			}
 		</script>
-		<link rel="stylesheet" type="text/css" href="../includes/css/admin.css" />
 	</head>
 	<body>
 <?php

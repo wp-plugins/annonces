@@ -14,24 +14,30 @@ class admin
 	{
 		if (function_exists('add_menu_page'))
 		{
-			add_menu_page('Gestion des annonces', 'Annonces', 'level_2', Basename_Dirname_AOS.'/admin/annonce_listing.php', '', WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/icon_menu.gif' );
+			add_menu_page('Gestion des annonces', 'Annonces', 'level_2', Basename_Dirname_AOS.'/admin/annonce_listing.php', '', WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/icon_menu.png' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des annonces','annonces'), __('Annonces','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/annonce_listing.php' );
-			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Ajouter une annonce','annonces'), __('Ajouter','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/add_annonce.php' );
-			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des cat&eacute;gories','annonces'), __('Cat&eacute;gories','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/attribut_grp_listing.php' );
-			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des attributs','annonces'), __('Attributs','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/attribut_listing.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Ajouter une annonce','annonces'), __('Ajouter','annonces'), 'level_1', Basename_Dirname_AOS.'/admin/add_annonce.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des cat&eacute;gories','annonces'), __('Cat&eacute;gories','annonces'), 'level_5', Basename_Dirname_AOS.'/admin/attribut_grp_listing.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des attributs','annonces'), __('Attributs','annonces'), 'level_5', Basename_Dirname_AOS.'/admin/attribut_listing.php' );
 			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Gestion des passerelles','annonces'), __('Passerelle','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/export_admin.php' );
-			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Exporter les annonces','annonces'), __('Exporter','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/export.php' );
-			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Importer les annonces','annonces'), __('Importer','annonces'), 'level_2', Basename_Dirname_AOS.'/admin/import_admin.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Exporter les annonces','annonces'), __('Exporter','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/export.php' );
+			add_submenu_page(Basename_Dirname_AOS.'/admin/annonce_listing.php', __('Importer les annonces','annonces'), __('Importer','annonces'), 'level_10', Basename_Dirname_AOS.'/admin/import_admin.php' );
 		}
 	}
 
 	function add_admin_header() {
 		echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL . '/' . Basename_Dirname_AOS. '/includes/css/admin.css" />';
+		echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/fileuploader.css" />';
 	}
 
 	function add_admin_js()
 	{
 		echo '<script type="text/javascript" src="'.WP_PLUGIN_URL . '/' . Basename_Dirname_AOS. '/includes/js/admin.js?v=1.0"></script>';
-		echo '<script type="text/javascript" src="'.WP_PLUGIN_URL . '/' . Basename_Dirname_AOS. '/includes/js/geolocalisation.js"></script>';
+		echo '<script type="text/javascript" src="'.WP_PLUGIN_URL . '/' . Basename_Dirname_AOS. '/includes/js/geolocalisation.js"></script>
+		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/lib/uploadify/jquery-1.4.2.min.js" type="text/javascript"></script>
+		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/lib/uploadify/jquery.uploadify.v2.1.4.js" type="text/javascript"></script>
+		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/lib/uploadify/jquery.uploadify.v2.1.4.min.js" type="text/javascript"></script>
+		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/lib/uploadify/swfobject.js" type="text/javascript"></script>
+		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/fileuploader.js" type="text/javascript"></script>';
 	}
 }

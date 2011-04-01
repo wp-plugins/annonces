@@ -49,6 +49,9 @@ class annonce_form extends sfForm
 		  'titre'      							=> new sfWidgetFormInput(array(
 				'label' => __('Titre','annonces'),
 		  )),
+		  'urlannonce'      							=> new sfWidgetFormInput(array(
+				'label' => __('Url personnalis&eacute;e','annonces'),
+		  )),
 		  'referenceagencedubien'   => new sfWidgetFormInput(array(
 				'label' => __('R&eacute;f&eacute;rence','annonces'),
 		  )),
@@ -66,6 +69,7 @@ class annonce_form extends sfForm
 		  'idgroupeattribut' 			 => new sfValidatorChoice(array('choices' => array_keys($attribute_group_possibilities))),
 		  'aexporter' 			 			 => new sfValidatorChoice(array('choices' => array_keys($flag_a_exporter_possibilities))),
 		  'titre'						       => new sfValidatorString(array('max_length' => 64,'required' => true)),
+		  'urlannonce'						       => new sfValidatorString(array('max_length' => 150,'required' => false)),
 		  'referenceagencedubien'  => new sfValidatorString(array('max_length' => 20,'required' => true)),
 		  'idpetiteannonce'     	 => new sfValidatorString(array('required' => false)),
 		  'autoinsert'     	 			 => new sfValidatorString(array('required' => false)),
@@ -249,6 +253,13 @@ class annonce
 		$content = substr($content,0,-2);
 		if(($fields != "") && ($content != ""))
 		{
+			$sql = $wpdb->prepare ("SELECT idpetiteannonce+1 FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce = (SELECT MAX(idpetiteannonce) FROM  " . PREFIXE_ANNONCES . " )");
+			$reqbudget = mysql_query($sql) or die(mysql_error());
+			while($data = mysql_fetch_array($reqbudget))
+			{
+				$idAnnonce = $data[0];
+			}
+			
 			$sql = "INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " (".$fields.")
 				VALUES
 				(".$content.")";
@@ -329,6 +340,7 @@ class annonce
 			$doc = new Zend_Search_Lucene_Document();
 			$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $id_annouce));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($values_announce['titre']), 'utf-8'));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($values_announce['urlannonce']), 'utf-8'));
 			$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $values_announce['referenceagencedubien']));
 			if(!empty($values_announce['adresse'])){
 				$doc->addField(Zend_Search_Lucene_Field::UnStored('adresse', $tools->slugify_noaccent($values_announce['adresse']), 'utf-8'));
@@ -406,6 +418,7 @@ class annonce
 			$doc = new Zend_Search_Lucene_Document();
 			$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $annonce->idpetiteannonce));
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($annonce->titre), 'utf-8'));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($annonce->urlannonce), 'utf-8'));
 			$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $annonce->referenceagencedubien));
 			
 			if(!empty($annonce->adresse)){
@@ -479,7 +492,26 @@ class annonce
 		{
 			if(($field_value != '') && ($field_name!='idpetiteannonce') && ($field_name!='unique_token') && !array_key_exists($field_name,$attribute_array) && !in_array($field_name,$geolocalisation_field))
 			{
-				$sql .= " ".$field_name." = '".mysql_real_escape_string($tools->IsValid_Variable($field_value))."', ";
+				if ($field_name == 'urlannonce')
+				{
+					$field_value = stripslashes($field_value);
+					$field_value = annonces_options::slugify_noaccent($field_value);
+					$field_value = trim($field_value);
+					// $field_value = str_replace(' ', '-', $field_value);
+					// $field_value = str_replace('\'', '-', $field_value);
+					// $field_value = str_replace('"', '-', $field_value);
+					// $field_value = str_replace('\\', '-', $field_value);
+					// $field_value = str_replace('?', '', $field_value);
+					// $field_value = str_replace('!', '', $field_value);
+					// $field_value = str_replace('@', '', $field_value);
+					$field_value = preg_replace('([^0-9a-zA-Z-_])', '-', $field_value);
+					
+					$sql .= " ".$field_name." = '".mysql_real_escape_string($tools->IsValid_Variable($field_value))."', ";
+				}
+				else
+				{
+					$sql .= " ".$field_name." = '".mysql_real_escape_string($tools->IsValid_Variable($field_value))."', ";
+				}
 			}
 			elseif($field_name == 'idpetiteannonce')
 			{
@@ -572,6 +604,7 @@ class annonce
 		$doc = new Zend_Search_Lucene_Document();
 		$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $annonce[0]->idpetiteannonce));
 		$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($annonce[0]->titre), 'utf-8'));
+		$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($annonce[0]->urlannonce), 'utf-8'));
 		$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $annonce[0]->referenceagencedubien));
 		if(!empty($annonce[0]->adresse)){
 			$doc->addField(Zend_Search_Lucene_Field::UnStored('adresse', $tools->slugify_noaccent($annonce[0]->adresse), 'utf-8'));
@@ -769,7 +802,7 @@ class annonce
 				{
 					$sql = 
 						"INSERT INTO " . $table_name_by_type[$attribute_type] . " 
-							(" . $id_attribute_by_type[$attribute_type] . ", idpetiteannonce, idattribut, " . $attribute_type_definition['name'] . ") 
+							(" . $id_attribute_by_type[$attribute_type] . ", idpetiteannonce, idattribut, " . stripslashes($attribute_type_definition['name']) . ") 
 						VALUES 
 							('', '" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($attribute_id) . "', '" . mysql_real_escape_string($attribute_type_definition['value']) . "') ;";
 				}
@@ -883,30 +916,69 @@ class annonce
 		global $flag_visible_attribut_possibilities;
 		global $flag_a_exporter_possibilities;
 		global $flag_possibilities;
-		$entête =	'<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery_002.js"></script>
-					<script type="text/javascript" language="javascript" src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/js/jquery.js"></script>
-					<script type="text/javascript" charset="utf-8">
-						$(document).ready(function() {
-							$(\'#example\').dataTable();
-						} );
-					</script>';
-		$entête .='<div id="container">
-					<div id="demo">
-					<div id="example_wrapper" class="dataTables_wrapper">';
-		$output = 
-			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
-				<thead><tr class="titre_listing">
-					<th class="sorting" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</th>
-					<th class="sorting" >'.__('Exportable','annonces').'</th>
-					<th class="sorting" >'.__('R&eacute;f&eacute;rence','annonces').'</th>
-					<th class="sorting" >'.__('Titre','annonces').'</th>
-					<th class="sorting" >'.__('Derni&egrave;re modification','annonces').'</th>
-					<th class="sorting" colspan="3" >'.__('Op&eacute;ration','annonces').'</th>
-				</tr></thead>';
+		// $entête =	'<script type="text/javascript" charset="utf-8">
+						// annoncejquery(document).ready(function() {
+							// var oTable = annoncejquery(\'#example\').dataTable({
+							// "aaSorting": [[ 4, "desc" ]]
+							// });						
+						// });
+					// </script>';
+		// $entête .='<div id="container">
+					// <div id="demo">
+					// <div id="example_wrapper" class="dataTables_wrapper">';
+		// $output = 
+			// '<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
+				// <thead><tr class="titre_listing">
+					// <th class="sorting" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</th>
+					// <th class="sorting" >'.__('Exportable','annonces').'</th>
+					// <th class="sorting" >'.__('R&eacute;f&eacute;rence','annonces').'</th>
+					// <th class="sorting" >'.__('Titre','annonces').'</th>
+					// <th class="sorting" >'.__('Derni&egrave;re modification','annonces').'</th>
+					// <th class="sorting" colspan="3" >'.__('Op&eacute;ration','annonces').'</th>
+				// </tr></thead>';
 
+		// if( count($annonce_to_show) > 0 )
+		// {
+			// $output .= '<tbody>';
+			// foreach($annonce_to_show as $key => $annonce_content)
+			// {
+				// $output .= 
+				// '<tr>
+					// <td>'.$flag_possibilities[$annonce_content->flagvalidpetiteannonce].'</td>
+					// <td>'.$flag_a_exporter_possibilities[$annonce_content->aexporter].'</td>
+					// <td>'.$annonce_content->referenceagencedubien.'</td>
+					// <td>'.$annonce_content->titre.'</td>
+					// <td>'.date("d/m/Y",strtotime($annonce_content->autolastmodif)).'</td>
+					// <td>
+					// <img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/>
+					// </td>
+					// <td>
+					// <img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
+					// <td><input class="attribut_annonce_content" type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" /></td>
+				// </tr>';
+			// }
+		// }
+		// else
+		// {
+			// $output .= '<tr><td colspan="20" class="no_result" >'.__('Aucun r&eacute;sultat','annonces').'</td></tr>';
+		// }
+		
+		// $output .= '</tbody></table></div></div></div>';
+
+		// return $entête.$output;
+	// }
+		$output = 
+			'<table summary="annonce listing" cellpadding="2" cellspacing="1" class="listing" >
+				<tr>
+					<td class="listing_header" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</td>
+					<td class="listing_header" >'.__('Exportable','annonces').'</td>
+					<td class="listing_header" >'.__('R&eacute;f&eacute;rence','annonces').'</td>
+					<td class="listing_header" >'.__('Titre','annonces').'</td>
+					<td class="listing_header" >'.__('Derni&egrave;re modification','annonces').'</td>
+					<td class="listing_header" colspan="3" >'.__('Op&eacute;ration','annonces').'</td>
+				</tr>';
 		if( count($annonce_to_show) > 0 )
 		{
-			$output .= '<tbody>';
 			foreach($annonce_to_show as $key => $annonce_content)
 			{
 				$output .= 
@@ -916,24 +988,18 @@ class annonce
 					<td>'.$annonce_content->referenceagencedubien.'</td>
 					<td>'.$annonce_content->titre.'</td>
 					<td>'.date("d/m/Y",strtotime($annonce_content->autolastmodif)).'</td>
-					<td>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/>
-					</td>
-					<td>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
-					<td><input class="attribut_annonce_content" type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" /></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
+					<td><input type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" style="cursor:pointer;" /></td>
 				</tr>';
 			}
 		}
 		else
 		{
-			$output .= '</tbody>';
 			$output .= '<tr><td colspan="20" class="no_result" >'.__('Aucun r&eacute;sultat','annonces').'</td></tr>';
 		}
-		
-		$output .= '</tbody></table></div></div></div>';
 
-		return $entête.$output;
+		$output .= '</table><br/><br/>';
+		return $output;
 	}
-	
 }

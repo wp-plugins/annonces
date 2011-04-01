@@ -5,9 +5,6 @@
 *Comment:                                          *
 ***************************************************/
 
-echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/annonce.css" />';
-
-
 class tools
 {
 	
@@ -28,13 +25,12 @@ class tools
 		$pluriel='';if($nbitems>1)$pluriel='s';
 		$pluriel1='';if($nbpage>1)$pluriel1='s';
 
-		$pagination='<div class="paginationtoolsclass" style="background:'.$background.';color:'.$color.';" >
-		<span class="paginationspan1" onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-		'.str_replace('#PAGE#',1, $link).'';
+		$pagination='<div class="paginationtoolsclass" style="background:'.$background.';color:'.$color.';">
+		<span class="paginationspan1"'.str_replace('#PAGE#',1, $link).'>';
 				if($option==0)$pagination.=''.number_format($nbitems,0,'',' ').'&nbsp;';
 				if($option!=-1)$pagination.=__('r&eacute;sultat','annonces').$pluriel.'&nbsp;/';
 				$pagination.='&nbsp;'.$nbpage.'&nbsp;'.__('page','annonces').$pluriel1.'</span>
-				<span class="paginationspan2" >&nbsp;:&nbsp;</span>';
+				<span class="paginationspan2" >&nbsp;' . __('Page', 'annonces') . '&nbsp;&nbsp; : </span>';
 
 		$min=$page-$offset;
 		if($min<1)$min=1;
@@ -51,21 +47,21 @@ class tools
 
 		if($option<2){	//	sens croissant
 			if($min>1)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" ><<</span>';
+			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" ></span>';
 			else $pagination.='<span class="paginationspan3" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 
 			for($i=$min;$i<=$max;$i++){
 				$selected='';if($i==$page)$selected='color:'.$slctdcolor.';background:'.$slctdbackground.';font-weight:bold;';
-				$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
+				$pagination.='&nbsp;<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
 				'.str_replace('#PAGE#',$i, $link).' class="paginationspan1" style="'.$selected.' " >'.$i.'</span>';
 			}
 
 			if($max<$nbpage)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" >>></span>';
+			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" ></span>';
 		}
 		else{						//	sens decroissant
 			if($max<$nbpage)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" ><<</span>';
+			'.str_replace('#PAGE#',$maxto, $link).' class="paginationspan1" ></span>';
 
 			for($i=$max;$i>=$min;$i--){
 				$selected='';if($i==$page)$selected='color:'.$slctdcolor.';background:'.$slctdbackground.';font-weight:bold;';
@@ -74,11 +70,11 @@ class tools
 			}
 
 			if($min>1)$pagination.='<span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'\';" 
-			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" >>></span>';
+			'.str_replace('#PAGE#',$minto, $link).' class="paginationspan1" ></span>';
 			else $pagination.='<span class="paginationspan1" >&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 		}
 
-		$pagination.='</div >';
+		$pagination.='</div>';
 
 		return $pagination;
 	}
