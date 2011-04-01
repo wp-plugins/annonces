@@ -666,10 +666,10 @@ class Frontend {
 
 				$markers .= 'var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>'.__('En savoir plus','annonces').'</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>'.__('En savoir plus','annonces').'</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
-						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'\';
+						window.location.href = \''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
 				
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
@@ -897,10 +897,10 @@ class Frontend {
 
 				$markers .='var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
 				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle2\" onclick=\"window.location.href=\''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>En savoir plus</a>");
+							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle2\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>En savoir plus</a>");
 				});
 				GEvent.addListener(marker'.$i.', "click", function() {
-						window.location.href = \''.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=map\';
+						window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
 				
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
@@ -1096,7 +1096,7 @@ class Frontend {
 								annoncemap.setCenter(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'), 12);
 								var icon = new GIcon();
 								icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-								icon.iconSize=new GSize(32,32);
+								icon.iconSize=new GSize(150,150);
 								icon.iconAnchor=new GPoint(16,16);
 								
 								var marker = new GMarker(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),icon);
