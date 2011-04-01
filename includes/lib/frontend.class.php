@@ -60,153 +60,155 @@ class Frontend {
 		}
 	}
 	
-	public function sendMail()
-	{
-		/**
-		*	Envoi des mails grâce au lien "Contacter le vendeur par email"
-		**/
-		
-		if (isset ($_POST['submit']))
+	
+		public function sendMail()
 		{
-			if (!empty($_POST['txtNom']) && preg_match('`[0-9]{10}`', $_POST['txtTel']) && preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']) && !empty($_POST['txtMessage']))
+			/**
+			*	Envoi des mails grâce au lien "Contacter le vendeur par email"
+			**/
+			
+			if (isset ($_POST['submit']))
 			{
-				/**
-				*	Email de réception des demandes d'informations
-				**/
-					$mail = annonces_email_reception;
+				if (!empty($_POST['txtNom']) && preg_match('`[0-9]{10}`', $_POST['txtTel']) && preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']) && !empty($_POST['txtMessage']))
+				{
+					/**
+					*	Email de réception des demandes d'informations
+					**/
+						$mail = annonces_email_reception;
+						
+					/**
+					*	On filtre les serveurs qui rencontrent des bogues.
+					**/
+						if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
+						{
+							$passage_ligne = "\r\n";
+						}
+						else
+						{
+							$passage_ligne = "\n";
+						}
+
+					/**
+					*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails HTML
+					**/
+						$html = annonces_html_reception;
+						
+						$html = stripslashes(str_replace('%nom%',$_POST['txtNom'], $html));
+						$html = stripslashes(str_replace('%tel%',$_POST['txtTel'], $html));
+						$html = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $html));
+						$html = stripslashes(str_replace('%message%',$_POST['txtMessage'], $html));
+						$html = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $html));
+						$html = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $html));
+						$html = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $html));
+
+					/**
+					*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails TXT
+					**/
+						$txt = annonces_txt_reception;
+						
+						$txt = stripslashes(str_replace('%nom%',$_POST['txtNom'], $txt));
+						$txt = stripslashes(str_replace('%tel%',$_POST['txtTel'], $txt));
+						$txt = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $txt));
+						$txt = stripslashes(str_replace('%message%',$_POST['txtMessage'], $txt));
+						$txt = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $txt));
+						$txt = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $txt));
+						$txt = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $txt));
+						
+						
+					/**
+					*	Déclaration des messages au format texte et au format HTML.
+					**/
+						$message_txt = $txt."";
+						$message_html = "<html><head></head><body>" . $html . "</body></html>";
+						
+					/**
+					*	Création de la boundary
+					**/
+						$boundary = "-----=".md5(rand());
+						$boundary_alt = "-----=".md5(rand());
+					 
+					/**
+					*	Définition du sujet
+					**/
+						$sujet = annonces_sujet_reception;
+						
+						$sujet = stripslashes(str_replace('%nom%',$_POST['txtNom'], $sujet));
+						$sujet = stripslashes(str_replace('%tel%',$_POST['txtTel'], $sujet));
+						$sujet = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $sujet));
+						$sujet = stripslashes(str_replace('%message%',$_POST['txtMessage'], $sujet));
+						$sujet = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $sujet));
+						$sujet = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $sujet));
+						$sujet = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $sujet));
+						
+					/**
+					*	Création du header de l'e-mail
+					**/
+						
+						$header = "From: \"" . $_POST['txtNom'] . "\"<" . $_POST['txtEmail'] . ">".$passage_ligne;
+						$header.= "Reply-to: \"" . $_POST['txtNom'] . "\" <" . $_POST['txtEmail'] . ">".$passage_ligne;
+						$header.= "MIME-Version: 1.0".$passage_ligne;
+						$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+
+					/**
+					*	Création du message
+					**/
+						$message = $passage_ligne.$boundary.$passage_ligne;
+						
+					/**
+					*	Ajout du message au format texte
+					**/
+						$message.= "Content-Type: text/plain; charset=\"utf-8\"".$passage_ligne;
+						$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+						$message.= $passage_ligne.$message_txt.$passage_ligne;
+
+						$message.= $passage_ligne."--".$boundary.$passage_ligne;
+					/**
+					*	Ajout du message au format HTML
+					**/
+						$message.= "Content-Type: text/html; charset=\"utf-8\"".$passage_ligne;
+						$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+						$message.= $passage_ligne.$message_html.$passage_ligne;
+
+						$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+						$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+
+					/**
+					*	Envoi de l'e-mail
+					**/
+						mail($mail,$sujet,$message,$header);
+						
+						echo '<div class="contact_success">' . __('Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement','annonce') . '</div><br/>';
+				}
+				else
+				{
+					$message_error = __('L\'envoi de votre demande d\'information(s) n\'a pu aboutir :','annonces') . '<br/>';
 					
-				/**
-				*	On filtre les serveurs qui rencontrent des bogues.
-				**/
-					if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
+					if (empty($_POST['txtNom']))
 					{
-						$passage_ligne = "\r\n";
+						$message_error .= '<div class="contact_error">' . __('Le nom est incomplet','annonces') . '</div>';
 					}
-					else
+					if (empty($_POST['txtMessage']))
 					{
-						$passage_ligne = "\n";
+						$message_error .= '<div class="contact_error">' . __('Le message est incomplet','annonces') . '</div>';
 					}
-
-				/**
-				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails HTML
-				**/
-					$html = annonces_html_reception;
+					if (!preg_match('`[0-9]{10}`', $_POST['txtTel']))
+					{
+						$message_error .= '<div class="contact_error">' . __('Le t&eacute;l&eacute;phone est incomplet ou incorrect','annonces') . '</div>';
+					}
+					if (!preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']))
+					{
+						$message_error .= '<div class="contact_error">' . __('L\'adresse email est incompl&egrave;te ou incorrecte','annonces') . '</div>';
+					}
 					
-					$html = stripslashes(str_replace('%nom%',$_POST['txtNom'], $html));
-					$html = stripslashes(str_replace('%tel%',$_POST['txtTel'], $html));
-					$html = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $html));
-					$html = stripslashes(str_replace('%message%',$_POST['txtMessage'], $html));
-					$html = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $html));
-					$html = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $html));
-					$html = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $html));
-
-				/**
-				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails TXT
-				**/
-					$txt = annonces_txt_reception;
-					
-					$txt = stripslashes(str_replace('%nom%',$_POST['txtNom'], $txt));
-					$txt = stripslashes(str_replace('%tel%',$_POST['txtTel'], $txt));
-					$txt = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $txt));
-					$txt = stripslashes(str_replace('%message%',$_POST['txtMessage'], $txt));
-					$txt = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $txt));
-					$txt = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $txt));
-					$txt = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $txt));
-					
-					
-				/**
-				*	Déclaration des messages au format texte et au format HTML.
-				**/
-					$message_txt = $txt."";
-					$message_html = "<html><head></head><body>" . $html . "</body></html>";
-					
-				/**
-				*	Création de la boundary
-				**/
-					$boundary = "-----=".md5(rand());
-					$boundary_alt = "-----=".md5(rand());
-				 
-				/**
-				*	Définition du sujet
-				**/
-					$sujet = annonces_sujet_reception;
-					
-					$sujet = stripslashes(str_replace('%nom%',$_POST['txtNom'], $sujet));
-					$sujet = stripslashes(str_replace('%tel%',$_POST['txtTel'], $sujet));
-					$sujet = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $sujet));
-					$sujet = stripslashes(str_replace('%message%',$_POST['txtMessage'], $sujet));
-					$sujet = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $sujet));
-					$sujet = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $sujet));
-					$sujet = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $sujet));
-					
-				/**
-				*	Création du header de l'e-mail
-				**/
-					
-					$header = "From: \"" . $_POST['txtNom'] . "\"<" . $_POST['txtEmail'] . ">".$passage_ligne;
-					$header.= "Reply-to: \"" . $_POST['txtNom'] . "\" <" . $_POST['txtEmail'] . ">".$passage_ligne;
-					$header.= "MIME-Version: 1.0".$passage_ligne;
-					$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
-
-				/**
-				*	Création du message
-				**/
-					$message = $passage_ligne.$boundary.$passage_ligne;
-					
-				/**
-				*	Ajout du message au format texte
-				**/
-					$message.= "Content-Type: text/plain; charset=\"utf-8\"".$passage_ligne;
-					$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-					$message.= $passage_ligne.$message_txt.$passage_ligne;
-
-					$message.= $passage_ligne."--".$boundary.$passage_ligne;
-				/**
-				*	Ajout du message au format HTML
-				**/
-					$message.= "Content-Type: text/html; charset=\"utf-8\"".$passage_ligne;
-					$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-					$message.= $passage_ligne.$message_html.$passage_ligne;
-
-					$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-					$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-
-				/**
-				*	Envoi de l'e-mail
-				**/
-					mail($mail,$sujet,$message,$header);
-					
-					echo '<div class="contact_success">' . __('Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement','annonce') . '</div><br/>';
-			}
-			else
-			{
-				$message_error = __('L\'envoi de votre demande d\'information(s) n\'a pu aboutir :','annonces') . '<br/>';
-				
-				if (empty($_POST['txtNom']))
-				{
-					$message_error .= '<div class="contact_error">' . __('Le nom est incomplet','annonces') . '</div>';
+					$message_error .= __('Veuillez rectifier ces champs pour que l\'envoi de votre email se fasse','annonces');
+					$message_error .= '<br/><br/>';
+					echo $message_error;
 				}
-				if (empty($_POST['txtMessage']))
-				{
-					$message_error .= '<div class="contact_error">' . __('Le message est incomplet','annonces') . '</div>';
-				}
-				if (!preg_match('`[0-9]{10}`', $_POST['txtTel']))
-				{
-					$message_error .= '<div class="contact_error">' . __('Le t&eacute;l&eacute;phone est incomplet ou incorrect','annonces') . '</div>';
-				}
-				if (!preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']))
-				{
-					$message_error .= '<div class="contact_error">' . __('L\'adresse email est incompl&egrave;te ou incorrecte','annonces') . '</div>';
-				}
-				
-				$message_error .= __('Veuillez rectifier ces champs pour que l\'envoi de votre email se fasse','annonces');
-				$message_error .= '<br/><br/>';
-				echo $message_error;
 			}
 		}
-	}
 	
-	public function generate($content){
+	
+		public function generate($content){
 		global $tools;
 		$query        = isset($_REQUEST['query'])        ? $tools->IsValid_Variable($_REQUEST['query'])        : '' ;
 		$query1       = isset($_REQUEST['query1'])       ? $tools->IsValid_Variable($_REQUEST['query1'])       : '' ;
@@ -244,7 +246,7 @@ class Frontend {
 
 				$result_search = ' AND ANN.idpetiteannonce IN ('.$id.') ';
 
-				if($show_map == 'true' and (annonces_maps_activation == 1)){
+				if($show_map == 'true' and (annonces_options::recupinfo(annonces_maps_activation) == 1)){
 					/*---- Show map ----*/
 					$this->concatAnnonceContent($this->generate_search_map());
 					if(!empty($id)){
@@ -261,7 +263,7 @@ class Frontend {
 					
 				/*---- Show search filter ----*/
 				$this->concatAnnonceContent($this->generate_search());
-				if(annonces_maps_activation == 1){
+				if(annonces_options::recupinfo('annonces_maps_activation') == 1){
 					$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 
 					if(empty($id))
@@ -290,18 +292,85 @@ class Frontend {
 					endforeach;
 					$query_sentence->setSlop(3);
 					$hits = $index->find($tools->slugify_noaccent($query_sentence));
+					$directSearch = false;
+					if((count($hits) <= 0))
+					{
+						$searchResult = array();
+						foreach($array_query as $searchWordIndex => $search)
+						{
+							$query = 
+								"(SELECT idpetiteannonce 
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce
+								WHERE titre LIKE '%" . mysql_real_escape_string($search) . "%' 
+									OR referenceagencedubien LIKE '%" . mysql_real_escape_string($search) . "%' 
+									OR urlannonce LIKE '%" . mysql_real_escape_string($search) . "%' 
+									AND flagvalidpetiteannonce = 'valid')
+									UNION
+								(SELECT idpetiteannonce
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributchar
+								WHERE valueattributchar LIKE '%" . mysql_real_escape_string($search) . "%'
+									AND flagvalidattributchar = 'valid')
+									UNION
+								(SELECT idpetiteannonce
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdate
+								WHERE valueattributdate LIKE '%" . mysql_real_escape_string($search) . "%'
+									AND flagvalidattributdate = 'valid')
+									UNION
+								(SELECT idpetiteannonce
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdec
+								WHERE valueattributdec LIKE '%" . mysql_real_escape_string($search) . "%'
+									AND flagvalidattributdec = 'valid')
+									UNION
+								(SELECT idpetiteannonce
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributint
+								WHERE valueattributint LIKE '%" . mysql_real_escape_string($search) . "%'
+									AND flagvalidattributint = 'valid')
+									UNION
+								(SELECT idpetiteannonce
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributtext
+									LEFT JOIN " . $wpdb->prefix . "ctlg_petiteannonce__txt ON (idtxt = valueattributtextlong)
+								WHERE ((valueattributtextcourt LIKE '%" . mysql_real_escape_string($search) . "%') OR (txtlong LIKE '%" . mysql_real_escape_string($search) . "%'))
+									AND flagvalidattributtext = 'valid')
+									UNION
+								(SELECT iddest
+								FROM " . $wpdb->prefix . "ctlg_petiteannonce__geolocalisation
+								WHERE (
+									(autolocalisation LIKE '%" . mysql_real_escape_string($search) . "%') OR (adresse LIKE '%" . mysql_real_escape_string($search) . "%') 
+									OR (ville LIKE '%" . mysql_real_escape_string($search) . "%') OR (departement LIKE '%" . mysql_real_escape_string($search) . "%') 
+									OR (region LIKE '%" . mysql_real_escape_string($search) . "%') OR (cp LIKE '%" . mysql_real_escape_string($search) . "%') 
+									OR (pays LIKE '%" . mysql_real_escape_string($search) . "%')
+								)
+									AND flagvalidgeolocalisation = 'valid') ";
+							$searchResult = array_merge($searchResult, $wpdb->get_results($query));
+						};
+						$directSearch = true;
+					}
 					$values = null;
 					$checkprix = null;
 					$checksurface = null;
 					$limite = count($hits);
 					$check_status = new Eav();
-					foreach ($hits as $i => $hit){
-						$document = $hit->getDocument();
-						$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$document->getFieldValue('pk')."' ","'valid'",'titre',0,'nolimit','count');
-						if($annonce>0){
-							$values[$i] = $document->getFieldValue('pk');
+					if(!$directSearch)
+					{
+						foreach ($hits as $i => $hit){
+							$document = $hit->getDocument();
+							$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$document->getFieldValue('pk')."' ","'valid'",'titre',0,'nolimit','count');
+							if($annonce>0){
+								$values[$i] = $document->getFieldValue('pk');
+							}
 						}
 					}
+					else
+					{
+						foreach ($searchResult as $i => $annonces)
+						{
+							$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$annonces->idpetiteannonce."' ","'valid'",'titre',0,'nolimit','count');
+							if($annonce>0){
+								$values[$i] = $annonces->idpetiteannonce;
+							}
+						}
+					}
+
 					if(!empty($query3) OR !empty($query4)){
 						$eav_value = new Eav();
 						$morequery = (!empty($query4) ? " AND ATT_DEC.valueattributdec <= ".$query4." " : "").(!empty($query3) ? " AND ATT_DEC.valueattributdec >= ".$query3." " : "");
@@ -1130,7 +1199,7 @@ class Frontend {
 			if(annonces_photos_activation == 1)
 			{
 				$generate_annonce .= '<td><div class="annonce-photos">';
-				$generate_annonce .= '<a href="' . get_permalink() . '/' . $annonce_link . '">';
+				$generate_annonce .= '<a href="' . $annonce_link . '">';
 				$photos = $eav_value->getPhotos($annonces[$i]->idpetiteannonce);
 				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original))
 				$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/>';

@@ -4,7 +4,7 @@ Tags: annonce, passerelle, administration, immobilier, map, carte google maps, g
 Donate link: http://www.eoxia.com/site-web/pluginannonces/
 Requires at least: 2.8.4
 Tested up to: 3.1
-Stable tag: 1.1.2.4
+Stable tag: 1.1.2.5
 
 Affiche vos annonces sur votre blog.
 
@@ -42,6 +42,11 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 
 
 == Changelog ==
+
+v1.1.2.5:
+
+* FIXED - Suppression de zend pour la recherche
+* FIXED - R&eacute;&eacute;criture d'url lorsqu'il y a plusieurs pages, et sur l'image des annonces
 
 v1.1.2.4:
 
