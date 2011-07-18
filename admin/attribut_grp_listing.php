@@ -58,7 +58,7 @@ elseif(!empty($_POST) && is_array($_POST['attribut_group_filter']) && ($act == '
 
 ?>
 
-<form action="" method="POST" name="treat_group_att" >
+<form action="" method="post" name="treat_group_att" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />

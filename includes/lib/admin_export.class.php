@@ -260,7 +260,7 @@ class export
 
 		/*	OPEN CSV FILE IN MODE WRITABLE	*/
 		if(!$f=fopen($file,'w+')){
-			$this->error_message = __('Erreur lors de l&#146;ouverture du fichier ','annonces') . $file;
+			$this->error_message = __('Erreur lors de l\'ouverture du fichier ','annonces') . $file;
 			$this->class_admin_notice = 'admin_notices_class_notok';
 		}
 		/*	WRITE CSV FILE	*/

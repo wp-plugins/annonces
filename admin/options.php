@@ -34,7 +34,7 @@
 				$img = $_FILES['options']['name']['change_marqueur'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['options']['tmp_name']['change_marqueur'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['options']['tmp_name']['change_marqueur'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_marqueur_courant"');
 					}
@@ -223,72 +223,72 @@
 		var id = 0;
 		function init()
 		{
-			if (document.getElementById('url_activation').checked == true)
+			if (document.getElementById('url_activation') && document.getElementById('url_activation').checked == true)
 			{
-				$('#url_part1').show();
-				$('#url_part2').show();
-				$('#url_part3').show();
+				annoncejquery('#url_part1').show();
+				annoncejquery('#url_part2').show();
+				annoncejquery('#url_part3').show();
 			}
 			else
 			{
-				$('#url_part1').hide();
-				$('#url_part2').hide();
-				$('#url_part3').hide();
+				annoncejquery('#url_part1').hide();
+				annoncejquery('#url_part2').hide();
+				annoncejquery('#url_part3').hide();
 			}
 			reglages_url();
 			
-			if (document.getElementById('email_activation').checked == true)
+			if (document.getElementById('email_activation') && document.getElementById('email_activation').checked == true)
 			{
-				$('#email_act').show();
-				$('#sujet_act').show();
-				$('#txt_act').show();
-				$('#html_act').show();
-				$('#email_part1').show();
+				annoncejquery('#email_act').show();
+				annoncejquery('#sujet_act').show();
+				annoncejquery('#txt_act').show();
+				annoncejquery('#html_act').show();
+				annoncejquery('#email_part1').show();
 			}
 			else
 			{
-				$('#email_act').hide();
-				$('#sujet_act').hide();
-				$('#txt_act').hide();
-				$('#html_act').hide();
-				$('#email_part1').hide();
+				annoncejquery('#email_act').hide();
+				annoncejquery('#sujet_act').hide();
+				annoncejquery('#txt_act').hide();
+				annoncejquery('#html_act').hide();
+				annoncejquery('#email_part1').hide();
 			}	
 			reglages_email();
 		}
 		
 		function reglages_url()
 		{
-			if (document.getElementById('url_activation').checked == true)
+			if (document.getElementById('url_activation') && document.getElementById('url_activation').checked == true)
 			{
-				$('#url_part1').show();
-				$('#url_part2').show();
-				$('#url_part3').show();
+				annoncejquery('#url_part1').show();
+				annoncejquery('#url_part2').show();
+				annoncejquery('#url_part3').show();
 			}
 			else
 			{
-				$('#url_part1').hide();
-				$('#url_part2').hide();
-				$('#url_part3').hide();
+				annoncejquery('#url_part1').hide();
+				annoncejquery('#url_part2').hide();
+				annoncejquery('#url_part3').hide();
 			}
 		}
 
 		function reglages_email()
 		{
-			if (document.getElementById('email_activation').checked == true)
+			if (document.getElementById('email_activation') && document.getElementById('email_activation').checked == true)
 			{
-				$('#email_act').show();
-				$('#sujet_act').show();
-				$('#txt_act').show();
-				$('#html_act').show();
-				$('#email_part1').show();
+				annoncejquery('#email_act').show();
+				annoncejquery('#sujet_act').show();
+				annoncejquery('#txt_act').show();
+				annoncejquery('#html_act').show();
+				annoncejquery('#email_part1').show();
 			}
 			else
 			{
-				$('#email_act').hide();
-				$('#sujet_act').hide();
-				$('#txt_act').hide();
-				$('#html_act').hide();
-				$('#email_part1').hide();
+				annoncejquery('#email_act').hide();
+				annoncejquery('#sujet_act').hide();
+				annoncejquery('#txt_act').hide();
+				annoncejquery('#html_act').hide();
+				annoncejquery('#email_part1').hide();
 			}			
 		}
 		
@@ -364,7 +364,7 @@
 				<th><?php _e('Activer G&eacute;olocalisation', 'annonces') ?></th> 
 				<td>
 					<input type="checkbox" id="maps_activation" name="options[maps_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_maps_activation')? 'checked': '') ?> />
-					<p><small><?php _e('Cette option lorsqu&#146;elle est activ&eacute;e, utilise Google Maps pour g&eacute;olocaliser vos annonces sur une carte.', 'annonces') ?></small></p>
+					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, utilise Google Maps pour g&eacute;olocaliser vos annonces sur une carte.', 'annonces') ?></small></p>
 				</td>
 			</tr>
 			<tr class="v_align">
@@ -376,7 +376,7 @@
 				<th><?php _e('Activer Photos', 'annonces') ?></th> 
 				<td>
 					<input type="checkbox" id="photos_activation" name="options[photos_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_photos_activation')? 'checked': '') ?> />
-					<p><small><?php _e('Cette option lorsqu&#146;elle est activ&eacute;e, affiche les photos de vos annonces si celles-ci sont d&eacute;finies.', 'annonces') ?></small></p>
+					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, affiche les photos de vos annonces si celles-ci sont d&eacute;finies.', 'annonces') ?></small></p>
 				</td>
 			</tr>
 			<tr class="v_align">
@@ -388,7 +388,7 @@
 				<th><?php _e('Activer Date', 'annonces') ?></th> 
 				<td>
 					<input type="checkbox" id="date_activation" name="options[date_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_date_activation')? 'checked': '') ?> />
-					<p><small><?php _e('Cette option lorsqu&#146;elle est activ&eacute;e, affiche la date de derni&egrave;re modification de vos annonces.', 'annonces') ?></small></p>
+					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, affiche la date de derni&egrave;re modification de vos annonces.', 'annonces') ?></small></p>
 				</td>
 			</tr>
 			<tr class="v_align">
@@ -399,7 +399,7 @@
 				?>
 				<th><?php _e('Marqueur', 'annonces') ?></th> 
 				<td class="preview_marker">
-					<img onclick="AddSubElement_frame('btn_marker', 'options[change_marqueur]' , document.forms.annonces_options_form);this.style.display='none'" id="preview_marker" src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_marqueur_courant'); ?>" alt="marqueur actif"/>
+					<img onclick="AddSubElement_frame('btn_marker', 'options[change_marqueur]' , document.forms.annonces_options_form);this.style.display='none'" id="preview_marker" src="<?php echo WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.annonces_options::recupinfo('url_marqueur_courant'); ?>" alt="marqueur actif"/>
 					<div id="btn_marker"></div>
 					<br/>
 					<input type="checkbox" id="marqueur_activation" name="options[marqueur_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_marqueur_activation')? 'checked': '') ?> /><label for="marqueur_activation"><?php _e('Utiliser le marqueur par d&eacute;faut.', 'annonces') ?></label>
@@ -414,10 +414,10 @@
 				?>
 				<th><?php echo __('Th&egrave;me', 'annonces') ?></th> 
 				<td>
-					<a rel="theme" rev="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS ?>/admin/theme.php" id="option_theme" title="<?php _e('Changer le th&egrave;me des boutons', 'annonces') ?>"><?php _e('Changer...','annonces') ?></a>
+					<a rel="theme" rev="<?php echo WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR ?>/admin/theme.php" id="option_theme" title="<?php _e('Changer le th&egrave;me des boutons', 'annonces') ?>"><?php _e('Changer...','annonces') ?></a>
 					<br/>
 					<input type="checkbox" id="theme_activation" name="options[theme_activation]" value="1" <?php echo (annonces_options::recupinfo('theme_activation')? 'checked': '') ?> /><label for="theme_activation"><?php _e('Utiliser le th&egrave;me par d&eacute;faut.','annonces') ?></label>
-					<p><small><?php _e('Cette option permet de changer l&#146;apparence des boutons du bloc recherche.', 'annonces') ?></small></p>
+					<p><small><?php _e('Cette option permet de changer l\'apparence des boutons du bloc recherche.', 'annonces') ?></small></p>
 				</td>
 			</tr>
 			<tr class="v_align">
@@ -497,7 +497,7 @@
 			<input type="submit" id="submit_option" name="submit" value="<?php _e('Enregistrer les r&eacute;glages', 'annonces') ?>" />
 		</p>
 	</form>
-	<form method="POST" name="raz_url">
+	<form method="post" name="raz_url">
 		<table class="form-table">
 				<tr>
 					<th><?php echo __('R&eacute;initalisation des URLs', 'annonces') ?></th>
@@ -524,7 +524,7 @@
 				<th><?php _e('Activer Contact', 'annonces') ?></th> 
 				<td>
 					<input type="checkbox" id="email_activation" name="options[email_activation]" onclick="reglages_email()" value="1" <?php echo (annonces_options::recupinfo('annonces_email_activation')? 'checked': '') ?> />
-					<p><small><?php echo __('Cette option lorsqu&#146;elle est activ&eacute;e, affiche un lien "Contacter le vendeur par email" sur chaque annonce et affiche un formulaire de contact comprenant Nom, T&eacute;l&eacute;phone, Email et Message sur la page de l\'annonce s&eacute;lectionn&eacute;e. V&eacute;rifiez auparavant que votre h&eacute;bergement permet l\'utilisation de la fonction "mail()" obligatoire pour le formulaire de contact, sans cela, n\'activez pas cette fonctionnalit&eacute;.', 'annonces') ?></small></p>
+					<p><small><?php echo __('Cette option lorsqu\'elle est activ&eacute;e, affiche un lien "Contacter le vendeur par email" sur chaque annonce et affiche un formulaire de contact comprenant Nom, T&eacute;l&eacute;phone, Email et Message sur la page de l\'annonce s&eacute;lectionn&eacute;e. V&eacute;rifiez auparavant que votre h&eacute;bergement permet l\'utilisation de la fonction "mail()" obligatoire pour le formulaire de contact, sans cela, n\'activez pas cette fonctionnalit&eacute;.', 'annonces') ?></small></p>
 				</td>
 			</tr>
 			<tr class="v_align" id="email_part1">
@@ -599,9 +599,9 @@
 </div>
 <center>
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="10265740">
-		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+		<input type="hidden" name="cmd" value="_s-xclick" />
+		<input type="hidden" name="hosted_button_id" value="10265740" />
+		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !" />
+		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1" />
 	</form>
 </center>

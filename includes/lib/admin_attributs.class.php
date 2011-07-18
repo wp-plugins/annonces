@@ -32,14 +32,14 @@ class attribut_annonce_form extends sfForm
 		  )),
 		  'group_attribut'      	=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_group_possibilities,
-				'label' => __('Groupe de l&#146;attribut','annonces'),
+				'label' => __('Groupe de l\'attribut','annonces'),
 		  )),
 		  'typeattribut'      	=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_type_possibilities,
-				'label' => __('Type de l&#146;attribut','annonces'),
+				'label' => __('Type de l\'attribut','annonces'),
 		  )),
 		  'nomattribut'				 	=> new sfWidgetFormInput(array(
-				'label' => __('Nom de l&#146;attribut','annonces'),
+				'label' => __('Nom de l\'attribut','annonces'),
 		  )),
 			'measureunit' 				=> new sfWidgetFormInput(array(
 				'label' => __('Unit&eacute; de mesure','annonces'),
@@ -134,7 +134,7 @@ class attribut_annonce
 				}
 				else
 				{
-					$this->error_message = __('Erreur lors de l&#146;insertion','annonces');
+					$this->error_message = __('Erreur lors de l\'insertion','annonces');
 					if(is_admin())$this->error_message .= '<hr/>'.$sql.'<br/>'.mysql_error().'<hr/>';
 					$this->class_admin_notice = 'admin_notices_class_notok';
 				}
@@ -307,7 +307,7 @@ class attribut_annonce
 							annoncejquery(document).ready(function() {
 							annoncejquery(\'#example\').dataTable({
 								"oLanguage": {
-									"sUrl": "' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/js/dataTables.french.txt"
+									"sUrl": "' .WP_PLUGIN_URL . '/' . ANNONCES_PLUGIN_DIR.'/includes/js/dataTables.french.txt"
 								}
 							});
 						});
@@ -321,11 +321,11 @@ class attribut_annonce
 		if(is_admin())$output .= '
 					<th class="sorting" >ID</th>';
 		$output .= '          
-					<th class="sorting" >'.__('Validit&eacute; de l&#146;attribut','annonces').'</th>
-					<th class="sorting" >'.__('Visibilit&eacute; de l&#146;attribut','annonces').'</th>
-					<th class="sorting" >'.__('Nom de l&#146;attribut','annonces').'</th>
-					<th class="sorting" >'.__('Type de l&#146;attribut','annonces').'</th>
-					<th class="sorting" >'.__('Groupe de l&#146;attribut','annonces').'</th>
+					<th class="sorting" >'.__('Validit&eacute; de l\'attribut','annonces').'</th>
+					<th class="sorting" >'.__('Visibilit&eacute; de l\'attribut','annonces').'</th>
+					<th class="sorting" >'.__('Nom de l\'attribut','annonces').'</th>
+					<th class="sorting" >'.__('Type de l\'attribut','annonces').'</th>
+					<th class="sorting" >'.__('Groupe de l\'attribut','annonces').'</th>
 					<th class="sorting" >'.__('Unit&eacute; de mesure','annonces').'</th>
 					<th class="sorting" colspan="5" >'.__('Op&eacute;ration','annonces').'</th>
 				</tr></thead>';
@@ -346,9 +346,9 @@ class attribut_annonce
 					<td>'.$attribute_type_possibilities[strtolower($attribut_annonce_content->typeattribut)].'</td>
 					<td>'.$attribut_annonce_content->nomgroupeattribut.'</td>
 					<td>'.$attribut_annonce_content->measureunit.'</td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_pass" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';document.forms.treat_attribut.submit();"/></td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_pass" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_attribut.submit();}" /></td>
-					<td><input class="attribut_annonce_content" type="checkbox" name="attribut['.$attribut_annonce_content->idattribut.']" id="'.$attribut_annonce_content->idattribut.'" value="'.$attribut_annonce_content->idattribut.'" /></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_edit.png" alt="edit_pass" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';document.forms.treat_attribut.submit();"/></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_drop.png" alt="drop_pass" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$attribut_annonce_content->idattribut.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_attribut.submit();}" /></td>
+					<td><input class="attribut_annonce_content" type="checkbox" name="attribut['.$attribut_annonce_content->idattribut.']" id="attribute_'.$attribut_annonce_content->idattribut.'" value="'.$attribut_annonce_content->idattribut.'" /></td>
 				</tr>';
 			}
 		}

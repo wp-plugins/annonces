@@ -57,7 +57,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_recherche'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_recherche'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_recherche'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_recherche_theme_courant"');
 					}
@@ -68,7 +68,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_superfice'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_superfice'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_superfice'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_superficie_theme_courant"');
 					}
@@ -79,7 +79,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_budget'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_budget'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_budget'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_budget_theme_courant"');
 					}
@@ -90,7 +90,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_maisons'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_maisons'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_maisons'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_radio_maisons_theme_courant"');
 					}
@@ -101,7 +101,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_terrains'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_terrains'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_terrains'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_radio_terrains_theme_courant"');
 					}
@@ -112,7 +112,7 @@ global $wpdb;
 				$img = $_FILES['theme']['name']['change_bouton_toutes'];
 				$extension = strtolower(strrchr($img,'.'));
 				if(in_array($extension,$extensions)){
-					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_toutes'],WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/images/'.$img))
+					if(move_uploaded_file($_FILES['theme']['tmp_name']['change_bouton_toutes'],WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.$img))
 					{
 						$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$img.'" WHERE labeloption="url_radio_toutes_theme_courant"');
 					}
@@ -124,20 +124,20 @@ global $wpdb;
 ?>
 		<form name="annonces_theme_form" action="" method="post" enctype="multipart/form-data" >
 			<div class='carte-annonce'>
-				<h4>&#149;&nbsp;<?php _e('Type d&#146;annonce','annonces') ?></h4>
+				<h4>&#149;&nbsp;<?php _e('Type d\'annonce','annonces') ?></h4>
 				<div class='filtretheme'>
 					<label for='toutes' >
-						<img src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_radio_toutes_theme_courant'); ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_toutes]' , document.forms.annonces_theme_form,'Cancel');" alt='<?php _e('Toutes','annonces') ?>'/>
+						<img src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_toutes_theme_courant; ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_toutes]' , document.forms.annonces_theme_form,'Cancel');" alt='<?php _e('Toutes','annonces') ?>'/>
 					</label>
 					<input type='radio' id='toutes' name='mode'  value='all'>
 					<label for='toutes' ><?php _e('Toutes','annonces') ?>&nbsp;</label>
 					<label for='terrains' >
-						<img src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_radio_terrains_theme_courant'); ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_terrains]' , document.forms.annonces_theme_form);" alt='<?php _e('Terrains','annonces') ?>'/>
+						<img src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_terrains_theme_courant; ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_terrains]' , document.forms.annonces_theme_form);" alt='<?php _e('Terrains','annonces') ?>'/>
 					</label>
 					<input type='radio' id='terrains' name='mode'  value='terrain'>
 					<label for='terrains' ><?php _e('Terrains','annonces') ?>&nbsp;</label>
 					<label for='maisons' >
-						<img src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_radio_maisons_theme_courant'); ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_maisons]' , document.forms.annonces_theme_form);" alt='<?php _e('Maisons','annonces') ?>'/>
+						<img src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_maisons_theme_courant; ?>" onclick="AddSubElement_frame('btn_filtre', 'theme[change_bouton_maisons]' , document.forms.annonces_theme_form);" alt='<?php _e('Maisons','annonces') ?>'/>
 					</label>
 					<input type='radio' id='maisons' name='mode' value='maison/villa'>
 					<label for='maisons' ><?php _e('Maisons','annonces') ?></label>
@@ -147,14 +147,14 @@ global $wpdb;
 				<h4>&#149;&nbsp;<?php _e('Filtre','annonces') ?></h4>
 				<div class='budgettheme'>
 					<p>
-						<img src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_budget_theme_courant'); ?>" onclick="AddSubElement_frame('btn_budget', 'theme[change_bouton_budget]' , document.forms.annonces_theme_form);" alt='Budget'/>
+						<img src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_budget_theme_courant; ?>" onclick="AddSubElement_frame('btn_budget', 'theme[change_bouton_budget]' , document.forms.annonces_theme_form);" alt='Budget'/>
 						<b>&nbsp;&nbsp;<?php _e('Votre budget','annonces') ?><div id="btn_budget" ></div></b>
 					</p>
 				</div>
 				<br/>
 				<div class='superficietheme'>
 					<p>
-						<img src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_superficie_theme_courant'); ?>" onclick="AddSubElement_frame('btn_surface', 'theme[change_bouton_superfice]' , document.forms.annonces_theme_form);" alt='Superficie'/>
+						<img src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_superficie_theme_courant; ?>" onclick="AddSubElement_frame('btn_surface', 'theme[change_bouton_superfice]' , document.forms.annonces_theme_form);" alt='Superficie'/>
 						<b>&nbsp;&nbsp;<?php _e('Superficie terrain souhait&eacute;e','annonces') ?><div id="btn_surface" ></div></b>
 					</p>
 				</div>
@@ -163,7 +163,7 @@ global $wpdb;
 				<div>
 					<table class="irecherche">
 						<tr>
-							<th><img class="irecherche" onclick="AddSubElement_frame('btn_recherche', 'theme[change_bouton_recherche]' , document.forms.annonces_theme_form);" src="<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.annonces_options::recupinfo('url_recherche_theme_courant'); ?>" type='reset' value='' /></th> 
+							<th><img class="irecherche" onclick="AddSubElement_frame('btn_recherche', 'theme[change_bouton_recherche]' , document.forms.annonces_theme_form);" src="<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_recherche_theme_courant; ?>" type='reset' value='' /></th> 
 							<td>
 								<div id="btn_recherche"></div>
 							</td>

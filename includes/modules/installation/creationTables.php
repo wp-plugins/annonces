@@ -177,7 +177,7 @@ function annonces_creationTables()
 					nomoption varchar(1000) collate utf8_unicode_ci default NULL,
 					PRIMARY KEY  (idoption)";
 			// On vérifie si la table option n'existe pas
-			createTable(ANNONCES_TABLE_OPTION,$champoption);
+		//	NOT USED FROM DB VERSION 18
 			
 			
 			$champpasserelle = "idpasserelle int(11) NOT NULL auto_increment,

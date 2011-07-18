@@ -11,205 +11,216 @@ require_once dirname(__FILE__).'/options.class.php';
 global $content;
 global $post;
 
-class Frontend {	
-	
+class Frontend 
+{
+
+	private $annonce_content = '';
+
+
+	/**
+	*	Return an adds url by lookig at the configuration
+	*
+	*	@param integer $id The adds identifier we want to have the url for
+	*
+	*	@return string $annonce_link The url of the adds
+	*/
 	function lienUrl($id)
 	{
 		if (preg_match_all('(\?page_id=)', $_SERVER['REQUEST_URI'], $match) == 0)
+		{
+			if (annonces_url_activation == 'oui')
 			{
-				if (annonces_url_activation == 1)
-				{
-					$annonce_link = Eav::get_link($id);
-				}
-				else
-				{
-					$annonce_link = (strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$id.'&show_mode=list';
-				}
+				$annonce_link = Eav::get_link($id);
 			}
 			else
 			{
 				$annonce_link = (strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$id.'&show_mode=list';
 			}
+		}
+		else
+		{
+			$annonce_link = (strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$id.'&show_mode=list';
+		}
 		
 		return $annonce_link;
 	}
-	
-	function gettype()
-	{
-		global $wpdb;
-		
-		$query = $wpdb->prepare('select measureunit from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attribut where labelattribut = "PrixLoyerPrixDeCession"');
-		$reqmonnaie = $wpdb->get_row($query);
-		$monnaie = $reqmonnaie->measureunit;
 
-		return $monnaie;
-	}
-	
-	private $annonce_content = '';
 	/*---- Parse page content looking for RegEx matches and add modify HTML to acomodate display ----*/
 	/**
-	* Cette méthode recherche dans le contenu de la page Wordpress courante la balise <div rel="annonces" id="annonces" ></div>
-	* puis la remplace par le code html généré pour les petites annonces.
+	*	Check the frontend current page content if there is the content <div rel="annonces" id="annonces" ></div> to replace it with the plugin output content
+	*
+	* @param mixed $content The current page content
+	*
+	*	@return mixed If the page contains the plugin shortcode, replace with the plugin content, else return the content
 	*/
-	public function show($content)
+	function show($content)
 	{
-		if(ereg('<[Dd][Ii][Vv] [Rr][Ee][Ll]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" [Ii][Dd]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" >',$content)){
+		if(ereg('<[Dd][Ii][Vv] [Rr][Ee][Ll]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" [Ii][Dd]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" >',$content))
+		{
 			return $this->generate($content);
-		}else{
+		}
+		else
+		{
 			return $content;
 		}
 	}
-	
-	
-		public function sendMail()
+
+	/**
+	*	Send an email when the user click on the "contact vendor"
+	*/
+	function sendMail()
+	{
+		/**
+		*	Envoi des mails grâce au lien "Contacter le vendeur par email"
+		**/
+		if (isset ($_POST['submit']))
 		{
-			/**
-			*	Envoi des mails grâce au lien "Contacter le vendeur par email"
-			**/
-			
-			if (isset ($_POST['submit']))
+			if (!empty($_POST['txtNom']) && preg_match('`[0-9]{10}`', $_POST['txtTel']) && preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']) && !empty($_POST['txtMessage']))
 			{
-				if (!empty($_POST['txtNom']) && preg_match('`[0-9]{10}`', $_POST['txtTel']) && preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']) && !empty($_POST['txtMessage']))
-				{
-					/**
-					*	Email de réception des demandes d'informations
-					**/
-						$mail = annonces_email_reception;
-						
-					/**
-					*	On filtre les serveurs qui rencontrent des bogues.
-					**/
-						if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
-						{
-							$passage_ligne = "\r\n";
-						}
-						else
-						{
-							$passage_ligne = "\n";
-						}
-
-					/**
-					*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails HTML
-					**/
-						$html = annonces_html_reception;
-						
-						$html = stripslashes(str_replace('%nom%',$_POST['txtNom'], $html));
-						$html = stripslashes(str_replace('%tel%',$_POST['txtTel'], $html));
-						$html = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $html));
-						$html = stripslashes(str_replace('%message%',$_POST['txtMessage'], $html));
-						$html = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $html));
-						$html = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $html));
-						$html = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $html));
-
-					/**
-					*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails TXT
-					**/
-						$txt = annonces_txt_reception;
-						
-						$txt = stripslashes(str_replace('%nom%',$_POST['txtNom'], $txt));
-						$txt = stripslashes(str_replace('%tel%',$_POST['txtTel'], $txt));
-						$txt = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $txt));
-						$txt = stripslashes(str_replace('%message%',$_POST['txtMessage'], $txt));
-						$txt = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $txt));
-						$txt = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $txt));
-						$txt = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $txt));
-						
-						
-					/**
-					*	Déclaration des messages au format texte et au format HTML.
-					**/
-						$message_txt = $txt."";
-						$message_html = "<html><head></head><body>" . $html . "</body></html>";
-						
-					/**
-					*	Création de la boundary
-					**/
-						$boundary = "-----=".md5(rand());
-						$boundary_alt = "-----=".md5(rand());
-					 
-					/**
-					*	Définition du sujet
-					**/
-						$sujet = annonces_sujet_reception;
-						
-						$sujet = stripslashes(str_replace('%nom%',$_POST['txtNom'], $sujet));
-						$sujet = stripslashes(str_replace('%tel%',$_POST['txtTel'], $sujet));
-						$sujet = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $sujet));
-						$sujet = stripslashes(str_replace('%message%',$_POST['txtMessage'], $sujet));
-						$sujet = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $sujet));
-						$sujet = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $sujet));
-						$sujet = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $sujet));
-						
-					/**
-					*	Création du header de l'e-mail
-					**/
-						
-						$header = "From: \"" . $_POST['txtNom'] . "\"<" . $_POST['txtEmail'] . ">".$passage_ligne;
-						$header.= "Reply-to: \"" . $_POST['txtNom'] . "\" <" . $_POST['txtEmail'] . ">".$passage_ligne;
-						$header.= "MIME-Version: 1.0".$passage_ligne;
-						$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
-
-					/**
-					*	Création du message
-					**/
-						$message = $passage_ligne.$boundary.$passage_ligne;
-						
-					/**
-					*	Ajout du message au format texte
-					**/
-						$message.= "Content-Type: text/plain; charset=\"utf-8\"".$passage_ligne;
-						$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-						$message.= $passage_ligne.$message_txt.$passage_ligne;
-
-						$message.= $passage_ligne."--".$boundary.$passage_ligne;
-					/**
-					*	Ajout du message au format HTML
-					**/
-						$message.= "Content-Type: text/html; charset=\"utf-8\"".$passage_ligne;
-						$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-						$message.= $passage_ligne.$message_html.$passage_ligne;
-
-						$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-						$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-
-					/**
-					*	Envoi de l'e-mail
-					**/
-						mail($mail,$sujet,$message,$header);
-						
-						echo '<div class="contact_success">' . __('Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement','annonce') . '</div><br/>';
-				}
-				else
-				{
-					$message_error = __('L\'envoi de votre demande d\'information(s) n\'a pu aboutir :','annonces') . '<br/>';
+				/**
+				*	Email de réception des demandes d'informations
+				**/
+					$mail = annonces_email_reception;
 					
-					if (empty($_POST['txtNom']))
+				/**
+				*	On filtre les serveurs qui rencontrent des bogues.
+				**/
+					if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail))
 					{
-						$message_error .= '<div class="contact_error">' . __('Le nom est incomplet','annonces') . '</div>';
+						$passage_ligne = "\r\n";
 					}
-					if (empty($_POST['txtMessage']))
+					else
 					{
-						$message_error .= '<div class="contact_error">' . __('Le message est incomplet','annonces') . '</div>';
+						$passage_ligne = "\n";
 					}
-					if (!preg_match('`[0-9]{10}`', $_POST['txtTel']))
-					{
-						$message_error .= '<div class="contact_error">' . __('Le t&eacute;l&eacute;phone est incomplet ou incorrect','annonces') . '</div>';
-					}
-					if (!preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']))
-					{
-						$message_error .= '<div class="contact_error">' . __('L\'adresse email est incompl&egrave;te ou incorrecte','annonces') . '</div>';
-					}
+
+				/**
+				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails HTML
+				**/
+					$html = annonces_html_reception;
 					
-					$message_error .= __('Veuillez rectifier ces champs pour que l\'envoi de votre email se fasse','annonces');
-					$message_error .= '<br/><br/>';
-					echo $message_error;
+					$html = stripslashes(str_replace('%nom%',$_POST['txtNom'], $html));
+					$html = stripslashes(str_replace('%tel%',$_POST['txtTel'], $html));
+					$html = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $html));
+					$html = stripslashes(str_replace('%message%',$_POST['txtMessage'], $html));
+					$html = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $html));
+					$html = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $html));
+					$html = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $html));
+
+				/**
+				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails TXT
+				**/
+					$txt = annonces_txt_reception;
+					
+					$txt = stripslashes(str_replace('%nom%',$_POST['txtNom'], $txt));
+					$txt = stripslashes(str_replace('%tel%',$_POST['txtTel'], $txt));
+					$txt = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $txt));
+					$txt = stripslashes(str_replace('%message%',$_POST['txtMessage'], $txt));
+					$txt = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $txt));
+					$txt = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $txt));
+					$txt = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $txt));
+					
+					
+				/**
+				*	Déclaration des messages au format texte et au format HTML.
+				**/
+					$message_txt = $txt."";
+					$message_html = "<html><head></head><body>" . $html . "</body></html>";
+					
+				/**
+				*	Création de la boundary
+				**/
+					$boundary = "-----=".md5(rand());
+					$boundary_alt = "-----=".md5(rand());
+				 
+				/**
+				*	Définition du sujet
+				**/
+					$sujet = annonces_sujet_reception;
+					
+					$sujet = stripslashes(str_replace('%nom%',$_POST['txtNom'], $sujet));
+					$sujet = stripslashes(str_replace('%tel%',$_POST['txtTel'], $sujet));
+					$sujet = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $sujet));
+					$sujet = stripslashes(str_replace('%message%',$_POST['txtMessage'], $sujet));
+					$sujet = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $sujet));
+					$sujet = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $sujet));
+					$sujet = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $sujet));
+					
+				/**
+				*	Création du header de l'e-mail
+				**/
+					
+					$header = "From: \"" . $_POST['txtNom'] . "\"<" . $_POST['txtEmail'] . ">".$passage_ligne;
+					$header.= "Reply-to: \"" . $_POST['txtNom'] . "\" <" . $_POST['txtEmail'] . ">".$passage_ligne;
+					$header.= "MIME-Version: 1.0".$passage_ligne;
+					$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+
+				/**
+				*	Création du message
+				**/
+					$message = $passage_ligne.$boundary.$passage_ligne;
+					
+				/**
+				*	Ajout du message au format texte
+				**/
+					$message.= "Content-Type: text/plain; charset=\"utf-8\"".$passage_ligne;
+					$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+					$message.= $passage_ligne.$message_txt.$passage_ligne;
+
+					$message.= $passage_ligne."--".$boundary.$passage_ligne;
+				/**
+				*	Ajout du message au format HTML
+				**/
+					$message.= "Content-Type: text/html; charset=\"utf-8\"".$passage_ligne;
+					$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+					$message.= $passage_ligne.$message_html.$passage_ligne;
+
+					$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+					$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+
+				/**
+				*	Envoi de l'e-mail
+				**/
+					mail($mail,$sujet,$message,$header);
+					
+				echo '<div class="contact_success">' . __('Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement','annonce') . '</div><br/>';
+			}
+			else
+			{
+				$message_error = __('L\'envoi de votre demande d\'information(s) n\'a pu aboutir :','annonces') . '<br/>';
+				
+				if (empty($_POST['txtNom']))
+				{
+					$message_error .= '<div class="contact_error">' . __('Le nom est incomplet','annonces') . '</div>';
 				}
+				if (empty($_POST['txtMessage']))
+				{
+					$message_error .= '<div class="contact_error">' . __('Le message est incomplet','annonces') . '</div>';
+				}
+				if (!preg_match('`[0-9]{10}`', $_POST['txtTel']))
+				{
+					$message_error .= '<div class="contact_error">' . __('Le t&eacute;l&eacute;phone est incomplet ou incorrect','annonces') . '</div>';
+				}
+				if (!preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']))
+				{
+					$message_error .= '<div class="contact_error">' . __('L\'adresse email est incompl&egrave;te ou incorrecte','annonces') . '</div>';
+				}
+				
+				$message_error .= __('Veuillez rectifier ces champs pour que l\'envoi de votre email se fasse','annonces');
+				$message_error .= '<br/><br/>';
+				echo $message_error;
 			}
 		}
-	
-	
-		public function generate($content){
+	}
+
+	/**
+	*	
+	*/
+	function generate($content)
+	{
 		global $tools;
+		global $wpdb;
+
 		$query        = isset($_REQUEST['query'])        ? $tools->IsValid_Variable($_REQUEST['query'])        : '' ;
 		$query1       = isset($_REQUEST['query1'])       ? $tools->IsValid_Variable($_REQUEST['query1'])       : '' ;
 		$query2       = isset($_REQUEST['query2'])       ? $tools->IsValid_Variable($_REQUEST['query2'])       : '' ;
@@ -225,7 +236,7 @@ class Frontend {
 			**/
 			if(empty($query) AND empty($query1) AND empty($query2) AND empty($query3) AND empty($query4) AND !empty($mode)){
 				$eav_mode = new Eav();
-				$annonces = $eav_mode->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
+				$annonces = $eav_mode->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,0,'nolimit');
 			
 				if($mode != 'all'){
 					foreach($annonces as $i){
@@ -246,7 +257,7 @@ class Frontend {
 
 				$result_search = ' AND ANN.idpetiteannonce IN ('.$id.') ';
 
-				if($show_map == 'true' and (annonces_options::recupinfo(annonces_maps_activation) == 1)){
+				if($show_map == 'true' and (annonces_maps_activation == 'oui')){
 					/*---- Show map ----*/
 					$this->concatAnnonceContent($this->generate_search_map());
 					if(!empty($id)){
@@ -263,7 +274,7 @@ class Frontend {
 					
 				/*---- Show search filter ----*/
 				$this->concatAnnonceContent($this->generate_search());
-				if(annonces_options::recupinfo('annonces_maps_activation') == 1){
+				if(annonces_maps_activation == 'oui'){
 					$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 
 					if(empty($id))
@@ -282,211 +293,193 @@ class Frontend {
 
 				/*---- Show annonce plugin ----*/
 				return $this->addAnnoncesToContent($content);
-			}else{
-				if(file_exists(Search_index_AOS)){
-					$index = Zend_Search_Lucene::open(Search_index_AOS);
-					$query_sentence = new Zend_Search_Lucene_Search_Query_Phrase();//Search a sentence, not some words.
-					$array_query = split(' ',$query);
-					foreach($array_query as $word):
-						$query_sentence->addTerm(new Zend_Search_Lucene_Index_Term($word));
-					endforeach;
-					$query_sentence->setSlop(3);
-					$hits = $index->find($tools->slugify_noaccent($query_sentence));
-					$directSearch = false;
-					if((count($hits) <= 0))
+			}
+			else
+			{
+				$searchResult = array();
+				$array_query = split(' ',$query);
+				foreach($array_query as $searchWordIndex => $search)
+				{
+					$query = 
+						"(SELECT idpetiteannonce 
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce
+						WHERE titre LIKE '%" . mysql_real_escape_string($search) . "%' 
+							OR referenceagencedubien LIKE '%" . mysql_real_escape_string($search) . "%' 
+							OR urlannonce LIKE '%" . mysql_real_escape_string($search) . "%' 
+							AND flagvalidpetiteannonce = 'valid')
+							UNION
+						(SELECT idpetiteannonce
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributchar
+						WHERE valueattributchar LIKE '%" . mysql_real_escape_string($search) . "%'
+							AND flagvalidattributchar = 'valid')
+							UNION
+						(SELECT idpetiteannonce
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdate
+						WHERE valueattributdate LIKE '%" . mysql_real_escape_string($search) . "%'
+							AND flagvalidattributdate = 'valid')
+							UNION
+						(SELECT idpetiteannonce
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdec
+						WHERE valueattributdec LIKE '%" . mysql_real_escape_string($search) . "%'
+							AND flagvalidattributdec = 'valid')
+							UNION
+						(SELECT idpetiteannonce
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributint
+						WHERE valueattributint LIKE '%" . mysql_real_escape_string($search) . "%'
+							AND flagvalidattributint = 'valid')
+							UNION
+						(SELECT idpetiteannonce
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributtext
+							LEFT JOIN " . $wpdb->prefix . "ctlg_petiteannonce__txt ON (idtxt = valueattributtextlong)
+						WHERE ((valueattributtextcourt LIKE '%" . mysql_real_escape_string($search) . "%') OR (txtlong LIKE '%" . mysql_real_escape_string($search) . "%'))
+							AND flagvalidattributtext = 'valid')
+							UNION
+						(SELECT iddest
+						FROM " . $wpdb->prefix . "ctlg_petiteannonce__geolocalisation
+						WHERE (
+							(autolocalisation LIKE '%" . mysql_real_escape_string($search) . "%') OR (adresse LIKE '%" . mysql_real_escape_string($search) . "%') 
+							OR (ville LIKE '%" . mysql_real_escape_string($search) . "%') OR (departement LIKE '%" . mysql_real_escape_string($search) . "%') 
+							OR (region LIKE '%" . mysql_real_escape_string($search) . "%') OR (cp LIKE '%" . mysql_real_escape_string($search) . "%') 
+							OR (pays LIKE '%" . mysql_real_escape_string($search) . "%')
+						)
+							AND flagvalidgeolocalisation = 'valid') ";
+					$searchResult = array_merge($searchResult, $wpdb->get_results($query));
+				}
+				$values = null;
+				$checkprix = null;
+				$checksurface = null;
+				$limite = count($hits);
+				$check_status = new Eav();
+				foreach ($searchResult as $i => $annonces)
+				{
+					$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$annonces->idpetiteannonce."' ","'valid'",annonce_frontend_listing_order,0,'nolimit','count');
+					if($annonce>0)
 					{
-						$searchResult = array();
-						foreach($array_query as $searchWordIndex => $search)
-						{
-							$query = 
-								"(SELECT idpetiteannonce 
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce
-								WHERE titre LIKE '%" . mysql_real_escape_string($search) . "%' 
-									OR referenceagencedubien LIKE '%" . mysql_real_escape_string($search) . "%' 
-									OR urlannonce LIKE '%" . mysql_real_escape_string($search) . "%' 
-									AND flagvalidpetiteannonce = 'valid')
-									UNION
-								(SELECT idpetiteannonce
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributchar
-								WHERE valueattributchar LIKE '%" . mysql_real_escape_string($search) . "%'
-									AND flagvalidattributchar = 'valid')
-									UNION
-								(SELECT idpetiteannonce
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdate
-								WHERE valueattributdate LIKE '%" . mysql_real_escape_string($search) . "%'
-									AND flagvalidattributdate = 'valid')
-									UNION
-								(SELECT idpetiteannonce
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributdec
-								WHERE valueattributdec LIKE '%" . mysql_real_escape_string($search) . "%'
-									AND flagvalidattributdec = 'valid')
-									UNION
-								(SELECT idpetiteannonce
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributint
-								WHERE valueattributint LIKE '%" . mysql_real_escape_string($search) . "%'
-									AND flagvalidattributint = 'valid')
-									UNION
-								(SELECT idpetiteannonce
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__attributtext
-									LEFT JOIN " . $wpdb->prefix . "ctlg_petiteannonce__txt ON (idtxt = valueattributtextlong)
-								WHERE ((valueattributtextcourt LIKE '%" . mysql_real_escape_string($search) . "%') OR (txtlong LIKE '%" . mysql_real_escape_string($search) . "%'))
-									AND flagvalidattributtext = 'valid')
-									UNION
-								(SELECT iddest
-								FROM " . $wpdb->prefix . "ctlg_petiteannonce__geolocalisation
-								WHERE (
-									(autolocalisation LIKE '%" . mysql_real_escape_string($search) . "%') OR (adresse LIKE '%" . mysql_real_escape_string($search) . "%') 
-									OR (ville LIKE '%" . mysql_real_escape_string($search) . "%') OR (departement LIKE '%" . mysql_real_escape_string($search) . "%') 
-									OR (region LIKE '%" . mysql_real_escape_string($search) . "%') OR (cp LIKE '%" . mysql_real_escape_string($search) . "%') 
-									OR (pays LIKE '%" . mysql_real_escape_string($search) . "%')
-								)
-									AND flagvalidgeolocalisation = 'valid') ";
-							$searchResult = array_merge($searchResult, $wpdb->get_results($query));
-						};
-						$directSearch = true;
+						$values[$i] = $annonces->idpetiteannonce;
 					}
-					$values = null;
-					$checkprix = null;
-					$checksurface = null;
-					$limite = count($hits);
-					$check_status = new Eav();
-					if(!$directSearch)
+				}
+
+				if(!empty($query3) OR !empty($query4))
+				{
+					$eav_value = new Eav();
+					$morequery = (!empty($query4) ? " AND ATT_DEC.valueattributdec <= ".$query4." " : "").(!empty($query3) ? " AND ATT_DEC.valueattributdec >= ".$query3." " : "");
+					$prix = $eav_value->getPrix($morequery,'valid');
+					foreach($prix as $i => $instance)
 					{
-						foreach ($hits as $i => $hit){
-							$document = $hit->getDocument();
-							$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$document->getFieldValue('pk')."' ","'valid'",'titre',0,'nolimit','count');
-							if($annonce>0){
-								$values[$i] = $document->getFieldValue('pk');
+						$checkprix[$i] = $instance->idpetiteannonce;
+					}
+				}
+				
+				if(!empty($query1) OR !empty($query2))
+				{
+					$eav_value = new Eav();
+					$morequery = (!empty($query2) ? " AND ATT_DEC.valueattributdec <= ".$query2." " : "").(!empty($query1) ? " AND ATT_DEC.valueattributdec >= ".$query1." " : "");
+					$surface = $eav_value->getSurface($morequery,'valid');
+					foreach($surface as $i => $instance)
+					{
+						$checksurface[$i] = $instance->idpetiteannonce;
+					}
+				}
+				
+				$filter = $this->Filter($checkprix,$checksurface);
+				$checkid = $this->Filter($values,$filter);
+				if(!is_null($checkid))
+				{
+					if(!empty($mode) and ($mode != 'all'))
+					{
+						$eav_mode = new Eav();
+						foreach($checkid as $i)
+						{
+							$eav_mode_value = $eav_mode->getTypeBien(null,'valid',null,$i);
+							if($eav_mode_value[0]->valueattributchar == $mode)
+							{
+								$idarray .= $i.',';
 							}
 						}
 					}
 					else
 					{
-						foreach ($searchResult as $i => $annonces)
+						foreach($checkid as $i)
 						{
-							$annonce = $check_status->getAnnoncesEntete(" AND ANN.idpetiteannonce ='".$annonces->idpetiteannonce."' ","'valid'",'titre',0,'nolimit','count');
-							if($annonce>0){
-								$values[$i] = $annonces->idpetiteannonce;
-							}
-						}
+							$idarray .= $i.',';
+						}					
 					}
 
-					if(!empty($query3) OR !empty($query4)){
-						$eav_value = new Eav();
-						$morequery = (!empty($query4) ? " AND ATT_DEC.valueattributdec <= ".$query4." " : "").(!empty($query3) ? " AND ATT_DEC.valueattributdec >= ".$query3." " : "");
-						$prix = $eav_value->getPrix($morequery,'valid');
-						foreach($prix as $i => $instance){
-							$checkprix[$i] = $instance->idpetiteannonce;
-						}
-					}
-					
-					if(!empty($query1) OR !empty($query2)){
-						$eav_value = new Eav();
-						$morequery = (!empty($query2) ? " AND ATT_DEC.valueattributdec <= ".$query2." " : "").(!empty($query1) ? " AND ATT_DEC.valueattributdec >= ".$query1." " : "");
-						$surface = $eav_value->getSurface($morequery,'valid');
-						foreach($surface as $i => $instance){
-							$checksurface[$i] = $instance->idpetiteannonce;
-						}
-					}
-					
-					$filter = $this->Filter($checkprix,$checksurface);
-					$checkid = $this->Filter($values,$filter);
-					if(!is_null($checkid)){
-						if(!empty($mode) and ($mode != 'all')){
-							$eav_mode = new Eav();
-							foreach($checkid as $i){
-								$eav_mode_value = $eav_mode->getTypeBien(null,'valid',null,$i);
-								if($eav_mode_value[0]->valueattributchar == $mode){
-									$idarray .= $i.',';
-								}
-							}
-						}else{
-							foreach($checkid as $i){
-								$idarray .= $i.',';
-							}					
-						}
 					//Supprime la dernière virgule de la liste des IDs
 					$size = strlen($idarray);
 					$id = substr($idarray, 0, $size-1);
 					
 					$result_search = ' AND ANN.idpetiteannonce IN ('.$id.') ';
+				}
+				
+				if($show_map == 'true')
+				{
+					/*---- Show map ----*/
+					$this->concatAnnonceContent($this->generate_search_map());
+					if(!empty($id))
+					{
+						$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><br/>');
+						$this->concatAnnonceContent($this->show_map($result_search));
 					}
-					
-					if($show_map == 'true'){
-						/*---- Show map ----*/
-						$this->concatAnnonceContent($this->generate_search_map());
-						if(!empty($id)){
-							$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><br/>');
-							$this->concatAnnonceContent($this->show_map($result_search));
-						}else{
-							$result_search = ' AND ANN.idpetiteannonce IN (0) ';
-							$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
-							$this->concatAnnonceContent($this->show_map($result_search));	
-						}
-						/*---- Show annonce plugin ----*/
-						return $this->addAnnoncesToContent($content);
+					else
+					{
+						$result_search = ' AND ANN.idpetiteannonce IN (0) ';
+						$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
+						$this->concatAnnonceContent($this->show_map($result_search));	
 					}
-					
-					/*---- Show search filter ----*/
-					$this->concatAnnonceContent($this->generate_search());
-					if(annonces_maps_activation == 1){
-						$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
-						if(empty($id))
-							{$result_search = ' AND ANN.idpetiteannonce IN (0) ';}
-						$this->concatAnnonceContent($this->generate_map($result_search));
-						$this->concatAnnonceContent('</center><br/><br/>');
-					}else{
-						$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/>');
-					}
-					/*---- Show list annonces ----*/
-					if(!empty($id)){
-						$this->concatAnnonceContent($this->list_annonce($result_search));
-					}else{
-						$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');	
-					}
-
-					/*---- Show annonce plugin ----*/
-					return $this->addAnnoncesToContent($content);
-				}else{
-					/*---- Show search filter ----*/
-					$this->concatAnnonceContent($this->generate_search());
-					$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><p class="rechercheindispo">Recherche momentanement indisponible.</p>');
-			
 					/*---- Show annonce plugin ----*/
 					return $this->addAnnoncesToContent($content);
 				}
+				
+				/*---- Show search filter ----*/
+				$this->concatAnnonceContent($this->generate_search());
+				if(annonces_maps_activation == 'oui')
+				{
+					$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
+					if(empty($id))
+						{$result_search = ' AND ANN.idpetiteannonce IN (0) ';}
+					$this->concatAnnonceContent($this->generate_map($result_search));
+					$this->concatAnnonceContent('</center><br/><br/>');
+				}
+				else
+				{
+					$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/>');
+				}
+
+				/*---- Show list annonces ----*/
+				if(!empty($id))
+				{
+					$this->concatAnnonceContent($this->list_annonce($result_search));
+				}
+				else
+				{
+					$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');	
+				}
+
+				/*---- Show annonce plugin ----*/
+				return $this->addAnnoncesToContent($content);
 			}
 		}
 		
 		/**
 		*	METHODE QUI AFFICHE L'ANNONCE
 		**/
+		$url_page_annonce = site_url() . '/' . Eav::recupPageAnnonce();
 
-		// if(isset($_REQUEST['show_annonce']))
-		// {
-			// /*---- Show annonce ----*/
-			// $this->concatAnnonceContent($this->show_annonce($_REQUEST['show_annonce']));
-			
-			// /*---- Show annonce plugin ----*/
-			// return $this->addAnnoncesToContent($content);
-		// }
-		
-		$url_page_annonce = Eav::get_url() . '/' . Eav::recupPageAnnonce();
-		
 		$nb_carac_url_page = strlen($url_page_annonce);
 		
 		$nb_url = strlen($url_page_annonce)+1;
 		
 		if (strlen('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) > $nb_url)
 		{
-			if (annonces_url_activation == 1)
+			if (annonces_url_activation == 'oui')
 			{
 				$lurl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 				$url = substr($lurl, $nb_url , 500);
 				
 				if(Eav::get_annonce($url))
 				{
-					if(annonces_email_activation == 1)
+					if(annonces_email_activation == 'oui')
 					{
 						$this->sendMail();
 					}
@@ -518,7 +511,7 @@ class Frontend {
 			}
 		}
 
-		if(!empty($show_map) and (annonces_maps_activation == 1))
+		if(!empty($show_map) and (annonces_maps_activation == 'oui'))
 		{
 			/*---- Show map ----*/
 			$this->concatAnnonceContent($this->generate_search_map());
@@ -531,7 +524,7 @@ class Frontend {
 	
 		/*---- Show search filter ----*/
 		$this->concatAnnonceContent($this->generate_search());
-		if(annonces_maps_activation == 1){
+		if(annonces_maps_activation == 'oui'){
 			$this->concatAnnonceContent('<br/><center class="annonces_listing" id="annonces_listing" >');
 			$this->concatAnnonceContent($this->generate_map());
 			$this->concatAnnonceContent('</center><br/><br/>');
@@ -546,27 +539,37 @@ class Frontend {
 		/*---- Show annonce plugin ----*/
 		return $this->addAnnoncesToContent($content);
 	}
-	
-	public function addAnnoncesToContent($content){
+
+	/**
+	*	
+	*/
+	function addAnnoncesToContent($content)
+	{
 		$pattern = '/<div rel="annonces" id="annonces" ><\/div>/';
 		$replacement = '<div rel="annonces" id="annonces"  >'.$this->getAnnonceContent().'</div>';
 
 		$content = preg_replace( $pattern, $replacement, $content );
 		return $content;
 	}
-	
+
+	/**
+	*
+	*/
 	function filter_plugin_actions_links($links, $file)
 	{
 		
-		if ($file == Basename_Dirname_AOS. '/annonces.php')
+		if ($file == ANNONCES_PLUGIN_DIR. '/annonces.php')
 		{
-			$settings_link = $settings_link = '<a href="options-general.php?page=annonces/options.php">' . __('R&eacute;glages', 'annonces') . '</a>';
+			$settings_link = $settings_link = '<a href="options-general.php?page=annonces_options">' . __('R&eacute;glages', 'annonces') . '</a>';
 			array_unshift($links, $settings_link);
 		}
 		return $links;
 	}
-	
-	public function getActualPage()
+
+	/**
+	*
+	*/
+	function getActualPage()
 	{
 		global $tools;
 		$actual_page = isset($_REQUEST['page_nav_annonces']) ? $tools->IsValid_Variable($_REQUEST['page_nav_annonces']) : 0 ;
@@ -577,7 +580,8 @@ class Frontend {
 	/**
 	* Cette méthode est appelé lorsque que le formulaire de recherche fait une requête sur le prix et/ou la superficie
 	*/
-	public function Filter($needle, $haystack){
+	function Filter($needle, $haystack)
+	{
 		if(is_null($needle)){
 			return $haystack;
 		}
@@ -595,14 +599,17 @@ class Frontend {
 		}
 		return $result;
 	}
-	
-	public function getPagination($morequery = null)
+
+	/**
+	*
+	*/
+	function getPagination($morequery = null)
 	{
 		global $tools;
 		$eav_value = new Eav();
 		$link = ' onclick="javascript:document.getElementById(\'page_nav_annonces\').value=\'#PAGE#\';document.forms.navigation_form.submit();" ';
 
-		$nb_total_items = 0;$nb_total_items = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage(),'nolimit','count');
+		$nb_total_items = 0;$nb_total_items = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage(),'nolimit','count');
 		$Pagination = '';
 		if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_FRONTEND_AOS) > 1)
 		{
@@ -612,49 +619,52 @@ class Frontend {
 		return $Pagination;
 	}
 
-	public function add_css()
-	{
-		echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/annonce.css" />';
-		echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/fileuploader.css" />';
-		echo '<link rel="stylesheet" type="text/css" href="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/css/gmlightbox.css" />';
-	}
-	
-	
+
 	/**
-	* Cette méthode ajoute de préférence dans le header la clé de l'API Google Maps qui permet d'afficher les cartes
+	* Add the google maps api callback into wordpress header
 	*/
-	public function add_gmap()
+	function add_gmap()
 	{
-		echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key='.GOOGLE_MAP_KEY_AOS.'" type="text/javascript"></script>';
+		if(annonces_maps_activation == 'oui')
+		{
+			echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=' . annonces_api_key . '" type="text/javascript"></script>';
+		}
 	}
-	
-	public function add_js()
+	/**
+	* Add the different needed javascript into the header
+	*/
+	function add_js()
 	{
-		echo '<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/jquery-1.5.1.js" type="text/javascript"></script>
-		<script type="text/javascript" >var annoncejquery = $.noConflict();</script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/jquery.dataTables.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/gmlightbox.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/jquery-1.4.2.min.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/jquery.uploadify.v2.1.4.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/jquery.uploadify.v2.1.4.min.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/fileuploader.js" type="text/javascript"></script>
-		<script src="'. WP_PLUGIN_URL.'/'.Basename_Dirname_AOS. '/includes/js/swfobject.js" type="text/javascript"></script>';
+		if(!wp_script_is('jquery', 'queue'))
+		{
+			wp_enqueue_script('jquery');
+		}
+		wp_enqueue_script('annonces_js_jq_swfobject', ANNONCES_JS_URL . 'swfobject.js', '', ANNONCE_PLUGIN_VERSION);
+	}
+
+	/**
+	* Add the different needed css into the header
+	*/
+	function add_css()
+	{
+		wp_register_style('annonces_css_main', ANNONCES_CSS_URL . 'annonce.css', '', ANNONCE_PLUGIN_VERSION);
+		wp_enqueue_style('annonces_css_main');
+		wp_register_style('annonces_css_fileuploader', ANNONCES_CSS_URL . 'fileuploader.css', '', ANNONCE_PLUGIN_VERSION);
+		wp_enqueue_style('annonces_css_fileuploader');
 	}
 
 	/**
 	* Cette méthode génère la petite carte que l'on peut voir dans le listing des annonces
 	*/
-	
-	public function generate_map($morequery = null)
+	function generate_map($morequery = null)
 	{
 		$markers = '';
 		$eav_value = new Eav();
 		//Afficher que les marqueurs de la page courante
-		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage());
+		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage());
 		//Afficher tout les marqueurs sans distinction de page
-		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
+		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,0,'nolimit');
 		$sizei = count($annonces);
-		$icon = url_marqueur_courant;
 		for($i = 0; $i < $sizei; $i++)
 		{
 			$annonce_link_1 = $this->lienUrl($annonces[$i]->idpetiteannonce);
@@ -692,8 +702,8 @@ class Frontend {
 						<!-- longitude, latitude et niveau de zoom initial -->
 						annoncemap.setCenter(new GLatLng(43.604262,3.768311), 8);
 						var icon = new GIcon();
-						icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-						icon.iconSize=new GSize(32,32);
+						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
+						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 						icon.iconAnchor=new GPoint(16,16);
 						
 						'.$markers.'
@@ -709,27 +719,27 @@ class Frontend {
 		
 		return $list_map;
 	}
-	
-	public function search_engine()
+
+	function search_engine()
 	{
 	
 	}
-	
-	public function getAnnonceContent()
+
+	function getAnnonceContent()
 	{
 		return $this->annonce_content;
 	}
-	
-	public function setAnnonceContent($new_annonce_content)
+
+	function setAnnonceContent($new_annonce_content)
 	{
 		$this->annonce_content = $new_annonce_content;
 	}
-	
-	public function concatAnnonceContent($new_annonce_content)
+
+	function concatAnnonceContent($new_annonce_content)
 	{
 		$this->annonce_content .= $new_annonce_content;
 	}
-	
+
 	/*---- diplay template Search ----*/
 	function generate_search()
 	{	
@@ -742,7 +752,8 @@ class Frontend {
 		$mode = isset($_REQUEST['mode']) ? $tools->IsValid_Variable($_REQUEST['mode']) : '' ;
 	
 		$filter_search = '';
-		if(annonces_maps_activation == 1){
+		if(annonces_maps_activation == 'oui')
+		{
 			$filter_search .= '		
 			<div class="carte-annonce">
 				<div class="carte-annonce-text">
@@ -760,17 +771,17 @@ class Frontend {
 			</div>';
 		}
 		$filter_search .= '
-		<form action="#annonces_listing" method="POST" class="navigation_form" name="navigation_form" >
+		<form action="#annonces_listing" method="post" class="navigation_form" name="navigation_form" >
 			<input type="hidden" name="page_nav_annonces" id="page_nav_annonces" value="" />
 			<h5>'.__('Recherchez une annonce','annonces').'</h5>
 			<div class="filtre">
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'" />
 				<input type="radio" id="toutes" name="mode" '.(($mode == 'all' or $mode == '')? 'checked': '').' value="all">&nbsp;
 				<label for="toutes" >'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
 				<input type="radio" id="terrains" name="mode" '.(($mode == 'terrain')? 'checked': '').' value="terrain">&nbsp;
 				<label for="terrains" >'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
 				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
@@ -779,7 +790,7 @@ class Frontend {
 			</div>
 			<div class="budget">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
+					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
 					<b>'.__('Votre budget','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_3">Min. : </label>
 						<input type="text" name="query3" value="'.$query3.'" id="search_keywords_3"/>
@@ -789,7 +800,7 @@ class Frontend {
 			</div>
 			<div class="superficie">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_superficie_theme_courant.'" '.__('Superficie terrain souhait&eacute;e','annonces').'"/>
+					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_superficie_theme_courant.'" '.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
 						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
@@ -798,11 +809,11 @@ class Frontend {
 				</p>
 			</div>
 			<div>
-				<input class="inputrecherche" style="background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
+				<input class="inputrecherche" style="background:url('.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
 			</div>
 		</form>';
 		return $filter_search;
-    }
+	}
 
 	/*---- diplay template Search for map (TODO: factoriser les méthodes de recherche)----*/
   function generate_search_map()
@@ -814,7 +825,7 @@ class Frontend {
 		$query3 = isset($_REQUEST['query3']) ? $tools->IsValid_Variable($_REQUEST['query3']) : '' ;
 		$query4 = isset($_REQUEST['query4']) ? $tools->IsValid_Variable($_REQUEST['query4']) : '' ;
 		$mode = isset($_REQUEST['mode']) ? $tools->IsValid_Variable($_REQUEST['mode']) : '' ;
-	
+
 		$filter_search_map = '		
 		<div class="carte-annonce">
 			<div class="carte-annonce-text">
@@ -831,17 +842,17 @@ class Frontend {
 			</div>
 		</div>
 		
-		<form action="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_map=true#annonces_listing" method="POST" class="navigation_form" name="navigation_form" >
+		<form action="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_map=true#annonces_listing" method="post" class="navigation_form" name="navigation_form" >
 			<input type="hidden" name="page_nav_annonces" id="page_nav_annonces" value="" />
 			<h5>'.__('Recherchez une annonce','annonces').'</h5>
 			<div class="filtre">
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_toutes_theme_courant.'"  onclick="javascript:document.getElementById(\'toutes\').checked=true;" alt="'.__('Toutes','annonces').'"/>
 				<input type="radio" id="toutes" name="mode" '.(($mode == 'all' or $mode == '')? 'checked': '').' value="all">&nbsp;
 				<label for="toutes" >'.__('Toutes','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_terrains_theme_courant.'"  onclick="javascript:document.getElementById(\'terrains\').checked=true;" alt="'.__('Terrains','annonces').'"/>
 				<input type="radio" id="terrains" name="mode" '.(($mode == 'terrain')? 'checked': '').' value="terrain">&nbsp;
 				<label for="terrains" >'.__('Terrains','annonces').'</label>&nbsp;&nbsp;&nbsp;
-				<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
+				<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_radio_maisons_theme_courant.'"  onclick="javascript:document.getElementById(\'maisons\').checked=true;" alt="'.__('Maisons','annonces').'"/>
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
 				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
@@ -850,7 +861,7 @@ class Frontend {
 			</div>
 			<div class="budget">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
+					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_budget_theme_courant.'"  alt="'.__('Votre budget','annonces').'"/>
 					<b>'.__('Votre budget','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_3">Min. : </label>
 						<input type="text" name="query3" value="'.$query3.'" id="search_keywords_3"/>
@@ -860,7 +871,7 @@ class Frontend {
 			</div>
 			<div class="superficie">
 				<p>
-					<img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_superficie_theme_courant.'"  alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
+					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_superficie_theme_courant.'"  alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
 						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
@@ -869,20 +880,20 @@ class Frontend {
 				</p>
 			</div>
 			<div>
-				<input class="inputrecherche" style="background:url('.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
+				<input class="inputrecherche" style="background:url('.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_recherche_theme_courant.') no-repeat;" type="submit" value="" />
 			</div>
 		</form>';
 		return $filter_search_map;
-    }
-	
-	public function show_map($morequery = null)
+	}
+
+	function show_map($morequery = null)
 	{
 		$eav_value = new Eav();
 		$generate_map = '';
 		
 		$markers = '';
 		$eav_value = new Eav();
-		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',0,'nolimit');
+		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,0,'nolimit');
 		
 		$sizei = count($annonces);
 
@@ -906,14 +917,13 @@ class Frontend {
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
-		$icon = url_marqueur_courant;
 		$generate_map = '
 			<script type="text/javascript">
 				<!-- Google map -->
 				var annoncemap;
 
 				function show_map() {
-					if(GBrowserIsCompatible()) {
+					if(GBrowserIsCompatible()){
 						var annoncemap = new GMap2(document.getElementById("annonceGmap"));
 						<!-- controle du zoom -->
 						annoncemap.addControl(new GLargeMapControl());
@@ -923,8 +933,8 @@ class Frontend {
 						<!-- longitude, latitude et niveau de zoom initial -->
 						annoncemap.setCenter(new GLatLng(43.496768,3.674927), 9);
 						var icon = new GIcon();
-						icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-						icon.iconSize=new GSize(32,32);
+						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
+						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 						icon.iconAnchor=new GPoint(16,16);
 						
 						'.$markers.'
@@ -941,7 +951,7 @@ class Frontend {
 		return $generate_map;	
 	}
 	
-	public function show_annonce($id = null)
+	function show_annonce($id = null)
 	{
 		if (preg_match_all('(\?page_id=)', $_SERVER['REQUEST_URI'], $match) == 0)
 		{
@@ -959,8 +969,7 @@ class Frontend {
 		$generate_annonce = '';
 		
 		$annonce = $eav_value->getAnnoncesEntete(' AND ANN.idpetiteannonce='.$id,"'valid'");
-		
-		$generate_annonce .= '<p class="retour">';
+
 		$generate_annonce .= '<a href="' . get_option('siteurl') . '/' . $retour_link . '">';
 		$generate_annonce .= '<b>&laquo;&nbsp;'.__('Retour','annonces').'</b>';
 		$generate_annonce .= '</a>';
@@ -993,7 +1002,7 @@ class Frontend {
 		/*** Attention ici faut mettre description longue et non la courte ***/
 		$generate_annonce .= stripslashes($description[0]->valueattributtextcourt);
 		$generate_annonce .= '</div>';
-		if(annonces_date_activation == 1){
+		if(annonces_date_activation == 'oui'){
 			$generate_annonce .= '<div class="published-date">';
 			$generate_annonce .= '<p id="img-date">';
 			$generate_annonce .= __('Publi&eacute;e le','annonces').'&nbsp;:&nbsp;'.date("d/m/Y",strtotime($annonce[0]->autolastmodif));
@@ -1002,27 +1011,23 @@ class Frontend {
 		}else{
 			$generate_annonce .= '<br/><br/>';
 		}
-		if(annonces_photos_activation == 1){
+		if(annonces_photos_activation == 'oui'){
 			$generate_annonce .= '<div class="annonce-img">';
 			$generate_annonce .= '<h5>'.__('Autres vues','annonces').'</h5><br/>';
 			
 			$photos = $eav_value->getPhotos($id);
 			$sizei = count($photos);
-			for($i = 0; $i < $sizei; $i++){
+			for($i = 0; $i < $sizei; $i++)
+			{
 				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[$i]->original))
 				{
-					$generate_annonce .= '<a title="'. $photos[$i]->original .'" href="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $photos[$i]->original .'" rel="lightbox[roadtrip]">';
-					
-					$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[$i]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/>';
-					
-					
-					$generate_annonce .=  '</a>';
+					$generate_annonce .= '<a id="example' . ($i + 1) . '" title="'. $photos[$i]->original .'" href="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $photos[$i]->original .'" ><img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[$i]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/></a>';
 				}
 			}
 			$generate_annonce .= '</div>';
 		}
 		
-		if(annonces_email_activation == 1)
+		if(annonces_email_activation == 'oui')
 		{
 			$generate_annonce .= '<br/><br/><div class="lien_contact">';
 			$generate_annonce .= '<a href="#form_contact"><label>';
@@ -1030,7 +1035,7 @@ class Frontend {
 			$generate_annonce .= '</label></a>';
 			$generate_annonce .= '</div>';
 		}
-		
+
 		$generate_annonce .= '<div class="infocomp">';
 		$generate_annonce .= '<fieldset>';
 		$generate_annonce .= '<legend>'.__('INFORMATIONS COMPL&Eacute;MENTAIRES','annonces').'</legend>';
@@ -1073,11 +1078,10 @@ class Frontend {
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</fieldset>';
 		$generate_annonce .= '</div>';
-		if(annonces_maps_activation == 1){
+		if(annonces_maps_activation == 'oui'){
 			$generate_annonce .= '<p>';
 			$generate_annonce .= '<h5>'.__('Localisation','annonces').'</h5><br/>';
 			$generate_annonce .= '<center>';
-			$icon = url_marqueur_courant;
 			if(!is_null($annonce[0]->latitude) AND !is_null($annonce[0]->longitude)){
 				$generate_annonce .= '
 					<script type="text/javascript">
@@ -1095,8 +1099,8 @@ class Frontend {
 								<!-- longitude, latitude et niveau de zoom initial -->
 								annoncemap.setCenter(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'), 12);
 								var icon = new GIcon();
-								icon.image = "'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/'.$icon.'";
-								icon.iconSize=new GSize(150,150);
+								icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
+								icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 								icon.iconAnchor=new GPoint(16,16);
 								
 								var marker = new GMarker(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),icon);
@@ -1123,7 +1127,7 @@ class Frontend {
 		$generate_annonce .= '</center>';
 		$generate_annonce .= '<br/>';
 		
-		if(annonces_email_activation == 1)
+		if(annonces_email_activation == 'oui')
 		{
 			/**
 			*	Implémentation du "Contacter le vendeur par email"
@@ -1135,7 +1139,7 @@ class Frontend {
 			
 			$generate_annonce .= '<tr>';
 			$generate_annonce .= '<td>';
-			$generate_annonce .= '<form method="POST">';
+			$generate_annonce .= '<form method="post">';
 			$generate_annonce .= '<div>';
 			$generate_annonce .= '<input name="id_annonce" type="hidden" value="' . $id . '" id="id_annonce"/>';
 			$generate_annonce .= '<input name="titre_annonce" type="hidden" value="' . $annonce[0]->titre . '" id="titre_annonce"/>';
@@ -1165,14 +1169,14 @@ class Frontend {
 		return $generate_annonce;
 	}
 	
-	public function list_annonce($morequery = null)
+	function list_annonce($morequery = null)
 	{
 		$eav_value = new Eav();
-		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'titre',$this->getActualPage(),null,null);
+		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage(),null,null);
 		/*
 		*	Modification Alex le 14/04/2010 pour tri par prix (mauvaise version à reprendre)
 		*/
-		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,'autolastmodif',$this->getActualPage(),null,null);
+		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage(),null,null);
 		$sizei = count($annonces);
 
 		$generate_annonce = '';
@@ -1181,7 +1185,7 @@ class Frontend {
 		{
 			if (preg_match_all('(\?page_id=)', $_SERVER['REQUEST_URI'], $match) == 0)
 			{
-				if (annonces_url_activation == 1)
+				if (annonces_url_activation == 'oui')
 				{
 					$annonce_link = get_permalink() . '/' . Eav::get_link($annonces[$i]->idpetiteannonce);
 				}
@@ -1196,7 +1200,7 @@ class Frontend {
 			}
 			
 			$generate_annonce .= '<tr class="annonce-ligne">';
-			if(annonces_photos_activation == 1)
+			if(annonces_photos_activation == 'oui')
 			{
 				$generate_annonce .= '<td><div class="annonce-photos">';
 				$generate_annonce .= '<a href="' . $annonce_link . '">';
@@ -1232,7 +1236,7 @@ class Frontend {
 			$generate_annonce .= '</div>';
 			$generate_annonce .= '</td>';
 			
-			if(annonces_date_activation == 1){
+			if(annonces_date_activation == 'oui'){
 				$generate_annonce .= '<td>';
 				$generate_annonce .= '<div class="annonce-date">';
 				$generate_annonce .= __('Publi&eacute;e le','annonces').'<br/>';
@@ -1260,11 +1264,11 @@ class Frontend {
 						<table>
 							<thead>
 								<tr>';
-									if(annonces_photos_activation == 1){
+									if(annonces_photos_activation == 'oui'){
 										$list_result .= '<th>'.__('Photos','annonces').'</th>';
 									}
 									$list_result .= '<th>'.__('Annonces','annonces').'</th>';
-									if(annonces_date_activation == 1){
+									if(annonces_date_activation == 'oui'){
 										$list_result .= '<th>'.__('Date','annonces').'</th>';
 									}
 									else{

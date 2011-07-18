@@ -40,7 +40,7 @@ class annonce_form extends sfForm
 		  )),
 		  'idgroupeattribut' 				=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_group_possibilities,
-				'label' => __('Cat&eacute;gorie de l&#146;annonce','annonces'),
+				'label' => __('Cat&eacute;gorie de l\'annonce','annonces'),
 		  )),
 		  'aexporter' 							=> new sfWidgetFormSelect(array(
 				'choices' => $flag_a_exporter_possibilities,
@@ -253,8 +253,8 @@ class annonce
 		$content = substr($content,0,-2);
 		if(($fields != "") && ($content != ""))
 		{
-			$sql = $wpdb->prepare ("SELECT idpetiteannonce+1 FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce = (SELECT MAX(idpetiteannonce) FROM  " . PREFIXE_ANNONCES . " )");
-			$reqbudget = mysql_query($sql) or die(mysql_error());
+			$sql = $wpdb->prepare("SELECT idpetiteannonce+1 FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce = (SELECT MAX(idpetiteannonce) FROM  " . PREFIXE_ANNONCES . " )");
+			$reqbudget = mysql_query($sql) or die(mysql_error() . '_' . __FILE__);
 			while($data = mysql_fetch_array($reqbudget))
 			{
 				$idAnnonce = $data[0];
@@ -309,68 +309,15 @@ class annonce
 			}
 			else
 			{
-				$this->error_message = __('Erreur lors de l&#146;insertion','annonces');
+				$this->error_message = __('Erreur lors de l\'insertion','annonces');
 				if(is_admin())$this->error_message .= '<hr/>'.$sql.'<br/>'.mysql_error().'<hr/>';
 				$this->class_admin_notice = 'admin_notices_class_notok';
 
 				$the_act = 'add';
 			}
 		}
-		$this->indexAnnonceForLucene($idpetiteannonce,$values,$eav_array);
 
 		return $the_act;
-	}
-
-	function indexAnnonceForLucene($id_annouce = null, $values_announce = null, $eav_attribut_title = null)
-	{
-		global $tools;
-		if(!is_null($id_annouce) AND !is_null($values_announce) AND !is_null($eav_attribut_title)){
-			if(file_exists(Search_index_AOS)){
-				$index = Zend_Search_Lucene::open(Search_index_AOS);
-			}else{
-				$index = Zend_Search_Lucene::create(Search_index_AOS);
-			}
-
-			// remove existing entries for update
-			foreach ($index->find('pk:'.$id_annouce) as $hit)
-			{
-				$index->delete($hit->id);
-			}
-
-			$doc = new Zend_Search_Lucene_Document();
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $id_annouce));
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($values_announce['titre']), 'utf-8'));
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($values_announce['urlannonce']), 'utf-8'));
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $values_announce['referenceagencedubien']));
-			if(!empty($values_announce['adresse'])){
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('adresse', $tools->slugify_noaccent($values_announce['adresse']), 'utf-8'));
-			}
-			if(!empty($values_announce['ville'])){
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('ville', $tools->slugify_noaccent($values_announce['ville']), 'utf-8'));
-			}
-			if(!empty($values_announce['cp'])){			
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('cp', $values_announce['cp']));
-			}
-			if(!empty($values_announce['region'])){			
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('region', $tools->slugify_noaccent($values_announce['region']), 'utf-8'));
-			}
-			if(!empty($values_announce['departement'])){
-				if($tools->slugify_noaccent($values_announce['departement']) == "Gard"){
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '30'));
-				}
-				if($tools->slugify_noaccent($values_announce['departement']) == "Herault"){
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '34'));
-				}
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('departement', $tools->slugify_noaccent($values_announce['departement']), 'utf-8'));
-			}
-			if(!empty($values_announce['pays'])){			
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('pays', $tools->slugify_noaccent($values_announce['pays']), 'utf-8'));			
-			}
-			foreach($eav_attribut_title as $value_title){
-				$doc->addField(Zend_Search_Lucene_Field::UnStored($value_title, $tools->slugify_noaccent($values_announce[$value_title]), 'utf-8'));
-			}
-			$index->addDocument($doc);
-		}
 	}
 
 	function clearDir($chemin)
@@ -399,73 +346,6 @@ class annonce
              }
     }
 
-	function rewriteSeachEngine()
-	{
-		global $tools;
-		$eav_value = new Eav();
-		$annonces = $eav_value->getAnnoncesEntete(null,"'valid'",null,null,'nolimit');
-		if(file_exists(Search_index_AOS)){$this->clearDir(Search_index_AOS);}
-		foreach($annonces as $i => $annonce){
-			if(file_exists(Search_index_AOS)){
-				$index = Zend_Search_Lucene::open(Search_index_AOS);
-			}else
-				{$index = Zend_Search_Lucene::create(Search_index_AOS);}
-			foreach ($index->find('pk:'.$annonce->idpetiteannonce) as $hit)
-			{
-				$index->delete($hit->id);
-			}
-
-			$doc = new Zend_Search_Lucene_Document();
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $annonce->idpetiteannonce));
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($annonce->titre), 'utf-8'));
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($annonce->urlannonce), 'utf-8'));
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $annonce->referenceagencedubien));
-			
-			if(!empty($annonce->adresse)){
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('adresse', $tools->slugify_noaccent($annonce->adresse), 'utf-8'));
-			}
-			if(!empty($annonce->ville)){
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('ville', $tools->slugify_noaccent($annonce->ville), 'utf-8'));
-			}
-			if(!empty($annonce->cp)){			
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('cp', $annonce->cp));
-			}
-			if(!empty($annonce->region)){			
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('region', $tools->slugify_noaccent($annonce->region), 'utf-8'));
-			}
-			if(!empty($annonce->departement)){
-				if($tools->slugify_noaccent($annonce->departement) == "Gard"){
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '30'));
-				}
-				if($tools->slugify_noaccent($annonce->departement) == "Herault"){
-					$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '34'));
-				}
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('departement', $tools->slugify_noaccent($annonce->departement), 'utf-8'));
-			}
-			if(!empty($annonce->pays)){			
-				$doc->addField(Zend_Search_Lucene_Field::UnStored('pays', $tools->slugify_noaccent($annonce->pays), 'utf-8'));			
-			}
-			foreach($eav_value->getAnnoncesAttributs(null,'valid',null,$annonce->idpetiteannonce,'oui') as $attribut){
-				switch($attribut->typeattribut){
-					case 'CHAR':
-						$doc->addField(Zend_Search_Lucene_Field::UnStored($attribut->labelattribut, $tools->slugify_noaccent($attribut->valueattributchar), 'utf-8'));
-					break;
-					case 'DEC':
-						$doc->addField(Zend_Search_Lucene_Field::Keyword($attribut->labelattribut, $attribut->valueattributint));
-					break;
-					case 'INT':
-						$doc->addField(Zend_Search_Lucene_Field::Keyword($attribut->labelattribut, $attribut->valueattributint));
-					break;
-					case 'TEXT':
-						$doc->addField(Zend_Search_Lucene_Field::UnStored($attribut->labelattribut, $tools->slugify_noaccent($attribut->valueattributtextcourt), 'utf-8'));
-					break;
-				}
-			}
-			$index->addDocument($doc);
-		}
-		$index->optimize();
-	}
-		
 	function update_annonce($values)
 	{
 		global $wpdb;
@@ -581,74 +461,10 @@ class annonce
 				$this->setGeoloc($geoloc_value,$idtoupdate);
 			}
 		}
-		
-		$this->indexAnnonceForLucene($idtoupdate,$values,$eav_array);
 
 		return $the_act;
 	}
 
-	function updateAnnonceForLucene($id)
-	{
-		global $tools;
-		$eav_value = new Eav();
-		$annonce = $eav_value->getAnnoncesEntete(" AND ANN.idpetiteannonce=".$id." ","'valid'",null,0,'nolimit');
-		if(file_exists(Search_index_AOS)){
-			$index = Zend_Search_Lucene::open(Search_index_AOS);
-		}else
-			{$index = Zend_Search_Lucene::create(Search_index_AOS);}
-		foreach ($index->find('pk:'.$annonce[0]->idpetiteannonce) as $hit)
-		{
-			$index->delete($hit->id);
-		}
-		
-		$doc = new Zend_Search_Lucene_Document();
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $annonce[0]->idpetiteannonce));
-		$doc->addField(Zend_Search_Lucene_Field::UnStored('titre', $tools->slugify_noaccent($annonce[0]->titre), 'utf-8'));
-		$doc->addField(Zend_Search_Lucene_Field::UnStored('urlannonce', $tools->slugify_noaccent($annonce[0]->urlannonce), 'utf-8'));
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('reference', $annonce[0]->referenceagencedubien));
-		if(!empty($annonce[0]->adresse)){
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('adresse', $tools->slugify_noaccent($annonce[0]->adresse), 'utf-8'));
-		}
-		if(!empty($annonce[0]->ville)){
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('ville', $tools->slugify_noaccent($annonce[0]->ville), 'utf-8'));
-		}
-		if(!empty($annonce[0]->cp)){			
-			$doc->addField(Zend_Search_Lucene_Field::Keyword('cp', $annonce[0]->cp));
-		}
-		if(!empty($annonce[0]->region)){			
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('region', $tools->slugify_noaccent($annonce[0]->region), 'utf-8'));
-		}
-		if(!empty($annonce[0]->departement)){	
-			if($tools->slugify_noaccent($annonce[0]->departement) == "Gard"){
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '30'));
-			}
-			if($tools->slugify_noaccent($annonce[0]->departement) == "Herault"){
-				$doc->addField(Zend_Search_Lucene_Field::Keyword('code', '34'));
-			}
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('departement', $tools->slugify_noaccent($annonce[0]->departement), 'utf-8'));
-		}
-		if(!empty($annonce[0]->pays)){			
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('pays', $tools->slugify_noaccent($annonce[0]->pays), 'utf-8'));			
-		}
-		foreach($eav_value->getAnnoncesAttributs(null,'valid',null,$id,'oui') as $attribut){
-			switch($attribut->typeattribut){
-				case 'CHAR':
-					$doc->addField(Zend_Search_Lucene_Field::UnStored($attribut->labelattribut, $tools->slugify_noaccent($attribut->valueattributchar), 'utf-8'));
-				break;
-				case 'DEC':
-					$doc->addField(Zend_Search_Lucene_Field::Keyword($attribut->labelattribut, $attribut->valueattributint));
-				break;
-				case 'INT':
-					$doc->addField(Zend_Search_Lucene_Field::Keyword($attribut->labelattribut, $attribut->valueattributint));
-				break;
-				case 'TEXT':
-					$doc->addField(Zend_Search_Lucene_Field::UnStored($attribut->labelattribut, $tools->slugify_noaccent($attribut->valueattributtextcourt), 'utf-8'));
-				break;
-			}
-		}
-		$index->addDocument($doc);
-	}
-	
 	function update_annonce_status($idtoupdate,$field_to_update,$values)
 	{
 		global $wpdb;
@@ -664,27 +480,6 @@ class annonce
 			{
 				$this->error_message = __('La s&eacute;lection a bien &eacute;t&eacute; modifi&eacute;e','annonces');
 				$this->class_admin_notice = 'admin_notices_class_ok';
-
-				$the_act = '';
-				if($field_to_update == 'flagvalidpetiteannonce')
-				{
-					if($values == 'moderated')
-					{
-						if(file_exists(Search_index_AOS)){
-							$index = Zend_Search_Lucene::open(Search_index_AOS);
-							// remove existing entries for update
-							foreach ($index->find('pk:'.$idtoupdate) as $hit)
-							{
-								$index->delete($hit->id);
-							}
-						}
-					}
-					elseif($values == 'valid')
-					{
-						//recreetonindex
-						$this->updateAnnonceForLucene($idtoupdate);
-					}
-				}
 			}
 			elseif(mysql_error() != '')
 			{
@@ -716,14 +511,6 @@ class annonce
 			$this->error_message = __('Erreur lors de la suppression','annonces');
 			if(is_admin())$this->error_message .= '<hr/>'.$sql.'<br/>'.mysql_error().'<hr/>';
 			$this->class_admin_notice = 'admin_notices_class_notok';
-		}
-		if(file_exists(Search_index_AOS)){
-			$index = Zend_Search_Lucene::open(Search_index_AOS);
-			// remove existing entries for update
-			foreach ($index->find('pk:'.$id_to_delete) as $hit)
-			{
-				$index->delete($hit->id);
-			}
 		}
 	}
 
@@ -929,7 +716,7 @@ class annonce
 		// $output = 
 			// '<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
 				// <thead><tr class="titre_listing">
-					// <th class="sorting" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</th>
+					// <th class="sorting" >'.__('Validit&eacute; de l\'annonce','annonces').'</th>
 					// <th class="sorting" >'.__('Exportable','annonces').'</th>
 					// <th class="sorting" >'.__('R&eacute;f&eacute;rence','annonces').'</th>
 					// <th class="sorting" >'.__('Titre','annonces').'</th>
@@ -950,10 +737,10 @@ class annonce
 					// <td>'.$annonce_content->titre.'</td>
 					// <td>'.date("d/m/Y",strtotime($annonce_content->autolastmodif)).'</td>
 					// <td>
-					// <img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/>
+					// <img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/>
 					// </td>
 					// <td>
-					// <img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
+					// <img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
 					// <td><input class="attribut_annonce_content" type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" /></td>
 				// </tr>';
 			// }
@@ -970,7 +757,7 @@ class annonce
 		$output = 
 			'<table summary="annonce listing" cellpadding="2" cellspacing="1" class="listing" >
 				<tr>
-					<td class="listing_header" >'.__('Validit&eacute; de l&#146;annonce','annonces').'</td>
+					<td class="listing_header" >'.__('Validit&eacute; de l\'annonce','annonces').'</td>
 					<td class="listing_header" >'.__('Exportable','annonces').'</td>
 					<td class="listing_header" >'.__('R&eacute;f&eacute;rence','annonces').'</td>
 					<td class="listing_header" >'.__('Titre','annonces').'</td>
@@ -988,9 +775,9 @@ class annonce
 					<td>'.$annonce_content->referenceagencedubien.'</td>
 					<td>'.$annonce_content->titre.'</td>
 					<td>'.date("d/m/Y",strtotime($annonce_content->autolastmodif)).'</td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/></td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
-					<td><input type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" style="cursor:pointer;" /></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_edit.png" alt="edit_annonce" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';document.forms.treat_annonce.submit();"/></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_drop.png" alt="drop_annonce" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$annonce_content->idpetiteannonce.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_annonce.submit();}"/></td>
+					<td><input type="checkbox" name="annonce['.$annonce_content->idpetiteannonce.']" id="annonce_'.$annonce_content->idpetiteannonce.'" value="'.$annonce_content->idpetiteannonce.'" style="cursor:pointer;" /></td>
 				</tr>';
 			}
 		}

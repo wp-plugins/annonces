@@ -4,7 +4,7 @@ Tags: annonce, passerelle, administration, immobilier, map, carte google maps, g
 Donate link: http://www.eoxia.com/site-web/pluginannonces/
 Requires at least: 2.8.4
 Tested up to: 3.1
-Stable tag: 1.1.2.6
+Stable tag: 1.2.0.0
 
 Affiche vos annonces sur votre blog.
 
@@ -43,18 +43,36 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 
 == Changelog ==
 
+
+v1.2.0.0:
+
+* FIXED - Correction de l'option cl&eacute; api de Google map qui n'&eacute;tait pas homog&egrave;ne
+* FIXED - Correction de toutes les erreurs html pour rendre le code valide w3c (partie admin)
+* FIXED - Correction de la g&eacute;olocalisation qui recherchait automatiquement en "Languedoc roussillon" pour les coordonn&eacute;es d'une adresse
+* FIXED - Correction de l'appel du formulaire de gestion des annonces qui &eacute;tait appel&eacute; avec la fonction stripslashes() qui provoquait une erreur fatale sur certains serveurs
+* ADD - Option permettant de choisir si lors de l'export les photos doivent &ecirc;tre envoy&eacute;es ou si uniquement les liens doivent &ecirc;tre envoy&eacute;s
+* CHANGE - Style des champs du formulaire de gestion des annonces pour homog&eacute;n&eacute;iser l'affichage
+* CHANGE - D&eacute;placement de certains javascripts pour regrouper
+* CHANGE - Ajout des valeurs possible pour l'attribut "Bilan consommation &eacute;nergie" et "Bilan &eacute;mission GES" pour &eacute;viter toute erreur
+* CHANGE - Gestion des options selon les bonnes pratiques de wordpress
+* DELETED - Inclusion librairie uploadify (probl&egrave;me de s&eacute;curit&eacute;)
+
+
 v1.1.2.6:
 
 * FIXED - Liens r&eacute;&eacute;crits sur les cartes
+
 
 v1.1.2.5:
 
 * FIXED - Suppression de zend pour la recherche
 * FIXED - R&eacute;&eacute;criture d'url lorsqu'il y a plusieurs pages, et sur l'image des annonces
 
+
 v1.1.2.4:
 
 * FIXED - Correction d'une erreur de readme
+
 
 v1.1.2.3:
 
@@ -64,6 +82,7 @@ v1.1.2.3:
 * FIXED - Url personnalisable lors de l'ajout et la modification de l'annonce
 * FIXED - Mise en place de la r&eacute;&eacute;criture d'URL avec URL type personnalisable
 * CHANGE - Changement du type du "nomoption" dans la base, on est pass&eacute; du char(70) au varchar(1000)
+
 
 v1.1.2.2:
 
@@ -78,9 +97,11 @@ v1.1.2.2:
 * FIXED - L'ic&ocirc;ne google a retrouver sa forme normale et est changeable
 * FIXED - Mise en place des passerelles deja cod&eacute;es et par d&eacute;faut
 
+
 v1.1.2.1:
 
 * FIXED - La taille du champs ville &eacute;tait limit&eacute;e &agrave; 20 caract&egrave;res contre 255 dans la base
+
 
 v1.1.2:
 
@@ -88,15 +109,18 @@ v1.1.2:
 * FIXED - le titre ne s'affiche pas &agrave; cause d'un double appel de la fonction de r&eacute;cup&eacute;ration
 * FIXED - la carte google ne s'affiche pas dans la fiche d'une annonce, d&ucirc; &agrave; une parenth&egrave;se orpheline
 
+
 v1.1.1:
 
 * CHANGE - Affiche la r&eacute;f&eacute;rence de l'annonce si l'option date est d&eacute;coch&eacute;e
+
 
 v1.1.0:
 
 * FIXED - Corrige le probl&egrave;me de m&eacute;moire manquante lors d'un export.
 * CHANGE - N'affiche que les annonces de la page en cours sur la carte google
 * CHANGE - Les annonces sont tri&eacute;es par prix par d&eacute;faut
+
 
 v1.0.1:
 

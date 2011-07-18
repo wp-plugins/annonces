@@ -35,12 +35,6 @@ else
 	$act = 'edit';
 }
 
-//	UPDATE SEARCH ENGINE
-if(!empty($_POST['update_lucene']) && $_POST['update_lucene'])
-{
-	$annonce->rewriteSeachEngine();
-}
-
 //	IF ACTION IS ADD (ADD OR UPDATE) ANNONCE
 if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act != ''))
 {
@@ -83,7 +77,7 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 			
 			$annonce->create_annonce($values);
 			
-			echo '<form name="form_ajout" action="admin.php?page=' . Basename_Dirname_AOS . '/admin/annonce_listing.php" method="POST">';
+			echo '<form name="form_ajout" action="admin.php?page=' . ANNONCES_PLUGIN_DIR . '/admin/annonce_listing.php" method="post">';
 			echo '<input type="hidden" name="id_to_treat" id="id_to_treat" value="' . Eav::getLatestIDAnnonce() . '"/>';
 			echo '<input type="hidden" name="act" id="act" value="edit"/>';
 			echo '<input type="hidden" name="aj" id="aj" value="ok"/>';
@@ -165,7 +159,7 @@ elseif($act == 'edit')
 </div>
 <br/><br/>
 
-<form action="" method="POST" name="treat_annonce" >
+<form action="" method="post" name="treat_annonce" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
@@ -184,29 +178,43 @@ if(($act == 'add') || ($act == 'edit'))
 		<tr>
       <td >
 				<table class="annonce_form" style="width:100%;" >
-				<tr><th colspan=2><div class="ajout_effectue" id="ajout_effectue" >
-				<?php  if ($encours != '' &&  $act != 'edit') {echo __('Cr&eacute;ation effectu&eacute; avec succ&eacute;s','annonces');} else { if ($act != 'add') echo __('Modification effectu&eacute; avec succ&eacute;s','annonces');} ?>
-				</div></th></tr>
-    <?php echo $annonce_form ?>
+					<tr>
+						<th colspan="2" >
+							<div class="ajout_effectue" id="ajout_effectue" >
+								
+<?php  
+	if($encours != '' &&  $act != 'edit')
+	{
+		_e('Cr&eacute;ation effectu&eacute; avec succ&eacute;s','annonces');
+	}
+	elseif ($act != 'add')
+	{
+		_e('Modification effectu&eacute; avec succ&eacute;s','annonces');
+	} 
+?>
+							</div>
+						</th>
+					</tr>
+					<?php echo $annonce_form; ?>
 				</table>
 			</td>
 			<td style="width:18px;" >&nbsp;</td>
       <td rowspan="3" >
 				<div id="annonceGmap" style="width: 512px; height: 400px">
 					<script type="text/javascript">
-						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo annonces_options::recupinfo('url_marqueur_courant') ?>';
-						var input_country = 'annonce_form[pays]';
-						var input_dept = 'annonce_form[departement]';
-						var input_region = 'annonce_form[region]';
-						var adress = 'annonce_form[adresse]';
-						var town = 'annonce_form[ville]';
-						var postal_code = 'annonce_form[cp]';
-						var latitude_input = 'annonce_form[latitude]';
-						var longitude_input = 'annonce_form[longitude]';
+						var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
+						var input_country = 'annonce_form_pays';
+						var input_dept = 'annonce_form_departement';
+						var input_region = 'annonce_form_region';
+						var adress = 'annonce_form_adresse';
+						var town = 'annonce_form_ville';
+						var postal_code = 'annonce_form_cp';
+						var latitude_input = 'annonce_form_latitude';
+						var longitude_input = 'annonce_form_longitude';
 						show_map();
-						<?php
+<?php
 						echo $on_edit_load_map;
-						?>
+?>
 					</script>
 				</div>
       </td>
@@ -217,34 +225,34 @@ if(($act == 'add') || ($act == 'edit'))
 				<table class="annonce_form" style="width:100%;" >
 					<tr>
 						<th>
-							<?php _e('Adresse','annonces') ?>
+							<label for="annonce_form_adresse" ><?php _e('Adresse','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form[adresse]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" /> 
+							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" /> 
 						</td>
 					</tr>
 					<tr>
 						<th>
-							<?php _e('Ville','annonces') ?>
+							<label for="annonce_form_ville" ><?php _e('Ville','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form[ville]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" /> 
+							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" /> 
 						</td>
 					</tr>
 					<tr>
 						<th>
-							<?php _e('Code Postal','annonces') ?>
+							<label for="annonce_form_cp" ><?php _e('Code Postal','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form[cp]" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" /> 
+							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" /> 
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="annonce_form[region]" id="annonce_form[region]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
-				<input type="hidden" name="annonce_form[departement]" id="annonce_form[departement]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
-				<input type="hidden" name="annonce_form[pays]" id="annonce_form[pays]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form[latitude]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" /> 
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form[longitude]" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" /> 
+				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
+				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
+				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" /> 
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" /> 
       </td>
     </tr>
 		<tr><td><hr/></td></tr>
@@ -256,7 +264,7 @@ if(($act == 'add') || ($act == 'edit'))
 					{
 						$id_to_treat = Eav::getLatestIDAnnonce();
 						
-						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
+						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
 					}
 				?>
 				</div>
@@ -275,9 +283,9 @@ if(($act == 'add') || ($act == 'edit'))
 </form>
 <div style="float:right;">
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="10265740">
-		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+		<input type="hidden" name="cmd" value="_s-xclick" />
+		<input type="hidden" name="hosted_button_id" value="10265740" />
+		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !" />
+		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1" />
 	</form>
 </div>

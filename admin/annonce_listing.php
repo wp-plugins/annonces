@@ -20,13 +20,6 @@ $actual_number_of_picture = isset($_REQUEST['actual_number_of_picture']) ? $tool
 $token = isset($_REQUEST['annonce_form']['unique_token']) ? $tools->IsValid_Variable($_REQUEST['annonce_form']['unique_token']) : date('dHis').rand(0,5) ;
 global $current_user;get_currentuserinfo();
 
-
-//	UPDATE SEARCH ENGINE
-if(!empty($_POST['update_lucene']) && $_POST['update_lucene'])
-{
-	$annonce->rewriteSeachEngine();
-}
-
 //	IF ACTION IS ADD (ADD OR UPDATE) ANNONCE
 if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act != ''))
 {
@@ -163,10 +156,20 @@ if(isset($_POST['annonce']) && is_array($_POST['annonce']))
 		}
 	}
 }
-if($current_user->user_level == 10)
+
+
+if($current_user->user_level >= 5)
 {
+	require_once dirname(__FILE__).'./../includes/lib/options.class.php';
+	if (isset($_POST["razLesUrl"]))
+	{
+		annonces_options::majUrlAnnonces();
+	}
 ?>
-	<form action="" method="POST" name="form_update_lucene" ><input name="update_lucene" type="submit" value="<?php _e('Actualiser moteur de recherche','annonces') ?>" /></form>
+	<form method="post" name="raz_url" action="" >
+		<input type="hidden" name="razLesUrl" id="razLesUrl" value="raz" />
+		<input  name="razurl" type="button" value="<?php echo __('R&eacute;initaliser les URLs', 'annonces') ?>" onclick="var check = confirm('&Ecirc;tes vous s&ucirc;r de vouloir remettre par d&eacute;faut selon l\'url type toutes les URLs y compris celles personnalis&eacute;es ?'); if (check ==true) document.forms.raz_url.submit();" />
+	</form>
 <?php 
 }
 if ($_POST['aj'] != '')
@@ -181,60 +184,18 @@ if ($error != '')
 <?php
 }
 ?>
-<script type="text/javascript">
-	window.onload = init;
-	
-	function init()
-	{
-		setTimeout(function(){
-			annoncejquery('#ajout_ok').hide();
-			annoncejquery('#error_message').hide();
-		},5000);
-	}
-	
-	annoncejquery(document).ready(function() {
-		annoncejquery('#annonce_form_titre').bind('keyup', function() {
-	
-				annoncejquery('#annonce_form_urlannonce').val(annoncejquery('#annonce_form_titre').val());
-				
-				var txt = annoncejquery('#annonce_form_urlannonce').val();
-				
-					txt = txt.replace(new RegExp("[ ]", "g"),"-");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('èéêë'); ?>]", "g"),"e");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('àáâãäå'); ?>]", "g"),"a");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('æ'); ?>]", "g"),"ae");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('ç'); ?>]", "g"),"c");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('ìíîï'); ?>]", "g"),"i");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('ñ'); ?>]", "g"),"n");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('òóôõö'); ?>]", "g"),"o");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('œ'); ?>]", "g"),"oe");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('ùúûü'); ?>]", "g"),"u");
-					txt = txt.replace(new RegExp("[<?php echo utf8_encode('ýÿ'); ?>]", "g"),"y");
-				
-				var reg = new RegExp("[^0-9a-zA-Z-_]", "g");
-				txt = txt.replace(reg,"");
-				
-				annoncejquery('#annonce_form_urlannonce').val(txt.toLowerCase());
-			});
-		});
-		
-</script>
 <div class="wrap">
 	<h2>
 		<?php echo __('Annonces','annonces') ?>
-		<a class="button add-new-h2" href="<?php echo 'admin.php?page=' . Basename_Dirname_AOS . '/admin/add_annonce.php' ?>">
-		<?php echo __('Ajouter','annonces') ?></a>
+		<a class="button add-new-h2" href="<?php echo 'admin.php?page=' . ANNONCES_PLUGIN_DIR . '/admin/add_annonce.php' ?>"><?php echo __('Ajouter','annonces') ?></a>
 	</h2>
 </div>
 <br/>
 <div style="clear:both;" id="error_message" class="<?php echo $annonce->class_admin_notice; ?>" ><?php echo $annonce->error_message; ?></div>
-
-
-<form action="" method="POST" name="treat_annonce" >
+<form action="" method="post" name="treat_annonce" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-	
 <?php
 if(($act == 'add') || ($act == 'edit'))
 {
@@ -244,14 +205,14 @@ if(($act == 'add') || ($act == 'edit'))
 		<tr>
       <td >
 				<table class="annonce_form" style="width:100%;" >
-    <?php echo stripslashes($annonce_form) ?>
+					<?php echo $annonce_form; ?>
 				</table>
 			</td>
 			<td style="width:18px;" >&nbsp;</td>
       <td rowspan="3" >
 				<div id="annonceGmap" style="width: 512px; height: 400px">
 					<script type="text/javascript">
-						var image_icon = '<?php echo WP_PLUGIN_URL.'/'.Basename_Dirname_AOS; ?>/medias/images/<?php echo url_marqueur_courant ?>';
+						var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
 						var input_country = 'annonce_form[pays]';
 						var input_dept = 'annonce_form[departement]';
 						var input_region = 'annonce_form[region]';
@@ -274,34 +235,34 @@ if(($act == 'add') || ($act == 'edit'))
 				<table class="annonce_form" style="width:100%;" >
 					<tr>
 						<th>
-							<?php _e('Adresse','annonces') ?>
+							<label for="annonce_form_adresse" ><?php _e('Adresse','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form[adresse]" value="<?php echo stripslashes($geo_loc->adresse) ?>" /> 
+							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php echo stripslashes($geo_loc->adresse) ?>" /> 
 						</td>
 					</tr>
 					<tr>
 						<th>
-							<?php _e('Ville','annonces') ?>
+							<label for="annonce_form_ville" ><?php _e('Ville','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form[ville]" value="<?php echo stripslashes($geo_loc->ville) ?>" onblur="javascript:getCoordonnees();" /> 
+							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php echo stripslashes($geo_loc->ville) ?>" onblur="javascript:getCoordonnees();" /> 
 						</td>
 					</tr>
 					<tr>
 						<th>
-							<?php _e('Code Postal','annonces') ?>
+							<label for="annonce_form_cp" ><?php _e('Code Postal','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form[cp]" value="<?php echo stripslashes($geo_loc->cp) ?>" onkeyup="javascript:getCoordonnees() ;" /> 
+							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php echo stripslashes($geo_loc->cp) ?>" onkeyup="javascript:getCoordonnees() ;" /> 
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="annonce_form[region]" id="annonce_form[region]" value="<?php echo stripslashes($geo_loc->region) ?>" />
-				<input type="hidden" name="annonce_form[departement]" id="annonce_form[departement]" value="<?php echo stripslashes($geo_loc->departement) ?>" />
-				<input type="hidden" name="annonce_form[pays]" id="annonce_form[pays]" value="<?php echo stripslashes($geo_loc->pays) ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form[latitude]" value="<?php echo stripslashes($geo_loc->latitude) ?>" /> 
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form[longitude]" value="<?php echo stripslashes($geo_loc->longitude) ?>" /> 
+				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php echo stripslashes($geo_loc->region) ?>" />
+				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php echo stripslashes($geo_loc->departement) ?>" />
+				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php echo stripslashes($geo_loc->pays) ?>" />
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo stripslashes($geo_loc->latitude) ?>" /> 
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo stripslashes($geo_loc->longitude) ?>" /> 
       </td>
     </tr>
 		<tr><td><hr/></td></tr>
@@ -311,7 +272,7 @@ if(($act == 'add') || ($act == 'edit'))
 				<?php
 					if(($id_to_treat != '') || ($token != ''))
 					{
-						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
+						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
 					}
 				?>
 				</div>
@@ -386,9 +347,9 @@ if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS_LISTING) > 1)$Paginati
 </form>
 <div style="float:right;">
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="10265740">
-		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus s&eacute;curis&eacute;e !">
-		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+		<input type="hidden" name="cmd" value="_s-xclick" />
+		<input type="hidden" name="hosted_button_id" value="10265740" />
+		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus s&eacute;curis&eacute;e !" />
+		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1" />
 	</form>
 </div>

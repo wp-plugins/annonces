@@ -79,7 +79,7 @@ class attribut_group
 			}
 			else
 			{
-				$this->error_message = __('Erreur lors de l&#146;insertion','annonces');
+				$this->error_message = __('Erreur lors de l\'insertion','annonces');
 				if(is_admin())$this->error_message .= '<hr/>'.$sql.'<br/>'.mysql_error().'<hr/>';
 				$this->class_admin_notice = 'admin_notices_class_notok';
 			}
@@ -187,7 +187,7 @@ class attribut_group
 						annoncejquery(document).ready(function() {
 							annoncejquery(\'#example\').dataTable({
 								"oLanguage": {
-									"sUrl": "' .WP_PLUGIN_URL . '/' . Basename_Dirname_AOS.'/includes/js/dataTables.french.txt"
+									"sUrl": "' .WP_PLUGIN_URL . '/' . ANNONCES_PLUGIN_DIR.'/includes/js/dataTables.french.txt"
 								}
 							});
 						} );
@@ -220,8 +220,8 @@ class attribut_group
 					<td>'.$flag_possibilities[$attribut_group_content->flagvalidgroupeattribut].'</td>
 					<td>'.$attribut_group_content->nomgroupeattribut.'</td>
 					<td>'.$attribut_group_content->descriptiongroupeattribut.'</td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_edit.png" alt="edit_cat" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$attribut_group_content->idgroupeattribut.'\';document.forms.treat_group_att.submit();"/></td>
-					<td><img src="'.WP_PLUGIN_URL.'/'.Basename_Dirname_AOS.'/medias/images/b_drop.png" alt="drop_cat" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$attribut_group_content->idgroupeattribut.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_group_att.submit();}" /></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_edit.png" alt="edit_cat" class="button_img"  onclick="javascript:document.getElementById(\'act\').value=\'edit\';document.getElementById(\'id_to_treat\').value=\''.$attribut_group_content->idgroupeattribut.'\';document.forms.treat_group_att.submit();"/></td>
+					<td><img src="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/b_drop.png" alt="drop_cat" class="button_img" onclick="javascript:document.getElementById(\'act\').value=\'delete\';document.getElementById(\'id_to_treat\').value=\''.$attribut_group_content->idgroupeattribut.'\';var check = confirm(\'&Ecirc;tes vous s&ucirc;r de vouloir supprimer cet &eacute;l&eacute;ment ? \');if(check == true){document.forms.treat_group_att.submit();}" /></td>
 				</tr>';
 			}
 		}

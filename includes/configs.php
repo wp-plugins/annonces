@@ -1,7 +1,6 @@
 <?php
 
 	DEFINE('small_ad_table_prefix_AOS','ctlg_');
-	DEFINE('GOOGLE_MAP_KEY_AOS',get_option('annonces_api_key'));
 	DEFINE('DEFAULT_FILTERS_EMPTY_VALUE_AOS',__("Tous","annonces"));
 
 	DEFINE('WAY_TO_PICTURES_AOS',"/uploads/small_ad/");
@@ -62,6 +61,24 @@
 	$select_yes_no_for_filters = array(DEFAULT_FILTERS_EMPTY_VALUE_AOS=>__('Tous','annonces'),'oui'=>__('Oui','annonces'),'non'=>__('Non','annonces'));
 
 	$select_special_attribut = array();
+	$select_special_attribut['BilanConsommationEnergie'] = array(
+				'A' => 'A',
+				'B' => 'B',
+				'C' => 'C',
+				'D' => 'D',
+				'E' => 'E',
+				'F' => 'F',
+				'G' => 'G'
+	);
+	$select_special_attribut['BilanEmissionGES'] = array(
+				'A' => 'A',
+				'B' => 'B',
+				'C' => 'C',
+				'D' => 'D',
+				'E' => 'E',
+				'F' => 'F',
+				'G' => 'G'
+	);
 	$select_special_attribut['TypeAnnonce'] = array(
 				//'cession de bail' => 'Cession de bail',
 				//'location' => 'Location',

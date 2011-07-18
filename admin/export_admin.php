@@ -61,14 +61,12 @@ elseif(!empty($_POST) && is_array($_POST['passerelle_filter']) && ($act == 'filt
 		$morequery = $passerelle_filters_form->setMorequery($filter_values);
 	}
 }
+
 ?>
-<form action="" method="POST" name="treat_passerelle">
-	<input type="hidden" name="act" value="add" />
 <div class="wrap">
 	<h2>
 		<?php echo __('Passerelles','annonces') ?>
-		<a class="button add-new-h2" onclick="javascript:document.getElementById('act').value = 'add';document.forms.treat_passerelle.submit();"">
-		<?php echo __('Ajouter','annonces') ?></a>
+		<a class="button add-new-h2" onclick="javascript:document.getElementById('act').value = 'add';document.forms.treat_passerelle.submit();"><?php echo __('Ajouter','annonces') ?></a>
 	</h2>
 </div>
 <br/>
@@ -78,14 +76,15 @@ elseif(!empty($_POST) && is_array($_POST['passerelle_filter']) && ($act == 'filt
 if(($act == 'add') || ($act == 'edit'))
 {
 ?>
-
+<form action="" method="post" name="treat_passerelle">
+	<input type="hidden" name="act" value="add" />
   <table class="annonce_form" >
     <?php echo $form ?>
     <tr>
       <td colspan="2">
        	<table class="attribut_listing" >
 					<tr>
-						<td class="td_att_listing" colspan="10" ><?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important','annonces') ?></td>
+						<td class="td_att_listing" colspan="10" ><?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l\'ordre est important','annonces') ?></td>
 					</tr>
 					<?php
 						$attribut_annonce = new attribut_annonce();
@@ -107,6 +106,10 @@ if(($act == 'add') || ($act == 'edit'))
 								$i=0;
 							}
 						}
+						if(($i != 0) || ($i < 5) || ($i < count($attribut_listing)))
+						{
+							echo '</tr>';
+						}
 					?>
 				</table>
       </td>
@@ -126,27 +129,18 @@ elseif($act == 'delete')
 	$act = '';
 }
 
-
-$nb_total_items = 0;$nb_total_items = $passerelle->get_passerelle($morequery, $flag , $actual_page, 'count');
-/*$Pagination = '';
-if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_passerelle.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF',-1);*/
-
 if(($act == '') || ($act == 'filter'))
 {
 ?>
-<form action="" method="POST" name="treat_passerelle" >
+<form action="" method="post" name="treat_passerelle" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
-		
-		<div id="attribut_annonce_listing" >
-		<br/><br/>
-			<?php /*echo $Pagination */?>
-			<div class="margin18px" >
-				<?php echo $passerelle->show_passerelle($passerelle->get_passerelle($morequery, $flag , $actual_page)) ?>
-			</div>
-			<?php /*echo $Pagination */?>
+	<div id="attribut_annonce_listing" >
+		<div class="margin18px" >
+			<?php echo $passerelle->show_passerelle($passerelle->get_passerelle($morequery, $flag , $actual_page)) ?>
 		</div>
+	</div>
 </form>
 <?php
 }

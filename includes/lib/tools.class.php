@@ -113,7 +113,20 @@ class tools
 
 	  return $text;
 	}
+	function slugify_accent_ut8($text){
+		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/", "/&#146;/","/&#34;/");
+		$rep_pat = Array("é", "è", "ê", "ç", "à", "â", "î", "ï", "ù", "ô", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", "Ö", "Ù", "Û", "Ü", "'",'"');
+		if ($text == '')
+		{
+			return '';
+		}
+		else
+		{
+			$text = preg_replace($pattern, $rep_pat, ($text));
+	  }
 
+	  return $text;
+	}
 	function slugify_accent($text){
 		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/", "/&#146;/","/&#34;/");
 		$rep_pat = Array("é", "è", "ê", "ç", "à", "â", "î", "ï", "ù", "ô", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", "Ö", "Ù", "Û", "Ü", "'",'"');
@@ -159,19 +172,76 @@ class tools
 	  return $text;
 	}
 	
-	function make_recursiv_dir($dir){
+	function make_recursiv_dir($directory)
+	{
+		$directoryComponent = explode('/',$directory);
+		$str = '';
+		foreach($directoryComponent as $k => $component)
+		{
+			if((trim($component) != '') && (trim($component) != '..') && (trim($component) != '.'))
+			{
+				$str .= '/' . trim($component);
+				if(long2ip(ip2long($_SERVER["REMOTE_ADDR"])) == '127.0.0.1')
+				{
+					if(!is_dir(substr($str,1)) && (!is_file(substr($str,1)) ) )
+					{
+						mkdir( substr($str,1) );
+					}
+				}
+				else
+				{
+					if(!is_dir($str) && (!is_file($str) ) )
+					{
+						mkdir( $str );
+					}
+				}
+			}
+		}
+		tools::changeAccesAuthorisation($directory);
+	}
+
+	function changeAccesAuthorisation($dir)
+	{
 		$tab=explode('/',$dir);
 		$str='';
-		foreach($tab as $k => $v ){
-			if((trim($v)!='')){
+		foreach($tab as $k => $v )
+		{
+			if((trim($v)!=''))
+			{
 				$str.='/'.trim($v);
-				if( (trim($v)!='..') &&(trim($v)!='.') ){
-					if(!is_dir(substr($str,1)) && (!is_file(substr($str,1)) ) ){
-						if(!mkdir(substr($str,1), 0755))echo '<hr>erreur mkdir ! '.$str;
-						if(!chmod(substr($str,1), 0755))echo '<hr>erreur chmod ! '.$str;				
+				if( (trim($v)!='..') &&(trim($v)!='.') )
+				{
+					if(!is_dir(substr($str,1)) && (!is_file(substr($str,1)) ) )
+					{
+						chmod(str_replace('//','/',$str), 0755);
 					}
 				}
 			}
 		}
 	}
+
+	function copyEntireDirectory($sourceDirectory, $destinationDirectory)
+	{
+		if(is_dir($sourceDirectory))
+		{
+			if(!is_dir($destinationDirectory))
+			{
+				mkdir($destinationDirectory, 0755, true);
+			}
+			$hdir = opendir($sourceDirectory);
+			while($item = readdir($hdir))
+			{
+				if(is_dir($sourceDirectory . '/' . $item) && ($item != '.') && ($item != '..')  && ($item != '.svn') )
+				{
+					tools::copyEntireDirectory($sourceDirectory . '/' . $item, $destinationDirectory . '/' . $item);
+				}
+				elseif(is_file($sourceDirectory . '/' . $item))
+				{
+					copy($sourceDirectory . '/' . $item, $destinationDirectory . '/' . $item);
+				} 
+			}
+			closedir( $hdir );
+		}
+	}
+
 }

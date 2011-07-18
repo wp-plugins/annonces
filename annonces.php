@@ -5,7 +5,7 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.1.2.6
+	Version: 1.2.0.0
 */
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
  
@@ -29,69 +29,36 @@
 	* Annonces est un plugin OpenSource permettant d'ajouter facilement des annonces sur son blog (ex: annonce immobilere, automobile...).
 	* Il suffit d'ajouter cette balise <b><div rel="annonces" id="annonces" ></div></b> dans le code html de votre page.
 	* @author Eoxia <contact@eoxia.com>
-	* @version 1.1.2.6
+	* @version 1.2.0.0
 	*/
 	
-	/**
-	* VARIABLES DE CONFIGURATIONS
-	*/
-	/**
-	* Basename_Dirname_AOS
-	* Sert de chemin de base pour inclure des classes ou fonctions du plugin
-	*/
-	DEFINE('Basename_Dirname_AOS',basename(dirname(__FILE__)));
+	{/* VARIABLES DE CONFIGURATIONS */
+		/* ANNONCES_PLUGIN_DIR permet de définirle chemin de base pour inclure des classes ou fonctions du plugin */
+		DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
+	}
 
-	/**
-	* I18N
-	*
-	* Wordpress propose un systeme de traduction I18N
-	* Cette fonction recupere le nom de domaine annonces et le dossier ou se trouve toute les traductions
-	*/
-	load_plugin_textdomain( 'annonces', false, Basename_Dirname_AOS.'\includes\languages');
-	
-	/**
-	* Search_index_AOS
-	* Chemin du dossier ou Lucene cree son index
-	*/
-	DEFINE('Search_index_AOS',ABSPATH.'wp-content/plugins/'.Basename_Dirname_AOS.'/includes/data/eav-index');
-	
+	/* Ajout des options	*/
+	add_action('admin_init', array('annonces_options', 'add_options'));
+
+	/* TRADUCTION : Wordpress propose un systeme de traduction I18N : Cette fonction recupere le nom de domaine annonces et le dossier ou se trouve toute les traductions */
+	load_plugin_textdomain( 'annonces', false, ANNONCES_PLUGIN_DIR.'\includes\languages');
+
 	/**
 	* Fichier de configurations
 	*/
-	require_once('includes/configs.php');
-	/**
-	* INCLUDES TOOLS
-	*/
+	require_once(WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/includes/configs.php' );
+	require_once(WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/includes/config/config.php' );
 
-	/**
-	* Tools est une classe contenant toute les methodes utiles du plugin
-	*/
-	require_once('includes/lib/tools.class.php');
-	/**
-	* CREATE A TOOL INSTANCE
-	*/
-	$tools = new tools();
-	
-	
-	
-	
-	/**
-	*	Recherche de la version
-	*/
-	
-	
-	
-	/**
-	* INCLUDE LIBRAIRIES
-	*/
-	require_once(Basename_Dirname_AOS. '/../admin/admin.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/options.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/admin_annonces.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/admin_attributs.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/eav.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/frontend.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/installation.class.php');
-	require_once(Basename_Dirname_AOS. '/../includes/lib/Zend/Search/Lucene.php');
+	/*	INCLUDES TOOLS	*/
+		/* Tools est une classe contenant toute les methodes utiles du plugin	*/
+		require_once('includes/lib/tools.class.php');
+		/* CREATE A TOOL INSTANCE	*/
+		$tools = new tools();
+
+	/* INCLUDE LIBRAIRIES */
+	require_once(ANNONCES_INC_PLUGIN_DIR . 'includes.php');
+
+	require_once(ANNONCES_PLUGIN_DIR. '/../admin/admin.php');
 
 	/**
 	* CREATE A FRONTEND INSTANCE
@@ -110,8 +77,7 @@
 	/**
 	* Ajoute le CSS dans le Header de Wordpress
 	*/
-	
-	add_action('wp_head', array( $view, "add_css" ));
+	add_action('init', array( $view, "add_css" ));
 	
 	/**
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header de Wordpress
@@ -125,54 +91,51 @@
 	/**
 	*	Ajoute la biblothèque JQuery dans le Header (même admin) de WordPress
 	*/
-	add_action('admin_head', array( $view, "add_js" ));
-	add_action('wp_head', array( $view, "add_js" ));
-		
-	
-	
-	DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
-	DEFINE('ANNONCES_HOME_DIR', WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/');
-	DEFINE('ANNONCES_INC_PLUGIN_DIR', ANNONCES_HOME_DIR . 'includes/');
-	DEFINE('ANNONCES_CONFIG', ANNONCES_INC_PLUGIN_DIR . 'config/config.php');
-	require_once(ANNONCES_CONFIG);
-	
+	add_action('admin_init', array( $view, "add_js" ));
+	add_action('init', array( $view, "add_js" ));
+
 	/**
 	*	Création des tables
 	**/
 	require_once(ANNONCES_MODULES_PLUGIN_DIR . 'installation/creationTables.php');
 	annonces_creationTables();
 	
-	/**
-	* Defini chaque option
-	*/
-	define('annonces_api_key', annonces_options::recupinfo('annonces_api_key'));
-	define('url_budget_theme_courant', annonces_options::recupinfo('url_budget_theme_courant'));
-	define('url_superficie_theme_courant', annonces_options::recupinfo('url_superficie_theme_courant'));
-	define('url_radio_maisons_theme_courant', annonces_options::recupinfo('url_radio_maisons_theme_courant'));
-	define('url_recherche_theme_courant', annonces_options::recupinfo('url_recherche_theme_courant'));
-	define('theme_activation', annonces_options::recupinfo('theme_activation'));
-	define('annonces_marqueur_activation', annonces_options::recupinfo('annonces_marqueur_activation'));
-	define('url_radio_terrains_theme_courant', annonces_options::recupinfo('url_radio_terrains_theme_courant'));
-	define('url_radio_toutes_theme_courant', annonces_options::recupinfo('url_radio_toutes_theme_courant'));
-	define('url_marqueur_courant', annonces_options::recupinfo('url_marqueur_courant'));
-	define('annonces_maps_activation', annonces_options::recupinfo('annonces_maps_activation'));
-	define('annonces_photos_activation', annonces_options::recupinfo('annonces_photos_activation'));
-	define('annonces_date_activation', annonces_options::recupinfo('annonces_date_activation'));
-	define('annonces_email_reception', annonces_options::recupinfo('annonces_email_reception'));
-	define('annonces_nom_reception', annonces_options::recupinfo('annonces_nom_reception'));
-	define('annonces_sujet_reception', annonces_options::recupinfo('annonces_sujet_reception'));
-	define('annonces_txt_reception', annonces_options::recupinfo('annonces_txt_reception'));
-	define('annonces_html_reception', annonces_options::recupinfo('annonces_html_reception'));
-	define('annonces_email_activation', annonces_options::recupinfo('annonces_email_activation'));
-	define('annonces_expression_url', annonces_options::recupinfo('annonces_expression_url'));
-	define('annonces_page_install', annonces_options::recupinfo('annonces_page_install'));
-	define('annonces_url_activation', annonces_options::recupinfo('annonces_url_activation'));
-	
-	/**
-	*	Réécriture des URLs
-	**/
-	
-		
+	{/* Definition des options */
+		$annonces_options = get_option('annonces_options');
+
+		define('annonces_api_key', annonces_options::valeurOption('gmap_api_key'));
+		define('annonces_maps_activation', annonces_options::valeurOption('annonce_activate_map'));
+		define('url_marqueur_courant', annonces_options::valeurOption('annonce_map_marker'));
+		define('annonce_map_marker_size', annonces_options::valeurOption('annonce_map_marker_size'));
+
+		define('annonces_photos_activation', annonces_options::valeurOption('annonce_show_picture'));
+		define('annonces_date_activation', annonces_options::valeurOption('annonce_show_date'));
+		define('annonce_frontend_listing_order', annonces_options::valeurOption('annonce_frontend_listing_order'));
+		define('annonce_frontend_listing_order_side', annonces_options::valeurOption('annonce_frontend_listing_order_side'));
+
+		define('annonce_currency', annonces_options::valeurOption('annonce_currency'));
+		define('annonce_export_picture', annonces_options::valeurOption('annonce_export_picture'));
+
+		define('annonces_url_activation', annonces_options::valeurOption('annonce_activate_url_rewrite'));
+		define('annonces_expression_url', annonces_options::valeurOption('annonce_url_rewrite_template'));
+		define('annonce_url_rewrite_template_suffix', annonces_options::valeurOption('annonce_url_rewrite_template_suffix'));
+
+		define('url_budget_theme_courant', annonces_options::valeurOption('url_budget'));
+		define('url_superficie_theme_courant', annonces_options::valeurOption('url_superficie'));
+		define('url_radio_maisons_theme_courant', annonces_options::valeurOption('url_radio_maisons'));
+		define('url_recherche_theme_courant', annonces_options::valeurOption('url_recherche'));
+		define('url_radio_terrains_theme_courant', annonces_options::valeurOption('url_radio_terrains'));
+		define('url_radio_toutes_theme_courant', annonces_options::valeurOption('url_radio_toutes'));
+
+		define('annonces_email_reception', annonces_options::valeurOption('annonces_email_reception'));
+		define('annonces_nom_reception', annonces_options::valeurOption('annonces_nom_reception'));
+		define('annonces_sujet_reception', annonces_options::valeurOption('annonces_sujet_reception'));
+		define('annonces_txt_reception', annonces_options::valeurOption('annonces_txt_reception'));
+		define('annonces_html_reception', annonces_options::valeurOption('annonces_html_reception'));
+		define('annonces_email_activation', annonces_options::valeurOption('annonces_email_activation'));
+	}
+
+	{/* Réécriture des URLs */
 		add_filter('rewrite_rules_array','wp_insertMyRewriteRules');
 		add_filter('query_vars','wp_insertMyRewriteQueryVars');
 		add_filter('wp_loaded','flushRules');
@@ -200,3 +163,4 @@
 			array_push($vars, 'show_annonce');
 			return $vars;
 		}
+	}

@@ -115,7 +115,7 @@ if(isset($_POST['attribut']) && is_array($_POST['attribut']))
 
 ?>
 
-<form action="" method="POST" name="treat_attribut" >
+<form action="" method="post" name="treat_attribut" >
 	<input type="hidden" name="id_to_treat" id="id_to_treat" value="" />
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />

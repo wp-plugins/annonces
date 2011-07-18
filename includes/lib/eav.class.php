@@ -85,7 +85,7 @@ class Eav {
 		
 		$eav_mode = new Eav();
 						
-		$recup_link = Eav::get_expression();
+		$recup_link = annonces_expression_url;
 		
 		$recup_link = str_replace('%idpetiteannonce%', $id, $recup_link);
 		$recup_link = str_replace('%titre_annonce%', $titre, $recup_link);
@@ -107,9 +107,9 @@ class Eav {
 		$recup_link = str_replace('"', '-', $recup_link);
 		$recup_link = mb_strtolower($recup_link);
 		
-		if (Eav::get_suffix() != '')
+		if (annonce_url_rewrite_template_suffix != '')
 		{
-			$recup_link = $recup_link . Eav::get_suffix();
+			$recup_link = $recup_link . annonce_url_rewrite_template_suffix;
 		}
 		
 		$maj_annonce = $wpdb->prepare('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce`
@@ -123,7 +123,7 @@ class Eav {
 		
 		$eav_mode = new Eav();
 						
-		$url = Eav::get_expression();
+		$url = annonces_expression_url;
 		
 		$date = explode ('-', $values[autolastmodif]);
 		$date2 = explode(' ', $date[2]);
@@ -150,9 +150,9 @@ class Eav {
 		$url = str_replace('"', '-', $url);
 		$url = mb_strtolower($url);
 		
-		if (Eav::get_suffix() != '')
+		if (annonce_url_rewrite_template_suffix != '')
 		{
-			$url = $url . Eav::get_suffix();
+			$url = $url . annonce_url_rewrite_template_suffix;
 		}
 		
 		return $url;
@@ -187,71 +187,21 @@ class Eav {
 				$id = $req_url->idpetiteannonce;
 		return $id;
 	}
-	
-	public function get_suffix()
-	{
-		global $wpdb;
-			
-		$recup_suffix = $wpdb->prepare('select nomoption from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option where labeloption = "annonces_suffix"');
-				$reqsuffix = $wpdb->get_row($recup_suffix);
-				$suffix = $reqsuffix->nomoption;
-		return $suffix;
-	}
-	
-	public function get_page()
-	{
-		global $wpdb;
-			
-		$recup_page = $wpdb->prepare('select nomoption from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option where labeloption = "annonces_page_install"');
-				$reqpage = $wpdb->get_row($recup_page);
-				$page = $reqpage->nomoption;
-		return $page;
-	}
-	
-	public function get_regex()
-	{
-		global $wpdb;
-			
-		$recup_regex = $wpdb->prepare('select nomoption from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option where labeloption = "annonces_regex_url"');
-				$reqregex = $wpdb->get_row($recup_regex);
-				$regex = $reqregex->nomoption;
-				
-		$regex = str_replace('/','\/', $regex);
-		return $regex;
-	}
-	
-	public function get_expression()
-	{
-		global $wpdb;
-			
-		$recup_exp = $wpdb->prepare('select nomoption from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option where labeloption = "annonces_expression_url"');
-				$reqexp = $wpdb->get_row($recup_exp);
-				$exp = $reqexp->nomoption;
-		return $exp;
-	}
-	
-	public function get_url()
-	{
-		global $wpdb;
-		
-		$recup_url = $wpdb->prepare('select option_value from '. $wpdb->prefix . 'options where option_name = \'siteurl\' ');
-				$req_url = $wpdb->get_row($recup_url);
-				$lurl = $req_url->option_value;
-		return $lurl;
-	}
-	
+
 	public function getFlag($flag = null)
 	{
 		if(is_null($flag)){return 'valid';}
 		return $flag;
 	}
 	
-	public function getOrder($order = null)
+	public function getOrder($order = null, $orderSide = 'DESC')
 	{
-		if(is_null($order)){return '';}
-		$generate_query = ' ORDER BY ';
-		$generate_query .= $order;
-		$generate_query .= ' DESC';
+		if(is_null($order))
+		{
+			return '';
+		}
+
+		$generate_query = ' ORDER BY ' . $order . ' ' . $orderSide;
 		return $generate_query;
 	}
 	
@@ -383,8 +333,8 @@ class Eav {
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributdec AS ATTRDEC ON ( (ATTRDEC.idpetiteannonce = ANN.idpetiteannonce) AND (ATTRDEC.idattribut = 11) )
 			WHERE 1 "
 				. $moreflag
-				.$this->getMorequery($morequery)
-			.$this->getOrder($order);
+				. $this->getMorequery($morequery)
+				. $this->getOrder($order, annonce_frontend_listing_order_side);
 
 		if($limit != 'nolimit')$sql .= " LIMIT " . $debut . "," . $itemperpage;
 

@@ -4,42 +4,23 @@
 *Author: Eoxia							           *
 *Comment: Add Admin Interface in Wordpress         *
 ***************************************************/
-	/*	INCLUDE LIBRAIRIES	*/
-	require_once(dirname(__FILE__) . '/../includes/lib/sfform/require_once.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin.class.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin_passerelle.class.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin_annonces.class.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin_attributs.class.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin_attributs_group.class.php');
-	require_once(dirname(__FILE__) . '/../includes/lib/admin_filters.class.php');
-	require_once dirname(__FILE__) . '/../includes/lib/admin_export.class.php';
-	require_once dirname(__FILE__) . '/../includes/lib/Zip/Zip.class.php';
-	require_once dirname(__FILE__) . '/../includes/lib/Ftp/Ftp.class.php';
-	require_once dirname(__FILE__) . '/../includes/lib/eav.class.php';
-	DEFINE('annonces_options_page_url',dirname(__FILE__) . '/options.php');
 
-
-	/*	CREATE A ADMIN INSTANCE	*/
-	$AdminPanel = new admin();
 	/*	ADD THE MENU INTO ADMIN PANEL	*/
-	add_action('admin_menu', array( $AdminPanel, "adds_menu" ));
-	add_action('admin_head', array( $AdminPanel, "add_admin_header" ));
-	add_action('admin_head', array( $AdminPanel, "add_admin_js" ));
-		
+	add_action('admin_menu', array( 'admin', "adds_menu" ));
+	add_action('admin_init', array( 'admin', "add_admin_header" ));
+	add_action('admin_init', array( 'admin', "add_admin_js" ));
+
 	add_action('admin_notice', array($tools, 'admin_message'));
 
+	// add_action("admin_menu","annonces_options_page");
 	/*	ADD THE MENU OPTIONS INTO ADMIN PANEL	*/
 	function annonces_options_page()  
-	{  
-		//add_options_page(Title,Menu title,Access Level,File,Function)  
-		add_options_page("Annonces Options","Annonces",10,"annonces/options.php","annonces_options_admin");  
-	}  
- 
-	add_action("admin_menu","annonces_options_page");  
-  
+	{
+		// add_options_page("Annonces Options", "Annonces", 10, "annonces/options.php", "annonces_options_admin");  
+	} 
 	function annonces_options_admin()  
 	{  
-		require_once annonces_options_page_url;
+		// require_once(ANNONCES_HOME_DIR . 'admin/options.php');
 	}
 	
 	/*	DYNAMICALLY CREATE GROUP POSSIBILITIES COMBOBOX	*/

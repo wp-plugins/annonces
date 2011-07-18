@@ -571,3 +571,38 @@ table.display tr.odd.row_selected td {
     text-align: center;
 	color:#000;
 }
+
+.annonce_hide{ display:none; }
+
+.annonce_form textarea, .annonce_form select, .annonce_form input[type=text], .annonce_form input[type=file]{	width:60% !important;	}
+.annonce_form input[type=radio], .annonce_form input[type=checkbox]{	margin:0px 1px 0px 6px; vertical-align:middle;	}
+.annonce_form label{	width:20% !important;	}
+
+.annonceMessage{	width:60%;margin:0px auto !important;text-align:center !important;padding:6px 0px !important;	}
+.icon32 img{ width:36px; }
+
+#annonces_options_container th{	padding:2px;	}
+#annonces_options_container td{	padding:2px;	}
+#annonces_options_container .form-table{		margin:0px 12px !important; width:80% !important;	}
+.optionFieldHelper{	font-size:9px;	}
+
+#annonces_options_container #annonce_url_rewrite_template{	width:60% !important;}
+#annonces_options_container #annonce_url_rewrite_template_suffix{	width:10% !important;}
+#annonces_options_container textarea, #annonces_options_container select, #annonces_options_container input[type=text], #annonces_options_container input[type=file]{	width:30% !important;	}
+#annonces_options_container input[type=radio], #annonces_options_container input[type=checkbox]{	margin:0px 1px 0px 6px; vertical-align:middle;	}
+
+#markerConfigurator, .searchPictoManager{	cursor:pointer;	color:#0000FF; text-decoration:underline; }
+#annoncePictoChanger #gmapMarker .qq-uploader .qq-upload-button{	width:95% !important;	}
+#annoncePictoChanger #changeSearchPicto .qq-uploader .qq-upload-button{	width:95% !important;	}
+#annoncePictoChangerContent{	overflow-y:auto; overflow-x:none;	}
+
+#urlConfigurator{	cursor:pointer;	color:#0000FF; text-decoration:underline; }
+
+.urlParamsList{	margin:6px auto 36px; width:50%;	}
+.urlParams{	margin:3px 12px; cursor:pointer;	}
+#urlRewriteFormat{	width:95% !important;	}
+.helpUrlRewriteFormat{	font-size:10px;	}
+
+.annonceSearchPicto{	min-width:20%;	}
+
+.deleteUrlParam{	background: url("jquery/images/ui-icons_cd0a0a_256x240.png") !important; background-position: -80px -128px !important; width:16px; height:16px; cursor:pointer;	}

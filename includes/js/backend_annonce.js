@@ -1,4 +1,8 @@
+var annoncejquery = jQuery.noConflict();
 var mapPreview;
+maxDescriptionLength = 200;
+geoCodeMessage = "Vous devez entrer votre adresse avant de d\xe9placer le marqueur de carte.";
+var id = 0;
 
 function loadJs() {
 	var msgs = new Object();
@@ -30,11 +34,7 @@ function _AF_ToggleChildren(node) {
 	}
 }
 
-maxDescriptionLength = 200;
-geoCodeMessage = "Vous devez entrer votre adresse avant de d\xe9placer le marqueur de carte.";
-
-function geocode()
-{
+function geocode(){
 	var address = document.getElementById('address_street1').value+' '+document.getElementById('address_street2').value+' '+document.getElementById('address_town').value+' France';
 	
 	var geocoder = new GClientGeocoder();
@@ -67,8 +67,7 @@ function geocode()
 	adresse_completion();
 }
 
-function auto_completion(point)
-{
+function auto_completion(point){
 	geocoder = new GClientGeocoder();
 	geocoder.getLocations(point,showAddress);
 	function showAddress(response) {
@@ -124,8 +123,7 @@ function auto_completion(point)
 	}
 }
 
-function delete_photo(id)
-{
+function delete_photo(id){
 	alert(id);
 	return "<?php echo Provibat::delete_photo("+id+") ?>";
 }
@@ -144,6 +142,80 @@ function adresse_completion(){
 }
 
 function preview_photo(){
-
 	return "$ctlg_petiteannonce_photos_list = Doctrine::getTable('CtlgPetiteannonce_Photos')->getGalerie_v2('document.getElementById(\"ctlg_petiteannonce_externe_token_galerie\").value');";
 }
+
+/*		FILL A INPUT WITH ANOTHER FIELDS 		*/
+function add_column_to_export_strucure(idtofill , stringtoadd, text_separator){
+	var input_to_fill = document.getElementById(idtofill);
+	var checkbox = document.getElementById(stringtoadd);
+	var box_is_checked = checkbox.checked;
+	if(box_is_checked)
+	{
+		input_to_fill.value += text_separator + checkbox.value + text_separator + ",";
+	}
+	else
+	{
+		input_to_fill.value = input_to_fill.value.replace(text_separator + checkbox.value + text_separator + ",",'');
+	}
+}
+
+/*		EMPTY A INPUT												*/
+function empty_input_field(idtofill){
+	var input_to_fill = document.getElementById(idtofill);
+	input_to_fill.value = '';
+}
+
+function AddSubElement_frame(the_src, form, wheretoadd, actualnumber, maxnumber, the_height){	
+	id++;
+	form.enctype="multipart/form-data";
+
+	var frame = document.createElement("iframe");
+	frame.id = id;
+	frame.src = the_src;
+	//frame.height = (the_height + 50) + 'px';
+	frame.style.overflow = 'noscroll';
+
+	document.getElementById(wheretoadd).appendChild(frame);
+}
+ 
+function check_selection(form,action){
+	for (i=0, n=form.elements.length; i<n; i++)
+	{
+    if (action == 'check_all') form.elements[i].checked = true;
+		else if (action == 'uncheck_all') form.elements[i].checked = false;
+	}
+}
+
+/*	Define the different actions into annonce management interface	*/
+annoncejquery(document).ready(function(){
+	/*	Hide the 	*/
+	setTimeout(function(){
+		annoncejquery('#ajout_ok').hide();
+		annoncejquery('#error_message').hide();
+	},5000);
+
+	/*		*/
+	annoncejquery('#annonce_form_titre').bind('keyup', function(){
+		annoncejquery('#annonce_form_urlannonce').val(annoncejquery('#annonce_form_titre').val());
+
+		var txt = annoncejquery('#annonce_form_urlannonce').val();
+
+		txt = txt.replace(new RegExp("[ ]", "g"),"-");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('èéêë'); ?>]", "g"),"e");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('àáâãäå'); ?>]", "g"),"a");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('æ'); ?>]", "g"),"ae");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ç'); ?>]", "g"),"c");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ìíîï'); ?>]", "g"),"i");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ñ'); ?>]", "g"),"n");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('òóôõö'); ?>]", "g"),"o");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('œ'); ?>]", "g"),"oe");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ùúûü'); ?>]", "g"),"u");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ýÿ'); ?>]", "g"),"y");
+
+		var reg = new RegExp("[^0-9a-zA-Z-_]", "g");
+		txt = txt.replace(reg,"");
+
+		annoncejquery('#annonce_form_urlannonce').val(txt.toLowerCase());
+	});
+});

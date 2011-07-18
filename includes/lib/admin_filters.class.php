@@ -21,7 +21,7 @@ class annonce_filters_form extends sfForm
 		  )),
 		  'idgroupeattribut' 				=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_group_possibilities_for_filters,
-				'label' => __('Cat&eacute;gorie de l&#146;annonce','annonces'),
+				'label' => __('Cat&eacute;gorie de l\'annonce','annonces'),
 		  )),
 		  'aexporter' 							=> new sfWidgetFormSelect(array(
 				'choices' => $flag_a_exporter_possibilities_for_filters,
@@ -90,14 +90,14 @@ class attribut_filters_form extends sfForm
 		  )),
 		  'group_attribut'      	=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_group_possibilities_for_filters,
-				'label' => __('Groupe de l&#146;attribut','annonces'),
+				'label' => __('Groupe de l\'attribut','annonces'),
 		  )),
 		  'typeattribut'      	=> new sfWidgetFormSelect(array(
 				'choices' => $attribute_type_possibilities_for_filters,
-				'label' => __('Type de l&#146;attribut','annonces'),
+				'label' => __('Type de l\'attribut','annonces'),
 		  )),
 		  'nomattribut'				 	=> new sfWidgetFormInput(array(
-				'label' => __('Nom de l&#146;attribut','annonces'),
+				'label' => __('Nom de l\'attribut','annonces'),
 		  )),
 			'measureunit' 				=> new sfWidgetFormInput(array(
 				'label' => __('Unit&eacute; de mesure','annonces'),
@@ -213,7 +213,7 @@ class passerelle_filters_form extends sfForm
 				'label' => __('S&eacute;parateur de ligne','annonces'),
 		  )),
 		  'structure' 			=> new sfWidgetFormTextarea(array(
-				'label' => __('Structure de l&#146;export','annonces'),
+				'label' => __('Structure de l\'export','annonces'),
 		  )),
 		));
 		$this->widgetSchema->setNameFormat('passerelle_filter[%s]');

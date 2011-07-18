@@ -3,7 +3,6 @@
  * @author Annonces
  * @version v1
  */
-include_once(ANNONCES_CONFIG);
 
 class version
 {

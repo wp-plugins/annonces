@@ -26,7 +26,7 @@ if($_POST){
 	switch($step){
 		case 1:
 ?>
-			<form name="export_annonce" action="" method="POST" >
+			<form name="export_annonce" action="" method="post" >
 				<center>
 					<textarea id="import_structure" name="import_structure" cols="70" rows="4"></textarea><br/>
 					<label class="label_import_admin"><?php echo _e('S&eacute;lectionner les attributs pr&eacute;sent dans les annonces &agrave; importer.','annonces') ?></label>
@@ -34,7 +34,7 @@ if($_POST){
 				<table class="attribut_listing" >
 					<tr>
 						<td colspan="10" class="td_attribut_listing">
-							<?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l&#146;ordre est important','annonces') ?>
+							<?php _e('Pour s&eacute;lectionner un attribut cliquez sur son nom. ATTENTION: l\'ordre est important','annonces') ?>
 						</td>
 					</tr>
 					<?php
@@ -74,12 +74,12 @@ if($_POST){
 			$attributs = split(',',$import_structure);
 			if(count($attributs) <= 1)
 			{
-				echo '<label>'.__('Attention aucun attribut n&#146;a &eacute;t&eacute; s&eacute;lectionn&eacute;.','annonces').'</lable>';
+				echo '<label>'.__('Attention aucun attribut n\'a &eacute;t&eacute; s&eacute;lectionn&eacute;.','annonces').'</lable>';
 			}
 			if($file_type == "csv")
 			{
 			?>
-			<form name="export_annonce" action="" method="POST" >
+			<form name="export_annonce" action="" method="post" >
 				<table class="annonce_form">
 					<tbody>
 						<tr>
@@ -125,12 +125,12 @@ if($_POST){
 			$attributs = split(',',$import_structure);
 			if(count($attributs) <= 1)
 			{
-				echo '<label>'.__('Attention aucun attribut n&#146;a &eacute;t&eacute; s&eacute;lectionn&eacute;.','annonces').'</lable>';
+				echo '<label>'.__('Attention aucun attribut n\'a &eacute;t&eacute; s&eacute;lectionn&eacute;.','annonces').'</lable>';
 			}
 			if($file_type == "xls")
 			{
 			?>
-				<form name="export_annonce" action="" method="POST" >
+				<form name="export_annonce" action="" method="post" >
 					<center>
 						<input type="hidden" name="step" value="<?php echo ((count($attributs) <= 1) ? '1' : '5' ) ?>" />
 						<input type="hidden" name="import_structure" value="<?php echo $import_structure; ?>" />
@@ -143,13 +143,13 @@ if($_POST){
 			}
 		break;
 		case 4:
-			echo '<label>'.__('Vous &ecirc;tes d&#146;importer un fichier CSV avec les param&egrave;tres suivant:','annonces').'</label><br/>';
+			echo '<label>'.__('Vous &ecirc;tes d\'importer un fichier CSV avec les param&egrave;tres suivant:','annonces').'</label><br/>';
 			echo '<label>'.__('S&eacute;parateur de texte:','annonces').'</label>&nbsp;'.$import_separateurtexte.'<br/>';
 			echo '<label>'.__('S&eacute;parateur de champ:','annonces').'</label>&nbsp;'.$import_separateurchamp.'<br/>';
 			echo '<label>'.__('S&eacute;parateur de ligne:','annonces').'</label>&nbsp;'.$import_separateurligne.'<br/>';
 			echo '<label>'.__('Attribut pr&eacute;sent dans le fichier:','annonces').'</label>&nbsp;'.$import_structure.'<br/>';
 ?>
-			<form name="export_annonce" action="" method="POST"  enctype="multipart/form-data">
+			<form name="export_annonce" action="" method="post"  enctype="multipart/form-data">
 				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import"/>
 				<center>
 					<input type="hidden" name="step" value="8" />
@@ -165,10 +165,10 @@ if($_POST){
 <?php
 		break;
 		case 5:
-			echo '<label>'.__('Vous &ecirc;tes sur le point d&#146;importer un fichier EXCEL avec les param&egrave;tres suivant:','annonces').'</label><br/>';
+			echo '<label>'.__('Vous &ecirc;tes sur le point d\'importer un fichier EXCEL avec les param&egrave;tres suivant:','annonces').'</label><br/>';
 			echo '<label>'.__('Attribut pr&eacute;sent dans le fichier:','annonces').'</lable>&nbsp;'.$import_structure.'<br/><br/>';
 ?>
-			<form name="export_annonce" action="" method="POST"  enctype="multipart/form-data">
+			<form name="export_annonce" action="" method="post"  enctype="multipart/form-data">
 				<label><?php echo _e('Fichier &agrave; importer:','annonces') ?>&nbsp;</label><input id="file_to_import" type="file" name="file_to_import"/>
 				<center>
 					<input type="hidden" name="step" value="6" />
@@ -191,7 +191,7 @@ if($_POST){
 					$extension = strtolower(strrchr($file,'.'));
 					if(in_array($extension,$extensions))
 					{
-						$path_file = WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/uploads/';
+						$path_file = WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/uploads/';
 						if(move_uploaded_file($_FILES['file_to_import']['tmp_name'],$path_file.$file))
 						{
 							$data = new Spreadsheet_Excel_Reader();
@@ -249,7 +249,7 @@ if($_POST){
 									if($check_geolocalisation)
 									{
 										$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".GOOGLE_API_KEY;
+										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
 
 										// Retrieve the URL contents*
 										$page = file_get_contents($address);
@@ -289,7 +289,7 @@ if($_POST){
 									echo '<hr/>'.$ctlg_annonce->error_message.'&nbsp;'.$announcement_data['ville'];
 								}else{
 									?>
-									<form action="" method="POST" name="progress_import">
+									<form action="" method="post" name="progress_import">
 										<input type="hidden" name="step" value="7" />
 										<input type="hidden" name="progress" value="<?php echo $i; ?>" />
 										<input type="hidden" name="file" value="<?php echo $file; ?>" />
@@ -309,7 +309,7 @@ if($_POST){
 			}else{echo __('Fichier inconnu.','annonces');}
 		break;
 		case 7:
-			$path_file = WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/uploads/';
+			$path_file = WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/uploads/';
 			if(is_file($path_file.$file))
 			{
 				$data = new Spreadsheet_Excel_Reader();
@@ -365,7 +365,7 @@ if($_POST){
 						if($check_geolocalisation)
 						{
 							$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".GOOGLE_API_KEY;
+							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
 
 							// Retrieve the URL contents*
 							$page = file_get_contents($address);
@@ -405,7 +405,7 @@ if($_POST){
 						echo '<hr/>'.$ctlg_annonce->error_message.'&nbsp;'.$announcement_data['ville'];
 					}else{
 						?>
-						<form action="" method="POST" name="progress_import">
+						<form action="" method="post" name="progress_import">
 							<input type="hidden" name="step" value="7" />
 							<input type="hidden" name="progress" value="<?php echo $i; ?>" />
 							<input type="hidden" name="file" value="<?php echo $file; ?>" />
@@ -432,7 +432,7 @@ if($_POST){
 					$extension = strtolower(strrchr($file,'.'));
 					if(in_array($extension,$extensions))
 					{
-						$path_file = WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/uploads/';
+						$path_file = WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/uploads/';
 						if(move_uploaded_file($_FILES['file_to_import']['tmp_name'],$path_file.$file))
 						{
 							$import_file = new Csv($path_file.$file,$import_separateurchamp,$import_separateurtexte);
@@ -487,7 +487,7 @@ if($_POST){
 									if($check_geolocalisation)
 									{
 										$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".GOOGLE_API_KEY;
+										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
 
 										// Retrieve the URL contents*
 										$page = file_get_contents($address);
@@ -527,7 +527,7 @@ if($_POST){
 									echo '<hr/>'.$ctlg_annonce->error_message.'&nbsp;'.$announcement_data['ville'];
 								}else{
 									?>
-									<form action="" method="POST" name="progress_import">
+									<form action="" method="post" name="progress_import">
 										<input type="hidden" name="step" value="9" />
 										<input type="hidden" name="progress" value="<?php echo $i; ?>" />
 										<input type="hidden" name="file" value="<?php echo $file; ?>" />
@@ -551,7 +551,7 @@ if($_POST){
 			}else{echo __('Fichier inconnu.','annonces');}
 		break;
 		case 9:
-			$path_file = WP_PLUGIN_DIR.'/'.Basename_Dirname_AOS.'/medias/uploads/';
+			$path_file = WP_PLUGIN_DIR.'/'.ANNONCES_PLUGIN_DIR.'/medias/uploads/';
 			if(is_file($path_file.$file))
 			{
 				$import_file = new Csv($path_file.$file,$import_separateurchamp,$import_separateurtexte);
@@ -605,7 +605,7 @@ if($_POST){
 						if($check_geolocalisation)
 						{
 							$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".GOOGLE_API_KEY;
+							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
 
 							// Retrieve the URL contents*
 							$page = file_get_contents($address);
@@ -644,7 +644,7 @@ if($_POST){
 						echo '<hr/>'.$ctlg_annonce->error_message.'&nbsp;'.$announcement_data['ville'];
 					}else{
 						?>
-						<form action="" method="POST" name="progress_import">
+						<form action="" method="post" name="progress_import">
 							<input type="hidden" name="step" value="9" />
 							<input type="hidden" name="progress" value="<?php echo $i; ?>" />
 							<input type="hidden" name="file" value="<?php echo $file; ?>" />
@@ -666,8 +666,8 @@ if($_POST){
 		break;
 		default:
 ?>
-			<form name="export_annonce" action="" method="POST" >
-				<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
+			<form name="export_annonce" action="" method="post" >
+				<table summary="<?php _e('choix du type de fichier pour l\'import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
 					<tr>
 						<td>
 							<?php _e('Choix du type de fichier contenant les annonces','annonces') ?>&nbsp;:&nbsp;
@@ -683,7 +683,7 @@ if($_POST){
 						<td>
 							<?php _e('Choix de la cat&eacute;gorie des annonces &agrave; importer','annonces') ?>&nbsp;:&nbsp;<br/>
 							<label class="lblannonceform">
-								<?php _e('*Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
+								<?php _e('*Si aucune cat&eacute;gorie n\'est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
 							</label>
 						</td>
 						<td>
@@ -709,9 +709,9 @@ if($_POST){
 }
 else{
 ?>
-<form name="export_annonce" action="" method="POST" >
+<form name="export_annonce" action="" method="post" >
 
-	<table summary="<?php _e('choix du type de fichier pour l&#146;import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce"> 
+	<table summary="<?php _e('choix du type de fichier pour l\'import des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
 		<tr>
 			<td>
 				<?php _e('Choix du type de fichier contenant les annonces','annonces') ?>&nbsp;:&nbsp;
@@ -728,7 +728,7 @@ else{
 				<?php _e('Choix de la cat&eacute;gorie des annonces &agrave; importer&sup1;','annonces') ?>&nbsp;:&nbsp;<br/>
 				<?php _e('&sup1;','annonces'); ?>
 				<label class="lblannonceform">
-					<?php _e('Si aucune cat&eacute;gorie n&#146;est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
+					<?php _e('Si aucune cat&eacute;gorie n\'est s&eacute;lectionn&eacute;e, tout les attributs seront affich&eacute;s.','annonces'); ?>
 				</label>
 			</td>
 			<td>
@@ -748,5 +748,3 @@ else{
 <?php
 }
 ?>
-</body>
-</html>

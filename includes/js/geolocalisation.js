@@ -1,4 +1,3 @@
-
 	var map;
 	var geocoder;
 	var coord;
@@ -19,7 +18,7 @@
 
 	function getCoordonnees()
 	{
-		var address = document.getElementById(adress).value + " " + document.getElementById(town).value + " " + document.getElementById(postal_code).value+" Languedoc-Roussillon France";
+		var address = document.getElementById(adress).value + " " + document.getElementById(town).value + " " + document.getElementById(postal_code).value;
 
 		geocoder.getLatLng(address, 
 			function (coord)

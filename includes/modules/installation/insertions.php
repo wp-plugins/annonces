@@ -6,6 +6,9 @@ function annonces_insertions($insertions = null)
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	global $wpdb;
 	
+		$sujet = htmlentities('Questions sur l\'annonce %id_annonce% de la part de %nom%');
+		$txt = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
+		$html = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
 
 	if(version::getVersion() <= 1)
 	{
@@ -479,7 +482,7 @@ function annonces_insertions($insertions = null)
 			(18, 'valid', 'url_budget_theme_defaut', 'budget_default.png'),
 			(19, 'valid', 'url_superficie_theme_defaut', 'surface_default.png'),
 			(20, 'valid', 'url_recherche_theme_defaut', 'recherche_default.png')";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
@@ -512,7 +515,7 @@ function annonces_insertions($insertions = null)
 	if(version::getVersion() <= 4)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET annonces_expression_url = '%titre_annonce%_%idpetiteannonce%.html'";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET measureunit = '&euro;' where labelattribut='PrixLoyerPrixDeCession'";
 		$wpdb->query($sql);
@@ -530,9 +533,6 @@ function annonces_insertions($insertions = null)
 	
 	if(version::getVersion() <= 5)
 	{
-		$sujet = htmlentities('Questions sur l\'annonce %id_annonce% de la part de %nom%');
-		$txt = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
-		$html = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
 		
 		$sql = "INSERT INTO " . ANNONCES_TABLE_OPTION . " (idoption, flagvalidoption, labeloption, nomoption) VALUES
 			(21, 'valid', 'annonces_email_reception', 'achanger@achanger.achanger'),
@@ -543,7 +543,7 @@ function annonces_insertions($insertions = null)
 			(26, 'valid', 'annonces_expression_url','annonce_%idpetiteannonce%.html'),
 			(27, 'valid', 'annonces_page_install', 'annonces'),
 			(28, 'valid', 'annonces_url_activation', '0')";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
@@ -551,11 +551,11 @@ function annonces_insertions($insertions = null)
 	if(version::getVersion() <= 6)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET flagvalidoption='deleted' where labeloption='annonces_page_install'";
-		$wpdb->query($sql);	
+		//	NOT USED FROM DB VERSION 18
 		
 		$sql = "INSERT INTO " . ANNONCES_TABLE_OPTION . " (idoption, flagvalidoption, labeloption, nomoption) VALUES
 			(29, 'valid', 'annonces_suffix', '.html')";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
@@ -587,7 +587,7 @@ function annonces_insertions($insertions = null)
 	if (version::getVersion() <= 9)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . "SET nomption = '%date_publication%/%type_bien%/%ville%-%departement%/%idpetiteannonce%' WHERE labeloption = 'annonces_expression_url'");
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " VALUES ('216', '1', 'valid')");
 		$wpdb->query($sql);
@@ -611,36 +611,256 @@ function annonces_insertions($insertions = null)
 	if (version::getVersion() <= 13)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='' where labeloption = 'annonces_suffix'");
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
 	if (version::getVersion() <= 14)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url'");
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
 	if (version::getVersion() <= 15)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='ee' where labeloption = 'annonces_expression_url' ";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
 	if (version::getVersion() <= 16)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='ee' where labeloption = 'annonces_expression_url' ";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
 	if (version::getVersion() <= 17)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url' ";
-		$wpdb->query($sql);
+		//	NOT USED FROM DB VERSION 18
 		
 		version::majVersion();
 	}
+	if (version::getVersion() <= 18)
+	{/*	Transfert the different option from the specific table to the wordpress table	*/
+		/*	Transfert the different file into the good directory	*/
+		if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'gmapMarker'))
+		{
+			tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'gmapMarker');
+		}
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'red-dot_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'gmapMarker/red-dot_default.png');
+		/*	Transfert the different file into the good directory	*/
+		if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto'))
+		{
+			tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto');
+		}
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'budget_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/budget_default.png');
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'maisons_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/maisons_default.png');
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'recherche_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/recherche_default.png');
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'surface_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/surface_default.png');
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'terrains_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/terrains_default.png');
+		copy(ANNONCES_IMG_PLUGIN_DIR . 'toutes_default.png', WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/toutes_default.png');
+
+		$annonceWPOption = array();
+		$annonceWPOptionEmail = array();
+		if( $wpdb->get_var("show tables like '" . ANNONCES_TABLE_OPTION . "'") == ANNONCES_TABLE_OPTION)
+		{
+			$query = $wpdb->prepare("SELECT * FROM " . ANNONCES_TABLE_OPTION);
+			$annonceOption = $wpdb->get_results($query);
+			foreach($annonceOption as $option)
+			{
+				switch($option->labeloption)
+				{
+					case 'annonces_api_key':
+						$optionValue = $option->nomoption;
+						if($optionValue == '')
+						{
+							$optionValue = get_option('annonces_api_key');
+						}
+						$annonceWPOption['gmap_api_key'] = $optionValue;
+					break;
+					case 'annonces_maps_activation':
+						$valeur = 'non';
+						if($option->nomoption == '1')
+						{
+							$valeur = 'oui';
+						}
+						$annonceWPOption['annonce_activate_map'] = $valeur;
+					break;
+					case 'url_marqueur_courant':
+						$annonceWPOption['annonce_map_marker'] = 'gmapMarker/' . $option->nomoption;
+						if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'gmapMarker/' . $option->nomoption))
+						{
+							copy(ANNONCES_IMG_PLUGIN_DIR . $option->nomoption, WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/' . $option->nomoption);
+						}
+					break;
+					case 'annonces_photos_activation':
+						$valeur = 'non';
+						if($option->nomoption == '1')
+						{
+							$valeur = 'oui';
+						}
+						$annonceWPOption['annonce_show_picture'] = $valeur;
+					break;
+					case 'annonces_date_activation':
+						$valeur = 'non';
+						if($option->nomoption == '1')
+						{
+							$valeur = 'oui';
+						}
+						$annonceWPOption['annonce_show_date'] = $valeur;
+					break;
+					case 'annonces_url_activation':
+						$valeur = 'non';
+						if($option->nomoption == '1')
+						{
+							$valeur = 'oui';
+						}
+						$annonceWPOption['annonce_activate_url_rewrite'] = $valeur;
+					break;
+					case 'annonces_expression_url':
+						$annonceWPOption['annonce_url_rewrite_template'] = $option->nomoption;
+					break;
+					case 'annonces_suffix':
+						$annonceWPOption['annonce_url_rewrite_template_suffix'] = $option->nomoption;
+					break;
+					case 'url_radio_maisons_theme_defaut':
+					case 'url_radio_terrains_theme_defaut':
+					case 'url_radio_toutes_theme_defaut':
+					case 'url_budget_theme_defaut':
+					case 'url_superficie_theme_defaut':
+					case 'url_recherche_theme_defaut':
+					case 'theme_activation':
+					case 'annonces_page_install':
+					case 'url_marqueur_defaut':
+						
+					break;
+					case 'url_radio_maisons_theme_courant':
+					case 'url_radio_terrains_theme_courant':
+					case 'url_radio_toutes_theme_courant':
+					case 'url_budget_theme_courant':
+					case 'url_superficie_theme_courant':
+					case 'url_recherche_theme_courant':
+						$newOptionName = str_replace('_theme_courant', '', $option->labeloption);
+						$finalDir = explode('_', $newOptionName);
+						if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/' . $finalDir[count($finalDir) - 1]))
+						{
+							tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/' . $finalDir[count($finalDir) - 1]);
+						}
+						$annonceWPOption[$newOptionName] = 'searchPicto/' . $finalDir[count($finalDir) - 1] . '/' . $option->nomoption;
+						if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/' . $finalDir[count($finalDir) - 1] . '/' . $option->nomoption))
+						{
+							copy(ANNONCES_IMG_PLUGIN_DIR . $option->nomoption, WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . 'searchPicto/' . $finalDir[count($finalDir) - 1] . '/' .  $option->nomoption);
+						}
+					break;
+					case 'annonces_email_reception':
+					case 'annonces_sujet_reception':
+					case 'annonces_txt_reception':
+					case 'annonces_html_reception':
+						$annonceWPOptionEmail[$option->labeloption] = $option->nomoption;
+					break;
+					case 'annonces_email_activation':
+						$valeur = 'non';
+						if($option->nomoption == '1')
+						{
+							$valeur = 'oui';
+						}
+						$annonceWPOption['annonces_email_activation'] = $valeur;
+					break;
+					default:
+						$annonceWPOption[$option->labeloption] = $option->nomoption;
+					break;
+				}
+			}
+
+			/*	Rename annonce option table for future deletion	*/
+			$query = $wpdb->prepare("RENAME TABLE " . ANNONCES_TABLE_OPTION . " TO " . TRASH__ANNONCES_TABLE_OPTION);
+			$wpdb->query($query);
+		}
+		else
+		{
+			$annonceWPOption['gmap_api_key'] = get_option('annonces_api_key');
+			$annonceWPOption['annonce_activate_map'] = 'oui';
+			$annonceWPOption['annonce_map_marker'] = 'gmapMarker/red-dot_default.png';
+			$annonceWPOption['annonce_show_picture'] = 'oui';
+			$annonceWPOption['annonce_show_date'] = 'oui';
+			$annonceWPOption['annonce_activate_url_rewrite'] = 'oui';
+			$annonceWPOption['annonce_url_rewrite_template'] = 'annonce_%idpetiteannonce%';
+			$annonceWPOption['annonce_url_rewrite_template_suffix'] = '.html';
+			$annonceWPOption['url_radio_maisons'] = 'searchPicto/maisons/maisons_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_maisons'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_maisons']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_maisons']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/maisons/', '/', $annonceWPOption['url_radio_maisons']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_maisons']);
+			}
+			$annonceWPOption['url_radio_terrains'] = 'searchPicto/terrains/terrains_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_terrains'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_terrains']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_terrains']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/terrains/', '/', $annonceWPOption['url_radio_terrains']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_terrains']);
+			}
+			$annonceWPOption['url_radio_toutes'] = 'searchPicto/toutes/toutes_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_toutes'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_radio_toutes']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_toutes']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/toutes/', '/', $annonceWPOption['url_radio_toutes']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_radio_toutes']);
+			}
+			$annonceWPOption['url_budget'] = 'searchPicto/budget/budget_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_budget'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_budget']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_budget']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/budget/', '/', $annonceWPOption['url_budget']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_budget']);
+			}
+			$annonceWPOption['url_superficie'] = 'searchPicto/superficie/surface_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_superficie'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_superficie']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_superficie']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/superficie/', '/', $annonceWPOption['url_superficie']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_superficie']);
+			}
+			$annonceWPOption['url_recherche'] = 'searchPicto/recherche/recherche_default.png';
+			if(!is_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_recherche'])))
+			{
+				tools::make_recursiv_dir(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . dirname($annonceWPOption['url_recherche']));
+			}
+			if(!is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_recherche']))
+			{
+				copy(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . str_replace('/recherche/', '/', $annonceWPOption['url_recherche']), WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $annonceWPOption['url_recherche']);
+			}
+			$annonceWPOptionEmail['annonces_email_reception'] = 'mail@mondomaine.com';
+			$annonceWPOptionEmail['annonces_sujet_reception'] = $sujet;
+			$annonceWPOptionEmail['annonces_txt_reception'] = $txt;
+			$annonceWPOptionEmail['annonces_html_reception'] = $html;
+			$annonceWPOptionEmail['annonces_email_activation'] = 'non';
+		}
+		
+		/*	Add new options	*/
+		$annonceWPOption['annonce_map_marker_size'] = '32';
+		$annonceWPOption['annonce_currency'] = '&euro;';
+		$annonceWPOption['annonce_frontend_listing_order'] = 'date';
+
+		/*	Set option into wordpress table	*/
+		add_option('annonces_options', $annonceWPOption);
+		/*	Set option into wordpress table	*/
+		add_option('annonces_email_options', $annonceWPOptionEmail);
+
+		version::majVersion();
+	}
+
 }

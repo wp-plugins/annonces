@@ -99,8 +99,8 @@ if($choosen_passerelle != '')
 			$file_content = implode($file_line_separator,$eachline);
 			$writen_file = $export->save_file(WP_CONTENT_DIR . WAY_TO_EXPORT_AOS . 'Annonces.csv', $file_content);
 
-			$file_to_zip[] = WP_PLUGIN_DIR . '/' . Basename_Dirname_AOS . '/includes/seloger/Config.txt';
-			$file_to_zip[] = WP_PLUGIN_DIR . '/' . Basename_Dirname_AOS . '/includes/seloger/Photos.cfg';
+			$file_to_zip[] = WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/includes/seloger/Config.txt';
+			$file_to_zip[] = WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/includes/seloger/Photos.cfg';
 		}
 		elseif($choosen_export[0]->typeexport == 'xml')
 		{
@@ -123,12 +123,15 @@ if($choosen_passerelle != '')
 		$file_to_zip[] = $writen_file;
 
 		/*	GETTING PHOTOS TO ADD TO ZIP	*/
-		foreach($photos_list as $key => $photos_definition)
+		if(annonce_export_picture == 'file')
 		{
-			if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original)
-					&&	(!in_array(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original, $file_to_zip)))
+			foreach($photos_list as $key => $photos_definition)
 			{
-				$file_to_zip[] = WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original;
+				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original)
+						&&	(!in_array(WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original, $file_to_zip)))
+				{
+					$file_to_zip[] = WP_CONTENT_DIR . WAY_TO_PICTURES_AOS . $photos_definition->original;
+				}
 			}
 		}
 
@@ -162,7 +165,7 @@ if($choosen_passerelle != '')
 			}
 			else
 			{
-				$export->error_message = __('Erreur lors de l&#146;envoi du fichier zip ','annonces') . $full_path_to_zip;
+				$export->error_message = __('Erreur lors de l\'envoi du fichier zip ','annonces') . $full_path_to_zip;
 				$export->class_admin_notice = 'admin_notices_class_notok';
 			}
 		}
@@ -176,9 +179,9 @@ if($choosen_passerelle != '')
 ?>
 <div class="<?php echo $export->class_admin_notice; ?>" ><?php echo $export->error_message; ?></div>
 
-<form name="export_annonce" action="" method="POST" >
+<form name="export_annonce" action="" method="post" >
 
-	<table summary="<?php _e('liste des passerelles pour l&#146;export des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
+	<table summary="<?php _e('liste des passerelles pour l\'export des annonces','annonces') ?>" cellpadding="0" cellspacing="0" class="table_export_annonce" > 
 		<tr>
 			<td>
 				<?php _e('Exporter vers','annonces') ?>&nbsp;:&nbsp;
@@ -192,7 +195,7 @@ if($choosen_passerelle != '')
 							echo '<option value="' . $passerelle_definition->idpasserelle . '" ' . $selected . ' >' . $passerelle_definition->nompasserelle . '</option>';
 						}
 					?>
-					<!--<option value="local"><?php //_e('l&#146;ordinateur (Bureau)','annonces') ?></option>-->
+					<!--<option value="local"><?php //_e('l\'ordinateur (Bureau)','annonces') ?></option>-->
 				</select>
 			</td>
 			<td colspan="2" ><input type="submit" name="exporter" value="<?php _e('Exporter','annonces') ?>" /></td>
