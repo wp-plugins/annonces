@@ -117,6 +117,13 @@ if($act == 'delete')
 	$act = '';
 }
 
+// EXPORT SOME AD TO WPSHOP
+if($act == 'export_annonce')
+{
+	$annonce->export_annonce($_REQUEST['annonce']);
+	$act = '';
+}
+
 //	MASS ACTION
 if(isset($_POST['annonce']) && is_array($_POST['annonce']))
 {
@@ -286,6 +293,61 @@ if(($act == 'add') || ($act == 'edit'))
   </table>
 
 <?php
+}
+
+elseif($act == 'export_to_wpshop')
+{
+	$eav_value = new Eav();
+	
+	echo '<h2>' . __('Exporter vos annonces vers WP-Shop','annonces') . '</h2>';
+
+	// echo '<pre>'; print_r($_REQUEST); echo '</pre>';
+	
+	if (count($_REQUEST['annonce']) > 0) {
+		echo "<input type='hidden' name='act' value='export_annonce'/>";
+		foreach ($_REQUEST['annonce'] as $id_annonce) {
+			echo "<input type='hidden' name='annonce[]' value='$id_annonce'/>";
+			$titre_annonce = $eav_value->get_titre($id_annonce);
+			echo '<fieldset><legend>Titre : ' . $titre_annonce . '</legend>';
+			$attributs = $eav_value->getAnnoncesAttributs(null,'valid',null,$id_annonce,'oui');
+			// echo '<pre>'; print_r($attributs); echo '</pre>';
+			foreach ($attributs as $attribut) {
+			$attribut = (array)$attribut;
+				echo $attribut['nomattribut'] . " : ";
+				switch ($attribut['typeattribut']) {
+					case 'CHAR' :
+						echo $attribut['valueattributchar'];
+					break;
+					
+					case 'DEC' :
+						echo $attribut['valueattributdec'];
+					break;
+					
+					case 'INT' :
+						echo $attribut['valueattributint'];
+					break;
+					
+					case 'TEXT' :
+						if ($attribut['valueattributtextlong'] == 0) {
+							echo $attribut['valueattributtextcourt'];
+						}
+						else {
+							echo $attribut['valueattributtextlong'];
+						}
+					break;
+					
+					case 'DATE' :
+						echo $attribut['valueattributdate'];
+					break;
+				}
+				echo '<br>';
+			}
+			echo '</fieldset>';
+		}
+		echo '<br><h3>' . __('Souhaitez-vous transf&eacute;rer ces annonces vers WP-Shop, avec les valeurs suivantes ?','annonces') . '</h3>';
+		echo '	<input type="button" value=" ' . __('Annuler','annonces') . '" onclick="javascript:history.go(-1);"/>
+				<input type="submit" value=" ' . __('Transf&eacute;rer','annonces') . '"/>';
+	}
 }
 else
 {

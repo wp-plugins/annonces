@@ -513,6 +513,115 @@ class annonce
 			$this->class_admin_notice = 'admin_notices_class_notok';
 		}
 	}
+	function export_annonce($id_to_export)
+	{
+		global $wpdb;
+		global $current_user;
+		
+		$eav_value = new Eav();
+		
+		foreach ($id_to_export as $id_annonce) {
+		
+			$titre_annonce = $eav_value->get_titre($id_annonce);
+			$autoinsert = $eav_value->get_autoinsert($id_annonce);
+			$autolastmodif = $eav_value->get_autolastmodif($id_annonce);
+			$description = $eav_value->getDescription(null, 'valid', null, $id_annonce);
+			$attributs = $eav_value->getAnnoncesAttributs(null, 'valid', null, $id_annonce, 'oui');
+			
+			$description = (array)$description;
+			
+			$description[0] = (array)$description[0];
+			
+			if($description[0]['valueattributtextlong'] == 0) {
+				$description_value = $description[0]['valueattributtextcourt'];
+			}
+			else{
+				$description_value = $description[0]['valueattributtextlong'];
+			}
+			
+			// echo '<pre>'; print_r($description); echo '</pre>';exit;
+		
+	$trans = array(" " => "-", "é" => "e", "è" => "e", "ç" => "c", "à" => "a", "â" => "a", "ê" => "e");
+	$name_annonce = strtolower(strtr(trim($titre_annonce, "/'"), $trans));
+		
+		$post = array(
+		  'comment_status' => 'open', // 'closed' means no comments.
+		  'ping_status' => 'open',  // 'closed' means pingbacks or trackbacks turned off
+		  'pinged' => '', //?
+		  'post_author' => $current_user->ID, //The user ID number of the author.
+		  'post_content' => $description_value, //The full text of the post.
+		  'post_date' => $autoinsert, //The time post was made.
+		  'post_date_gmt' => $autoinsert, //The time post was made, in GMT.
+		  'post_modified' => $autolastmodif,
+		  'post_name' => $name_annonce, // The name (slug) for your post
+		  'post_status' => 'publish', //Set the status of the new post. 
+		  'post_title' => $titre_annonce, //The title of your post.
+		  'post_type' => WPSHOP_NEWTYPE_IDENTIFIER_PRODUCT //You may want to insert a regular post, page, link, a menu item or some custom post type
+		);  
+			$last_post = wp_insert_post( $post );
+			$this->error_message = __('Exportation effectu&eacute; avec succes','annonces');
+			$this->class_admin_notice = 'admin_notices_class_ok';
+			
+			foreach ($attributs as $attribut) {
+			$attribut = (array)$attribut;
+			$myattribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE . " WHERE code = '" . $attribut['labelattribut'] . "'");
+				if ($myattribute->frontend_input == 'select') {
+					switch ($attribut['typeattribut']) {
+						case 'CHAR' :
+							$myoption_value = $attribut['valueattributchar'];
+						break;
+						
+						case 'DEC' :
+							$myoption_value = $attribut['valueattributdec'];
+						break;
+						
+						case 'INT' :
+							$myoption_value = $attribut['valueattributint'];
+						break;
+						
+						case 'TEXT' :
+							$myoption_value = $attribut['valueattributtextcourt'];
+						break;
+						
+						case 'DATE' :
+							$myoption_value = $attribut['valueattributdate'];
+						break;
+					}
+						
+					$myoption_attribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE_VALUE_OPTIONS . " WHERE attribute_id = '" . $myattribute->id . "' AND ((value = '" . $myoption_value ."')||(label = '" . $myoption_value ."'))");
+					$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => 0, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $myoption_attribute->id));
+				}
+				else {
+					switch ($attribut['typeattribut']) {
+						case 'CHAR' :
+							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_VARCHAR, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributchar']));
+						break;
+						
+						case 'DEC' :
+							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DECIMAL, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdec']));
+						break;
+						
+						case 'INT' :
+							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributint']));
+						break;
+						
+						case 'TEXT' :
+							if ($attribut['valueattributtextlong'] == 0) {
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextcourt']));
+							}
+							else {
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextlong']));
+							}
+						break;
+						
+						case 'DATE' :
+							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DATETIME, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdate']));
+						break;
+					}
+				}
+			}
+		}
+	}
 
 	function setGeoloc($values, $id)
 	{

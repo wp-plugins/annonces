@@ -228,5 +228,26 @@ function annonces_creationTables()
 			createTable(ANNONCES_TABLE_TXT,$champtxt);
 		}
 		annonces_insertions();
+
+	$geoloc_table = "
+CREATE TABLE `wp_ctlg_petiteannonce__geolocalisation` (
+  `idsrc` int(11) NOT NULL auto_increment,
+  `iddest` int(11) NOT NULL default '0',
+  `autolocalisation` char(255) collate utf8_unicode_ci default NULL,
+  `adresse` char(255) collate utf8_unicode_ci default NULL,
+  `ville` char(255) collate utf8_unicode_ci default NULL,
+  `departement` char(255) collate utf8_unicode_ci default NULL,
+  `region` char(255) collate utf8_unicode_ci default NULL,
+  `cp` char(20) default NULL,
+  `pays` char(255) collate utf8_unicode_ci default NULL,
+  `token` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `flagvalidgeolocalisation` enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
+  `latitude` decimal(32,16) default NULL,
+  `longitude` decimal(32,16) default NULL,
+  PRIMARY KEY  (`idsrc`,`iddest`),
+  UNIQUE KEY `token` (`token`),
+  KEY `iddest` (`iddest`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+	dbDelta($geoloc_table);
 }
 ?>

@@ -8,22 +8,6 @@
 	$url_for_uploaded_file_thumbnail = WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS;
 	$button_text_del = 'Supprimer';
 	$onload = '';
-	
-	function make_recursiv_dir($dir){
-		$tab=explode('/',$dir);
-		$str='';
-		foreach($tab as $k => $v ){
-			if((trim($v)!='')){
-				$str.='/'.trim($v);
-				if( (trim($v)!='..') &&(trim($v)!='.') ){
-					if(!is_dir(substr($str,1)) && (!is_file(substr($str,1)) ) ){
-						if(!mkdir(substr($str,1), 0755))echo '<hr>erreur mkdir ! '.$str;
-						if(!chmod(substr($str,1), 0755))echo '<hr>erreur chmod ! '.$str;				
-					}
-				}
-			}
-		}
-	}
 
 	$idgallery = (isset($_REQUEST['idgallery']) && ($_REQUEST['idgallery']!='')) ? $_REQUEST['idgallery'] : -1 ;
 	$idtodelete = (isset($_REQUEST['idtodelete']) && ($_REQUEST['idtodelete']!='')) ? $_REQUEST['idtodelete'] : 0 ;
@@ -33,9 +17,11 @@
 	{
 		if (is_uploaded_file($_FILES['photo']['tmp_name']))
 		{
-			if(!is_dir($url_for_uploaded_file))make_recursiv_dir($url_for_uploaded_file, 0755 );
+			if(!is_dir($url_for_uploaded_file))mkdir($url_for_uploaded_file, 0755, true);
+			exec('chown -R 0755 ' . WP_CONTENT_DIR . '/uploads');
 			chmod($url_for_uploaded_file, 0755);
-			if(!is_dir($url_for_uploaded_file_thumbnail))make_recursiv_dir($url_for_uploaded_file_thumbnail, 0755 );
+			if(!is_dir($url_for_uploaded_file_thumbnail))mkdir($url_for_uploaded_file_thumbnail, 0755, true);
+			exec('chown -R 0755 ' . WP_CONTENT_DIR . '/uploads');
 			chmod($url_for_uploaded_file_thumbnail, 0755);
 
 			$extension=strtolower(strrchr($_FILES['photo']['name'],'.'));

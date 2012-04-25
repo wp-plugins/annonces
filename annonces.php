@@ -5,7 +5,7 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.2.0.0
+	Version: 1.2.0.1
 */
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
  
@@ -58,7 +58,7 @@
 	/* INCLUDE LIBRAIRIES */
 	require_once(ANNONCES_INC_PLUGIN_DIR . 'includes.php');
 
-	require_once(ANNONCES_PLUGIN_DIR. '/../admin/admin.php');
+	require_once(WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/admin/admin.php');
 
 	/**
 	* CREATE A FRONTEND INSTANCE

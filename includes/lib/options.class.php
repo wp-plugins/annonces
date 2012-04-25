@@ -138,8 +138,13 @@ class annonces_options
 	function annonce_map_marker()
 	{
 		$options = get_option('annonces_options');
-		echo '<input type="hidden" value="' . $options['annonce_map_marker'] . '" name="annonces_options[annonce_map_marker]" id="annonce_map_marker" /><img id="preview_marker" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['annonce_map_marker'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" /><div id="markerConfigurator" >' . __('Changer', 'annonces') . '</div>
-		<p class="optionFieldHelper" >' . __('Vous pouvez d&eacute;finir un marqueur diff&eacute;rent que celui de Google Maps pour r&eacute;f&eacute;rencer vos annnonces sur la carte.', 'annonces') . '</p>';
+		echo '
+<div class="alignleft annonceSearchPicto" id="change_annonce_map_marker" >
+	<img class="searchPictoManager" style="max-height:43px;" id="preview_annonce_map_marker" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['annonce_map_marker'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+	<input type="hidden" class="pictoField" value="' . $options['annonce_map_marker'] . '" name="annonces_options[annonce_map_marker]" id="annonce_map_marker" />
+	<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
+	<p class="optionFieldHelper" >' . __('Vous pouvez d&eacute;finir un marqueur diff&eacute;rent que celui de Google Maps pour r&eacute;f&eacute;rencer vos annnonces sur la carte.', 'annonces') . '</p>
+</div>';
 	}
 
 	function annonce_show_picture()
@@ -210,37 +215,37 @@ class annonces_options
 	{
 		$options = get_option('annonces_options');
 		echo '
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_radio_maisons" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_maisons'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_radio_maisons" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_radio_maisons" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_maisons'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_radio_maisons]" id="url_radio_maisons" value="' . $options['url_radio_maisons']. '" />
-				<div class="searchPictoManager" id="change_url_radio_maisons" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_radio_terrains" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_terrains'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_radio_terrains" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_radio_terrains" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_terrains'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_radio_terrains]" id="url_radio_terrains" value="' . $options['url_radio_terrains']. '" />
-				<div class="searchPictoManager" id="change_url_radio_terrains" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_url_radio_toutes" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_toutes'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_radio_toutes" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_radio_toutes" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_radio_toutes'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_radio_toutes]" id="url_radio_toutes" value="' . $options['url_radio_toutes']. '" />
-				<div class="searchPictoManager" id="change_url_radio_toutes" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>
 			<div class="clear" >&nbsp;</div>
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_budget" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_budget'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_budget" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_budget" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_budget'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_budget]" id="url_budget" value="' . $options['url_budget']. '" />
-				<div class="searchPictoManager" id="change_url_budget" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_superficie" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_superficie'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_superficie" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_superficie" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_superficie'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_superficie]" id="url_superficie" value="' . $options['url_superficie']. '" />
-				<div class="searchPictoManager" id="change_url_superficie" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>
 			<div class="clear" >&nbsp;</div>
-			<div class="alignleft annonceSearchPicto" >
-				<img id="preview_url_recherche" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_recherche'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
+			<div class="alignleft annonceSearchPicto" id="change_url_recherche" >
+				<img class="searchPictoManager" style="max-height:43px;" id="preview_url_recherche" src="' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . $options['url_recherche'] . '" alt="' . __('Marqueur actuel', 'annonces') . '" />
 				<input type="hidden" class="pictoField" name="annonces_options[url_recherche]" id="url_recherche" value="' . $options['url_recherche']. '" />
-				<div class="searchPictoManager" id="change_url_recherche" >' . __('Changer', 'annonces') . '</div>
+				<div class="searchPictoManager" >' . __('Changer', 'annonces') . '</div>
 			</div>';
 	}
 	function url_radio_maisons()
@@ -312,72 +317,72 @@ class annonces_options
 ?>
 <div id="annonces_options_container" >
 	<div id="annoncePictoChangerContainer" class="annonce_hide" title="<?php _e('Choix d\'une ic&ocirc;ne', 'annonces'); ?>" >
+		<p><?php _e('Ajouter une nouvelle image', 'annonces') ?></p>
 		<div id="annoncePictoChanger" ><img src="<?php echo ANNONCES_IMG_PLUGIN_URL; ?>loading.gif" alt="loading" /></div>
-		<div id="annoncePictoChangerContent" >&nbsp;</div>
+		<p><?php _e('Ic&ocirc;nes existantes', 'annonces'); ?></p>
+		<div id="annoncePictoChangerContent" ><img src="<?php echo ANNONCES_IMG_PLUGIN_URL; ?>loading.gif" alt="loading" /></div>
 	</div>
 	<script type="text/javascript" >
 		annoncejquery(document).ready(function(){
-			annoncejquery("#annoncePictoChangerContainer").dialog({ 
-				autoOpen: false, height: 350, width: 350, modal:  true, 
-				buttons: { 
+			jQuery("#annoncePictoChangerContainer").dialog({ 
+				autoOpen: false,
+				height: 350,
+				width: 350,
+				modal: true, 
+				buttons:{
 					"<?php _e('Utiliser', 'annonces'); ?>": function(){
 						var choosenPicto;
-						annoncejquery(".pictoToChoose").each(function(){
-							if(annoncejquery(this).is(":checked")){
-								choosenPicto = annoncejquery(this).val();
+						jQuery(".pictoToChoose").each(function(){
+							if(jQuery(this).is(":checked")){
+								choosenPicto = jQuery(this).val();
 							}
 						});
-						annoncejquery("#" + annoncejquery("#fieldToUpdate").val()).val(choosenPicto); 
-						annoncejquery("#" + annoncejquery("#previewToUpdate").val()).attr("src", "<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS; ?>" + choosenPicto);
-						annoncejquery(this).dialog("close");
+						jQuery("#" + jQuery("#fieldToUpdate").val()).val(choosenPicto); 
+						jQuery("#" + jQuery("#previewToUpdate").val()).attr("src", "<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS; ?>" + choosenPicto);
+						jQuery(this).dialog("close");
 					}, 
 					"<?php _e('Annuler', 'annonces'); ?>": function(){
-						annoncejquery(this).dialog("close");
-						annoncejquery("#annoncePictoChanger").html(annoncejquery("#loadingImg").html());
-						annoncejquery("#annoncePictoChangerContent").html("");
-					}
-				} 
+						jQuery(this).dialog("close");
+					}				
+				},
+				close:function(){
+					jQuery("#annoncePictoChanger").html(jQuery("#loadingImg").html());
+					jQuery("#annoncePictoChangerContent").html(jQuery("#loadingImg").html());
+				}
 			});
-			annoncejquery("#markerConfigurator, #preview_marker").click(function(){
-				annoncejquery("#annoncePictoChangerContainer").dialog("open"); 
-				annoncejquery("#annoncePictoChanger").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { 
-					"post": "true", "elementCode": "gmapMarker", "action": "loadPictureUplodForm" 
+
+			jQuery(".searchPictoManager").click(function(){
+				jQuery("#annoncePictoChangerContainer").dialog("open"); 
+				jQuery("#annoncePictoChanger").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { 
+					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureUploadForm" 
 				});
-				annoncejquery("#annoncePictoChangerContent").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", {
-					"post": "true", "elementCode": "gmapMarker", "action": "loadPictureDirContent" 
-				});
-			});
-			annoncejquery(".searchPictoManager").click(function(){
-				annoncejquery("#annoncePictoChangerContainer").dialog("open"); 
-				annoncejquery("#annoncePictoChanger").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { 
-					"post": "true", "elementCode": annoncejquery(this).attr("id").replace("change_", ""), "action": "loadPictureUploadForm" 
-				});
-				annoncejquery("#annoncePictoChangerContent").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", {
-					"post": "true", "elementCode": annoncejquery(this).attr("id").replace("change_", ""), "action": "loadPictureDirContent" 
+				jQuery("#annoncePictoChangerContent").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", {
+					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureDirContent" 
 				});
 			});
 
-			annoncejquery("#urlFormatterContainer").dialog({
+			jQuery("#urlFormatterContainer").dialog({
 				autoOpen: false, height: 400, width: 800, modal:  true, 
 				buttons: {
 					"<?php _e('Utiliser', 'annonces'); ?>": function(){
-						annoncejquery("#annonce_url_rewrite_template").val(annoncejquery("#urlRewriteFormat").val());
-						if(annoncejquery("#urlRewriteFormat").val().match("%idpetiteannonce%")){
-							annoncejquery("#IDPAContainer").hide();
+						jQuery("#annonce_url_rewrite_template").val(jQuery("#urlRewriteFormat").val());
+						if(jQuery("#urlRewriteFormat").val().match("%idpetiteannonce%")){
+							jQuery("#IDPAContainer").hide();
 						}
 						else{
-							annoncejquery("#IDPAContainer").show();
+							jQuery("#IDPAContainer").show();
 						} 
-						annoncejquery(this).dialog("close");
+						jQuery(this).dialog("close");
 					}, 
 					"<?php _e('Annuler', 'annonces'); ?>": function(){
-						annoncejquery(this).dialog("close");
+						jQuery(this).dialog("close");
 					}
 				} 
-			}); 
-			annoncejquery("#urlConfigurator").click(function(){
-				annoncejquery("#urlFormatterContainer").dialog("open");
-				annoncejquery("#urlFormatter").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { "post": "true", "elementCode": "urlRewriteFormat", "action": "loadUrlPossibleParams" });
+			});
+			
+			jQuery("#urlConfigurator").click(function(){
+				jQuery("#urlFormatterContainer").dialog("open");
+				jQuery("#urlFormatter").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { "post": "true", "elementCode": "urlRewriteFormat", "action": "loadUrlPossibleParams" });
 			});
 		});
 	</script>

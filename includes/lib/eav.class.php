@@ -168,6 +168,35 @@ class Eav {
 		return $titre;
 	}
 	
+	public function get_autoinsert($id)
+	{
+		global $wpdb;
+			
+		$recup_autoinsert = $wpdb->prepare('select autoinsert from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+				$req_autoinsert = $wpdb->get_row($recup_autoinsert);
+				$autoinsert = $req_autoinsert->autoinsert;
+		return $autoinsert;
+	}
+	public function get_description($id)
+	{
+		global $wpdb;
+			
+		$recup_description = $wpdb->prepare('select valueattributtextcourt from '.$wpdb->prefix . small_ad_table_prefix_AOS .'petiteannonce__attributtext where idpetiteannonce = "' . $id . '"');
+				$req_desc = $wpdb->get_row($recup_description);
+				$desc = $req_desc->valueattributtextcourt;
+		return $desc;
+	}
+	
+	public function get_autolastmodif($id)
+	{
+		global $wpdb;
+			
+		$recup_autolastmodif = $wpdb->prepare('select autolastmodif from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+				$req_autolastmodif = $wpdb->get_row($recup_autolastmodif);
+				$autolastmodif = $req_autolastmodif->autolastmodif;
+		return $autolastmodif;
+	}
+	
 	public function get_link($id)
 	{
 		global $wpdb;
