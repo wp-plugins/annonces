@@ -329,6 +329,7 @@
 		}
 	</script>
 	<h2><?php _e('Options g&eacute;n&eacute;rales du Plugin d\'Annonces', 'annonces') ?></h2>
+	Mon tetstststs
 	<form name="annonces_options_form" method="post" action="" enctype="multipart/form-data" >
 		<table class="form-table">
 			<tr class="v_align">
