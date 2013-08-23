@@ -11,8 +11,7 @@ require_once dirname(__FILE__).'/options.class.php';
 global $content;
 global $post;
 
-class Frontend 
-{
+class annonce_frontend {
 
 	private $annonce_content = '';
 
@@ -41,7 +40,7 @@ class Frontend
 		{
 			$annonce_link = (strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$id.'&show_mode=list';
 		}
-		
+
 		return $annonce_link;
 	}
 
@@ -53,14 +52,11 @@ class Frontend
 	*
 	*	@return mixed If the page contains the plugin shortcode, replace with the plugin content, else return the content
 	*/
-	function show($content)
-	{
-		if(ereg('<[Dd][Ii][Vv] [Rr][Ee][Ll]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" [Ii][Dd]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" >',$content))
-		{
+	function show($content) {
+		if(preg_match('<[Dd][Ii][Vv] [Rr][Ee][Ll]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" [Ii][Dd]="[Aa][Nn][Nn][Oo][Nn][Cc][Ee][Ss]" >',$content)) {
 			return $this->generate($content);
 		}
-		else
-		{
+		else {
 			return $content;
 		}
 	}
@@ -71,17 +67,17 @@ class Frontend
 	function sendMail()
 	{
 		/**
-		*	Envoi des mails grâce au lien "Contacter le vendeur par email"
+		*	Envoi des mails grï¿½ce au lien "Contacter le vendeur par email"
 		**/
 		if (isset ($_POST['submit']))
 		{
 			if (!empty($_POST['txtNom']) && preg_match('`[0-9]{10}`', $_POST['txtTel']) && preg_match('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $_POST['txtEmail']) && !empty($_POST['txtMessage']))
 			{
 				/**
-				*	Email de réception des demandes d'informations
+				*	Email de rï¿½ception des demandes d'informations
 				**/
 					$mail = annonces_email_reception;
-					
+
 				/**
 				*	On filtre les serveurs qui rencontrent des bogues.
 				**/
@@ -98,7 +94,7 @@ class Frontend
 				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails HTML
 				**/
 					$html = annonces_html_reception;
-					
+
 					$html = stripslashes(str_replace('%nom%',$_POST['txtNom'], $html));
 					$html = stripslashes(str_replace('%tel%',$_POST['txtTel'], $html));
 					$html = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $html));
@@ -111,7 +107,7 @@ class Frontend
 				*	Remplacement des variables %xxxx% par leurs valeurs POST dans la personnalisation des emails TXT
 				**/
 					$txt = annonces_txt_reception;
-					
+
 					$txt = stripslashes(str_replace('%nom%',$_POST['txtNom'], $txt));
 					$txt = stripslashes(str_replace('%tel%',$_POST['txtTel'], $txt));
 					$txt = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $txt));
@@ -119,25 +115,25 @@ class Frontend
 					$txt = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $txt));
 					$txt = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $txt));
 					$txt = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $txt));
-					
-					
+
+
 				/**
-				*	Déclaration des messages au format texte et au format HTML.
+				*	Dï¿½claration des messages au format texte et au format HTML.
 				**/
 					$message_txt = $txt."";
 					$message_html = "<html><head></head><body>" . $html . "</body></html>";
-					
+
 				/**
-				*	Création de la boundary
+				*	Crï¿½ation de la boundary
 				**/
 					$boundary = "-----=".md5(rand());
 					$boundary_alt = "-----=".md5(rand());
-				 
+
 				/**
-				*	Définition du sujet
+				*	Dï¿½finition du sujet
 				**/
 					$sujet = annonces_sujet_reception;
-					
+
 					$sujet = stripslashes(str_replace('%nom%',$_POST['txtNom'], $sujet));
 					$sujet = stripslashes(str_replace('%tel%',$_POST['txtTel'], $sujet));
 					$sujet = stripslashes(str_replace('%mail%',$_POST['txtEmail'], $sujet));
@@ -145,21 +141,21 @@ class Frontend
 					$sujet = stripslashes(str_replace('%id_annonce%',$_POST['id_annonce'], $sujet));
 					$sujet = stripslashes(str_replace('%titre%',$_POST['titre_annonce'], $sujet));
 					$sujet = stripslashes(str_replace('%url_annonce%', Eav::get_link($_POST['id_annonce']), $sujet));
-					
+
 				/**
-				*	Création du header de l'e-mail
+				*	Crï¿½ation du header de l'e-mail
 				**/
-					
+
 					$header = "From: \"" . $_POST['txtNom'] . "\"<" . $_POST['txtEmail'] . ">".$passage_ligne;
 					$header.= "Reply-to: \"" . $_POST['txtNom'] . "\" <" . $_POST['txtEmail'] . ">".$passage_ligne;
 					$header.= "MIME-Version: 1.0".$passage_ligne;
 					$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 
 				/**
-				*	Création du message
+				*	Crï¿½ation du message
 				**/
 					$message = $passage_ligne.$boundary.$passage_ligne;
-					
+
 				/**
 				*	Ajout du message au format texte
 				**/
@@ -182,13 +178,13 @@ class Frontend
 				*	Envoi de l'e-mail
 				**/
 					mail($mail,$sujet,$message,$header);
-					
+
 				echo '<div class="contact_success">' . __('Votre demande a correctement &eacute;t&eacute; envoy&eacute;e, vous recevrez prochainement une r&eacute;ponse.<br/>Cordialement','annonce') . '</div><br/>';
 			}
 			else
 			{
 				$message_error = __('L\'envoi de votre demande d\'information(s) n\'a pu aboutir :','annonces') . '<br/>';
-				
+
 				if (empty($_POST['txtNom']))
 				{
 					$message_error .= '<div class="contact_error">' . __('Le nom est incomplet','annonces') . '</div>';
@@ -205,7 +201,7 @@ class Frontend
 				{
 					$message_error .= '<div class="contact_error">' . __('L\'adresse email est incompl&egrave;te ou incorrecte','annonces') . '</div>';
 				}
-				
+
 				$message_error .= __('Veuillez rectifier ces champs pour que l\'envoi de votre email se fasse','annonces');
 				$message_error .= '<br/><br/>';
 				echo $message_error;
@@ -214,7 +210,7 @@ class Frontend
 	}
 
 	/**
-	*	
+	*
 	*/
 	function generate($content)
 	{
@@ -229,15 +225,15 @@ class Frontend
 		$mode         = isset($_REQUEST['mode'])         ? $tools->IsValid_Variable($_REQUEST['mode'])         : '' ;
 		$show_map     = isset($_REQUEST['show_map'])     ? $tools->IsValid_Variable($_REQUEST['show_map'])     : '' ;
 		$show_annonce = isset($_REQUEST['show_annonce']) ? $tools->IsValid_Variable($_REQUEST['show_annonce']) : '' ;
-		
+
 		if(!empty($query) OR !empty($query1) OR !empty($query2) OR !empty($query3) OR !empty($query4) OR !empty($mode)){
 			/**
-			Si le critère de recherche n'est que le type de bien, on rentre dans la fonction sinon on fait la recherche avec les autres critères
+			Si le critï¿½re de recherche n'est que le type de bien, on rentre dans la fonction sinon on fait la recherche avec les autres critï¿½res
 			**/
 			if(empty($query) AND empty($query1) AND empty($query2) AND empty($query3) AND empty($query4) AND !empty($mode)){
 				$eav_mode = new Eav();
 				$annonces = $eav_mode->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,0,'nolimit');
-			
+
 				if($mode != 'all'){
 					foreach($annonces as $i){
 						$eav_mode_value = $eav_mode->getTypeBien(null,'valid',null,$i->idpetiteannonce);
@@ -248,10 +244,10 @@ class Frontend
 				}else{
 					foreach($annonces as $i){
 						$idarray .= $i->idpetiteannonce.',';
-					}					
+					}
 				}
-			
-				//Supprime la dernière virgule de la liste des IDs
+
+				//Supprime la derniï¿½re virgule de la liste des IDs
 				$size = strlen($idarray);
 				$id = substr($idarray, 0, $size-1);
 
@@ -266,12 +262,12 @@ class Frontend
 					}else{
 						$result_search = ' AND ANN.idpetiteannonce IN (0) ';
 						$this->concatAnnonceContent('<br/><br/><br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
-						$this->concatAnnonceContent($this->show_map($result_search));	
-					}				
+						$this->concatAnnonceContent($this->show_map($result_search));
+					}
 					/*---- Show annonce plugin ----*/
 					return $this->addAnnoncesToContent($content);
 				}
-					
+
 				/*---- Show search filter ----*/
 				$this->concatAnnonceContent($this->generate_search());
 				if(annonces_maps_activation == 'oui'){
@@ -288,7 +284,7 @@ class Frontend
 				if(!empty($id)){
 					$this->concatAnnonceContent($this->list_annonce($result_search));
 				}else{
-					$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');	
+					$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
 				}
 
 				/*---- Show annonce plugin ----*/
@@ -300,12 +296,12 @@ class Frontend
 				$array_query = split(' ',$query);
 				foreach($array_query as $searchWordIndex => $search)
 				{
-					$query = 
-						"(SELECT idpetiteannonce 
+					$query =
+						"(SELECT idpetiteannonce
 						FROM " . $wpdb->prefix . "ctlg_petiteannonce
-						WHERE titre LIKE '%" . mysql_real_escape_string($search) . "%' 
-							OR referenceagencedubien LIKE '%" . mysql_real_escape_string($search) . "%' 
-							OR urlannonce LIKE '%" . mysql_real_escape_string($search) . "%' 
+						WHERE titre LIKE '%" . mysql_real_escape_string($search) . "%'
+							OR referenceagencedubien LIKE '%" . mysql_real_escape_string($search) . "%'
+							OR urlannonce LIKE '%" . mysql_real_escape_string($search) . "%'
 							AND flagvalidpetiteannonce = 'valid')
 							UNION
 						(SELECT idpetiteannonce
@@ -337,9 +333,9 @@ class Frontend
 						(SELECT iddest
 						FROM " . $wpdb->prefix . "ctlg_petiteannonce__geolocalisation
 						WHERE (
-							(autolocalisation LIKE '%" . mysql_real_escape_string($search) . "%') OR (adresse LIKE '%" . mysql_real_escape_string($search) . "%') 
-							OR (ville LIKE '%" . mysql_real_escape_string($search) . "%') OR (departement LIKE '%" . mysql_real_escape_string($search) . "%') 
-							OR (region LIKE '%" . mysql_real_escape_string($search) . "%') OR (cp LIKE '%" . mysql_real_escape_string($search) . "%') 
+							(autolocalisation LIKE '%" . mysql_real_escape_string($search) . "%') OR (adresse LIKE '%" . mysql_real_escape_string($search) . "%')
+							OR (ville LIKE '%" . mysql_real_escape_string($search) . "%') OR (departement LIKE '%" . mysql_real_escape_string($search) . "%')
+							OR (region LIKE '%" . mysql_real_escape_string($search) . "%') OR (cp LIKE '%" . mysql_real_escape_string($search) . "%')
 							OR (pays LIKE '%" . mysql_real_escape_string($search) . "%')
 						)
 							AND flagvalidgeolocalisation = 'valid') ";
@@ -369,7 +365,7 @@ class Frontend
 						$checkprix[$i] = $instance->idpetiteannonce;
 					}
 				}
-				
+
 				if(!empty($query1) OR !empty($query2))
 				{
 					$eav_value = new Eav();
@@ -380,7 +376,7 @@ class Frontend
 						$checksurface[$i] = $instance->idpetiteannonce;
 					}
 				}
-				
+
 				$filter = $this->Filter($checkprix,$checksurface);
 				$checkid = $this->Filter($values,$filter);
 				if(!is_null($checkid))
@@ -402,16 +398,16 @@ class Frontend
 						foreach($checkid as $i)
 						{
 							$idarray .= $i.',';
-						}					
+						}
 					}
 
-					//Supprime la dernière virgule de la liste des IDs
+					//Supprime la derniï¿½re virgule de la liste des IDs
 					$size = strlen($idarray);
 					$id = substr($idarray, 0, $size-1);
-					
+
 					$result_search = ' AND ANN.idpetiteannonce IN ('.$id.') ';
 				}
-				
+
 				if($show_map == 'true')
 				{
 					/*---- Show map ----*/
@@ -425,12 +421,12 @@ class Frontend
 					{
 						$result_search = ' AND ANN.idpetiteannonce IN (0) ';
 						$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
-						$this->concatAnnonceContent($this->show_map($result_search));	
+						$this->concatAnnonceContent($this->show_map($result_search));
 					}
 					/*---- Show annonce plugin ----*/
 					return $this->addAnnoncesToContent($content);
 				}
-				
+
 				/*---- Show search filter ----*/
 				$this->concatAnnonceContent($this->generate_search());
 				if(annonces_maps_activation == 'oui')
@@ -453,30 +449,30 @@ class Frontend
 				}
 				else
 				{
-					$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');	
+					$this->concatAnnonceContent('<br/><p>'.__('Aucune annonce ne r&eacute;pond &agrave; vos crit&egrave;res.','annonces').'</p><br/>');
 				}
 
 				/*---- Show annonce plugin ----*/
 				return $this->addAnnoncesToContent($content);
 			}
 		}
-		
+
 		/**
 		*	METHODE QUI AFFICHE L'ANNONCE
 		**/
 		$url_page_annonce = site_url() . '/' . Eav::recupPageAnnonce();
 
 		$nb_carac_url_page = strlen($url_page_annonce);
-		
+
 		$nb_url = strlen($url_page_annonce)+1;
-		
+
 		if (strlen('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) > $nb_url)
 		{
 			if (annonces_url_activation == 'oui')
 			{
 				$lurl = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 				$url = substr($lurl, $nb_url , 500);
-				
+
 				if(Eav::get_annonce($url))
 				{
 					if(annonces_email_activation == 'oui')
@@ -492,7 +488,7 @@ class Frontend
 					{
 						/*---- Show annonce ----*/
 						$this->concatAnnonceContent($this->show_annonce($_REQUEST['show_annonce']));
-						
+
 						/*---- Show annonce plugin ----*/
 						return $this->addAnnoncesToContent($content);
 					}
@@ -504,7 +500,7 @@ class Frontend
 				{
 					/*---- Show annonce ----*/
 					$this->concatAnnonceContent($this->show_annonce($_REQUEST['show_annonce']));
-					
+
 					/*---- Show annonce plugin ----*/
 					return $this->addAnnoncesToContent($content);
 				}
@@ -517,11 +513,11 @@ class Frontend
 			$this->concatAnnonceContent($this->generate_search_map());
 			$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/><br/><br/>');
 			$this->concatAnnonceContent($this->show_map());
-			
+
 			/*---- Show annonce plugin ----*/
 			return $this->addAnnoncesToContent($content);
 		}
-	
+
 		/*---- Show search filter ----*/
 		$this->concatAnnonceContent($this->generate_search());
 		if(annonces_maps_activation == 'oui'){
@@ -531,17 +527,17 @@ class Frontend
 		}else{
 			$this->concatAnnonceContent('<br/><br/><br/><br/><br/><br/>');
 		}
-		
-		
+
+
 		/*---- Show list annonces ----*/
 		$this->concatAnnonceContent($this->list_annonce());
-		
+
 		/*---- Show annonce plugin ----*/
 		return $this->addAnnoncesToContent($content);
 	}
 
 	/**
-	*	
+	*
 	*/
 	function addAnnoncesToContent($content)
 	{
@@ -557,7 +553,7 @@ class Frontend
 	*/
 	function filter_plugin_actions_links($links, $file)
 	{
-		
+
 		if ($file == ANNONCES_PLUGIN_DIR. '/annonces.php')
 		{
 			$settings_link = $settings_link = '<a href="options-general.php?page=annonces_options">' . __('R&eacute;glages', 'annonces') . '</a>';
@@ -578,7 +574,7 @@ class Frontend
 	}
 
 	/**
-	* Cette méthode est appelé lorsque que le formulaire de recherche fait une requête sur le prix et/ou la superficie
+	* Cette mï¿½thode est appelï¿½ lorsque que le formulaire de recherche fait une requï¿½te sur le prix et/ou la superficie
 	*/
 	function Filter($needle, $haystack)
 	{
@@ -615,7 +611,7 @@ class Frontend
 		{
 			$Pagination = $tools->DoPagination($link,$nb_total_items,$this->getActualPage(),NUMBER_OF_ITEM_PAR_PAGE_FRONTEND_AOS,PAGINATION_OFFSET_FRONTEND_AOS,'','','#999999','#FFFFFF');
 		}
-	
+
 		return $Pagination;
 	}
 
@@ -654,7 +650,7 @@ class Frontend
 	}
 
 	/**
-	* Cette méthode génère la petite carte que l'on peut voir dans le listing des annonces
+	* Cette mï¿½thode gï¿½nï¿½re la petite carte que l'on peut voir dans le listing des annonces
 	*/
 	function generate_map($morequery = null)
 	{
@@ -668,7 +664,7 @@ class Frontend
 		for($i = 0; $i < $sizei; $i++)
 		{
 			$annonce_link_1 = $this->lienUrl($annonces[$i]->idpetiteannonce);
-			
+
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
 				$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
@@ -681,11 +677,11 @@ class Frontend
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
-				
+
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
-		
+
 		$list_map = '
 			<script type="text/javascript">
 				<!-- Google map -->
@@ -705,7 +701,7 @@ class Frontend
 						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
 						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 						icon.iconAnchor=new GPoint(16,16);
-						
+
 						'.$markers.'
 					}
 				}
@@ -716,13 +712,13 @@ class Frontend
 				</script>
 			</div>
 		';
-		
+
 		return $list_map;
 	}
 
 	function search_engine()
 	{
-	
+
 	}
 
 	function getAnnonceContent()
@@ -742,7 +738,7 @@ class Frontend
 
 	/*---- diplay template Search ----*/
 	function generate_search()
-	{	
+	{
 		global $tools;
 		$query = isset($_REQUEST['query']) ? $tools->IsValid_Variable($_REQUEST['query']) : '' ;
 		$query1 = isset($_REQUEST['query1']) ? $tools->IsValid_Variable($_REQUEST['query1']) : '' ;
@@ -750,21 +746,21 @@ class Frontend
 		$query3 = isset($_REQUEST['query3']) ? $tools->IsValid_Variable($_REQUEST['query3']) : '' ;
 		$query4 = isset($_REQUEST['query4']) ? $tools->IsValid_Variable($_REQUEST['query4']) : '' ;
 		$mode = isset($_REQUEST['mode']) ? $tools->IsValid_Variable($_REQUEST['mode']) : '' ;
-	
+
 		$filter_search = '';
 		if(annonces_maps_activation == 'oui')
 		{
-			$filter_search .= '		
+			$filter_search .= '
 			<div class="carte-annonce">
 				<div class="carte-annonce-text">
 					<form name="lien" action="'.get_permalink().'" method="post">
-						<input type="hidden" name="show_map" value="true"> 
-						<input type="hidden" name="query" value="'.$query.'"> 
-						<input type="hidden" name="query1" value="'.$query1.'"> 
-						<input type="hidden" name="query2" value="'.$query2.'"> 
-						<input type="hidden" name="query3" value="'.$query3.'"> 
-						<input type="hidden" name="query4" value="'.$query4.'"> 
-						<input type="hidden" name="mode" value="'.$mode.'"> 
+						<input type="hidden" name="show_map" value="true">
+						<input type="hidden" name="query" value="'.$query.'">
+						<input type="hidden" name="query1" value="'.$query1.'">
+						<input type="hidden" name="query2" value="'.$query2.'">
+						<input type="hidden" name="query3" value="'.$query3.'">
+						<input type="hidden" name="query4" value="'.$query4.'">
+						<input type="hidden" name="mode" value="'.$mode.'">
 						<div class="carte-seule-texte"><a onclick="javascript:document.forms.lien.submit();" href=\'#\'>'.__('Affichage carte','annonces').'</div><div class="carte-seule-image">&nbsp;</div></a>
 					</form>
 				</div>
@@ -785,7 +781,7 @@ class Frontend
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
 				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
-			<div class="sidebar_search">    
+			<div class="sidebar_search">
 				<b>'.__('Recherche','annonces').'&nbsp;:</b><input type="text" name="query" value="'.$query.'" id="search_keywords" /><i>'.__('(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)','annonces').'</i>
 			</div>
 			<div class="budget">
@@ -803,7 +799,7 @@ class Frontend
 					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_superficie_theme_courant.'" '.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
-						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
+						<input type="text" name="query1" value="'.$query1.'" id="search_keywords_1"/>
 					<label for="search_keywords_2">Max. : </label>
 						<input type="text" name="query2" value="'.$query2.'" id="search_keywords_2"/>
 				</p>
@@ -815,7 +811,7 @@ class Frontend
 		return $filter_search;
 	}
 
-	/*---- diplay template Search for map (TODO: factoriser les méthodes de recherche)----*/
+	/*---- diplay template Search for map (TODO: factoriser les mï¿½thodes de recherche)----*/
   function generate_search_map()
 	{
 		global $tools;
@@ -826,22 +822,22 @@ class Frontend
 		$query4 = isset($_REQUEST['query4']) ? $tools->IsValid_Variable($_REQUEST['query4']) : '' ;
 		$mode = isset($_REQUEST['mode']) ? $tools->IsValid_Variable($_REQUEST['mode']) : '' ;
 
-		$filter_search_map = '		
+		$filter_search_map = '
 		<div class="carte-annonce">
 			<div class="carte-annonce-text">
 				<form name="lien" action="'.get_permalink().'" method="post">
-					<input type="hidden" name="show_list" value="true"> 
-					<input type="hidden" name="query" value="'.$query.'"> 
-					<input type="hidden" name="query1" value="'.$query1.'"> 
-					<input type="hidden" name="query2" value="'.$query2.'"> 
-					<input type="hidden" name="query3" value="'.$query3.'"> 
-					<input type="hidden" name="query4" value="'.$query4.'"> 
-					<input type="hidden" name="mode" value="'.$mode.'"> 
+					<input type="hidden" name="show_list" value="true">
+					<input type="hidden" name="query" value="'.$query.'">
+					<input type="hidden" name="query1" value="'.$query1.'">
+					<input type="hidden" name="query2" value="'.$query2.'">
+					<input type="hidden" name="query3" value="'.$query3.'">
+					<input type="hidden" name="query4" value="'.$query4.'">
+					<input type="hidden" name="mode" value="'.$mode.'">
 					<div class="lst_annonce"><a onclick="javascript:document.forms.lien.submit();" href=\'#\'>'.__('Liste des annonces','annonces').'<div class="annonces-img"></div></a></div>
 				</form>
 			</div>
 		</div>
-		
+
 		<form action="'.(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_map=true#annonces_listing" method="post" class="navigation_form" name="navigation_form" >
 			<input type="hidden" name="page_nav_annonces" id="page_nav_annonces" value="" />
 			<h5>'.__('Recherchez une annonce','annonces').'</h5>
@@ -856,7 +852,7 @@ class Frontend
 				<input type="radio" id="maisons" name="mode" '.(($mode == 'maison/villa')? 'checked': '').' value="maison/villa">&nbsp;
 				<label for="maisons" >'.__('Maisons','annonces').'</label><BR/>
 			</div>
-			<div class="sidebar_search">    
+			<div class="sidebar_search">
 				<b>'.__('Recherche','annonces').'&nbsp;:</b><input type="text" name="query" value="'.$query.'" id="search_keywords" /><i>'.__('(Exemple : mot-cl&eacute;, ville, d&eacute;partement...)','annonces').'</i>
 			</div>
 			<div class="budget">
@@ -874,7 +870,7 @@ class Frontend
 					<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_superficie_theme_courant.'"  alt="'.__('Superficie terrain souhait&eacute;e','annonces').'"/>
 					<b>'.__('Superficie terrain souhait&eacute;e','annonces').'&nbsp;:</b><br/>
 					<label for="search_keywords_1">Min. : </label>
-						<input type="text" name="query1" value="'.$quer1.'" id="search_keywords_1"/>
+						<input type="text" name="query1" value="'.$query1.'" id="search_keywords_1"/>
 					<label for="search_keywords_2">Max. : </label>
 						<input type="text" name="query2" value="'.$query2.'" id="search_keywords_2"/>
 				</p>
@@ -890,17 +886,17 @@ class Frontend
 	{
 		$eav_value = new Eav();
 		$generate_map = '';
-		
+
 		$markers = '';
 		$eav_value = new Eav();
 		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,0,'nolimit');
-		
+
 		$sizei = count($annonces);
 
 		for($i = 0; $i < $sizei; $i++)
 		{
 			$annonce_link_1 = $this->lienUrl($annonces[$i]->idpetiteannonce);
-			
+
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
 				$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
@@ -913,7 +909,7 @@ class Frontend
 				GEvent.addListener(marker'.$i.', "click", function() {
 						window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
-				
+
 				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
@@ -936,7 +932,7 @@ class Frontend
 						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
 						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 						icon.iconAnchor=new GPoint(16,16);
-						
+
 						'.$markers.'
 					}
 				}
@@ -947,10 +943,10 @@ class Frontend
 				</script>
 			</div>
 		';
-		
-		return $generate_map;	
+
+		return $generate_map;
 	}
-	
+
 	function show_annonce($id = null)
 	{
 		if (preg_match_all('(\?page_id=)', $_SERVER['REQUEST_URI'], $match) == 0)
@@ -961,13 +957,13 @@ class Frontend
 		{
 			$retour_link =(strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').((!empty($show_mode) and ($show_mode == 'list'))? 'show_list=true' : '');
 		}
-		
+
 		global $tools;
 		$show_mode = isset($_REQUEST['show_mode']) ? $tools->IsValid_Variable($_REQUEST['show_mode']) : '' ;
 
 		$eav_value = new Eav();
 		$generate_annonce = '';
-		
+
 		$annonce = $eav_value->getAnnoncesEntete(' AND ANN.idpetiteannonce='.$id,"'valid'");
 
 		$generate_annonce .= '<a href="' . get_option('siteurl') . '/' . $retour_link . '">';
@@ -982,23 +978,23 @@ class Frontend
 		$generate_annonce .= $annonce[0]->titre;
 		$generate_annonce .= '<br/>';
 		$generate_annonce .= '</div>';
-		
+
 		$prix = $eav_value->getPrix(null,'valid',null,$id);
 		$generate_annonce .= '<div class="annonce-price-show" >';
 		$generate_annonce .= number_format($prix[0]->valueattributdec,0,',',' ').'&nbsp;'.$prix[0]->measureunit;
 		$generate_annonce .= '</div><br/><br/>';
-		
+
 		$generate_annonce .= '<div class="annonce-surface">';
 		$generate_annonce .= $annonce[0]->cp.'&nbsp;'.$annonce[0]->ville;
 		$generate_annonce .= '<br/>';
 		$surface = $eav_value->getSurface(null,'valid',null,$id);
 		$generate_annonce .= number_format($surface[0]->valueattributdec,0,',',' ').'&nbsp;'.$surface[0]->measureunit;
 		$generate_annonce .= '<br/></div>';
-		
+
 		$generate_annonce .= '<div class="annonce-description">'.__('Description','annonces').'&nbsp;:</div>';
 		$generate_annonce .= '<div class="annonce-texte">';
 		$description = $eav_value->getDescription(null,'valid',null,$id);
-		
+
 		/*** Attention ici faut mettre description longue et non la courte ***/
 		$generate_annonce .= stripslashes($description[0]->valueattributtextcourt);
 		$generate_annonce .= '</div>';
@@ -1014,7 +1010,7 @@ class Frontend
 		if(annonces_photos_activation == 'oui'){
 			$generate_annonce .= '<div class="annonce-img">';
 			$generate_annonce .= '<h5>'.__('Autres vues','annonces').'</h5><br/>';
-			
+
 			$photos = $eav_value->getPhotos($id);
 			$sizei = count($photos);
 			for($i = 0; $i < $sizei; $i++)
@@ -1026,7 +1022,7 @@ class Frontend
 			}
 			$generate_annonce .= '</div>';
 		}
-		
+
 		if(annonces_email_activation == 'oui')
 		{
 			$generate_annonce .= '<br/><br/><div class="lien_contact">';
@@ -1040,7 +1036,7 @@ class Frontend
 		$generate_annonce .= '<fieldset>';
 		$generate_annonce .= '<legend>'.__('INFORMATIONS COMPL&Eacute;MENTAIRES','annonces').'</legend>';
 		$generate_annonce .= '<div class="infos">';
-		
+
 		$attributs = $eav_value->getAnnoncesAttributs(null,'valid',null,$id,'oui');
 		$sizej = count($attributs);
 		for($j = 0; $j < $sizej; $j++){
@@ -1074,7 +1070,7 @@ class Frontend
 				}
 			}
 		}
-		
+
 		$generate_annonce .= '</div>';
 		$generate_annonce .= '</fieldset>';
 		$generate_annonce .= '</div>';
@@ -1102,7 +1098,7 @@ class Frontend
 								icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
 								icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
 								icon.iconAnchor=new GPoint(16,16);
-								
+
 								var marker = new GMarker(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),icon);
 								annoncemap.addOverlay(marker);
 							}
@@ -1121,37 +1117,37 @@ class Frontend
 			}
 			$generate_annonce .= '</center>';
 			$generate_annonce .= '<br/>';
-			
+
 			$generate_annonce .= '</p>';
 		}
 		$generate_annonce .= '</center>';
 		$generate_annonce .= '<br/>';
-		
+
 		if(annonces_email_activation == 'oui')
 		{
 			/**
-			*	Implémentation du "Contacter le vendeur par email"
+			*	Implï¿½mentation du "Contacter le vendeur par email"
 			**/
 			$generate_annonce .= '<div class="form_contact" id="form_contact"><table>';
 			$generate_annonce .= '<tr>';
 			$generate_annonce .= '<td colspan="3"><label> ' . __('Laissez un message au vendeur','annonces') . '</label></td><td></td>';
 			$generate_annonce .= '</tr>';
-			
+
 			$generate_annonce .= '<tr>';
 			$generate_annonce .= '<td>';
 			$generate_annonce .= '<form method="post">';
 			$generate_annonce .= '<div>';
 			$generate_annonce .= '<input name="id_annonce" type="hidden" value="' . $id . '" id="id_annonce"/>';
 			$generate_annonce .= '<input name="titre_annonce" type="hidden" value="' . $annonce[0]->titre . '" id="titre_annonce"/>';
-			
+
 			$generate_annonce .= '<label>' . __('Nom','annonces') . '</label><br/><input name="txtNom" id="txtNom" type="text" value="' . stripslashes(trim($_POST['txtNom'])) . '"/>';
 			$generate_annonce .= '<label>' . __('Telephone','annonces') . '</label><br/><input name="txtTel" id="txtTel" type="text" value="' . stripslashes(trim($_POST['txtTel'])) . '"/>';
 			$generate_annonce .= '<label>' . __('Email','annonces') . '</label><br/><input name="txtEmail" id="txtEmail" type="text" value="' . stripslashes(trim($_POST['txtEmail'])) . '"/>';
-			
-			
+
+
 			$generate_annonce .= '</div>';
 			$generate_annonce .= '</td>';
-			
+
 			$generate_annonce .= '<td colspan="2">';
 			$generate_annonce .= '<label>' . __('Message','annonces') . '</label><textarea id="txtMessage" name="txtMessage" cols="40" rows="6">' . stripslashes(trim($_POST['txtMessage'])) . '</textarea>';
 			$generate_annonce .= '<div></div>
@@ -1168,13 +1164,13 @@ class Frontend
 
 		return $generate_annonce;
 	}
-	
+
 	function list_annonce($morequery = null)
 	{
 		$eav_value = new Eav();
 		// $annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage(),null,null);
 		/*
-		*	Modification Alex le 14/04/2010 pour tri par prix (mauvaise version à reprendre)
+		*	Modification Alex le 14/04/2010 pour tri par prix (mauvaise version ï¿½ reprendre)
 		*/
 		$annonces = $eav_value->getAnnoncesEntete($morequery,DEFAULT_FLAG_AOS,annonce_frontend_listing_order,$this->getActualPage(),null,null);
 		$sizei = count($annonces);
@@ -1198,14 +1194,14 @@ class Frontend
 			{
 				$annonce_link = (strstr(get_permalink(), '?')? get_permalink().'&' : get_permalink().'?').'show_annonce='.$annonces[$i]->idpetiteannonce.'&show_mode=list';
 			}
-			
+
 			$generate_annonce .= '<tr class="annonce-ligne">';
 			if(annonces_photos_activation == 'oui')
 			{
 				$generate_annonce .= '<td><div class="annonce-photos">';
 				$generate_annonce .= '<a href="' . $annonce_link . '">';
 				$photos = $eav_value->getPhotos($annonces[$i]->idpetiteannonce);
-				if(is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original))
+				if(!empty($photos) && !empty($photos[0]) && is_file(WP_CONTENT_DIR . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original))
 				$generate_annonce .= '<img src="'.WP_CONTENT_URL . WAY_TO_PICTURES_THUMBNAIL_AOS . $photos[0]->original.'" alt="'.$annonces[$i]->titre.'" class="GAimg"/>';
 				$generate_annonce .= '</a></div></td>';
 			}
@@ -1228,14 +1224,14 @@ class Frontend
 			$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 			$generate_annonce .= number_format($surface[0]->valueattributdec,0,',',' ').'&nbsp;'.$surface[0]->measureunit;
 			$generate_annonce .= '<br/></div>';
-			
+
 			$description = $eav_value->getDescription(null,'valid',null,$annonces[$i]->idpetiteannonce);
 			$generate_annonce .= '<div class="annonce-description">'.__('Description','annonces').'&nbsp;:</div>';
 			$generate_annonce .= '<div class="annonce-texte">';
 			$generate_annonce .= stripslashes($description[0]->valueattributtextcourt);
 			$generate_annonce .= '</div>';
 			$generate_annonce .= '</td>';
-			
+
 			if(annonces_date_activation == 'oui'){
 				$generate_annonce .= '<td>';
 				$generate_annonce .= '<div class="annonce-date">';
@@ -1254,9 +1250,9 @@ class Frontend
 				$generate_annonce .= '</td>';
 			}
 			$generate_annonce .= '</tr>';
-			
+
 		}
-		$list_result = 
+		$list_result =
 			'<h5>'.__('Consultez toutes les annonces','annonces').'</h5>
 				'.$this->getPagination($morequery).'
 				<div>

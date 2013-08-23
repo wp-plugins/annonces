@@ -26,11 +26,12 @@
 	DEFINE('DEFAULT_FLAG_AOS',"'valid'");
 
 	DEFINE('ANN_WPSHOP_PLUGIN_MAINFILE', 'wpshop/wpshop.php');
-	
-	DEFINE('WPSHOP_NEWTYPE_IDENTIFIER_PRODUCT', 'wpshop_product');
+
+// 	DEFINE('WPSHOP_NEWTYPE_IDENTIFIER_PRODUCT', 'wpshop_product');
 	$table_name_by_type = array();
 	$id_attribute_by_type = array();
 	$field_name_value_by_type = array();
+	global $wpdb;
 	$table_name_by_type['char'] = $wpdb->prefix . small_ad_table_prefix_AOS . 'petiteannonce__attributchar';
 		$field_name_value_by_type['char'] = 'valueattributchar';
 			$id_attribute_by_type['char'] = 'idattributchar';
@@ -277,10 +278,10 @@
 	$fields_validator_string_4000 = array('Descriptif','CommentairesMandataire','CommentairesPrives','DescriptifLangue1','DescriptifLangue2','DescriptifLangue3');
 
 	$geolocalisation_field = array('adresse','ville','cp','pays','departement','region','latitude','longitude','token','autolocalisation','iddest','idsrc','flagvalidgeolocalisation');
-	
+
 	$annonce_general_action = array(__('Supprimer','annonces') => 'selection_delete', __('Exclure','annonces') => 'selection_moderated', __('Valider','annonces') => 'selection_valid', __('Exportable','annonces') => 'selection_exportable', __('Non exportable','annonces') => 'selection_not_exportable');
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if(is_plugin_active(ANN_WPSHOP_PLUGIN_MAINFILE)){
-		// $annonce_general_action[__('Exporter vers WP-Shop','annonces')] = 'export_to_wpshop';
+		$annonce_general_action[__('Exporter vers WP-Shop','annonces')] = 'export_to_wpshop';
 	}
 	$attribut_general_action = array(__('Supprimer','annonces') => 'selection_delete', __('Exclure','annonces') => 'selection_moderated', __('Valider','annonces') => 'selection_valid', __('Visible','annonces') => 'selection_visible', __('Non visible','annonces') => 'selection_not_visible');

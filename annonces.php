@@ -5,20 +5,20 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.2.0.2
+	Version: 1.2.0.3
 */
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
- 
+
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
- 
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
- 
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,9 +31,9 @@
 	* @author Eoxia <contact@eoxia.com>
 	* @version 1.2.0.0
 	*/
-	
+
 	{/* VARIABLES DE CONFIGURATIONS */
-		/* ANNONCES_PLUGIN_DIR permet de définirle chemin de base pour inclure des classes ou fonctions du plugin */
+		/* ANNONCES_PLUGIN_DIR permet de dï¿½finirle chemin de base pour inclure des classes ou fonctions du plugin */
 		DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
 	}
 
@@ -63,10 +63,10 @@
 	/**
 	* CREATE A FRONTEND INSTANCE
 	*/
-	$view = new Frontend();
+	$view = new annonce_frontend();
 	/**
 	* Appel la methode show dans le contenu de la page Wordpress
-	* Cette methode genère du code html avec toutes les annonces a afficher
+	* Cette methode genï¿½re du code html avec toutes les annonces a afficher
 	*/
 	add_filter('the_content', array( $view, "show" ), 99);
 	/**
@@ -78,7 +78,7 @@
 	* Ajoute le CSS dans le Header de Wordpress
 	*/
 	add_action('init', array( $view, "add_css" ));
-	
+
 	/**
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header de Wordpress
 	*/
@@ -87,19 +87,19 @@
 	* Ajoute le Script Javascript de la cle Google Maps dans le Header Admin de Wordpress
 	*/
 	add_action('admin_head', array( $view, "add_gmap" ));
-	
+
 	/**
-	*	Ajoute la biblothèque JQuery dans le Header (même admin) de WordPress
+	*	Ajoute la biblothï¿½que JQuery dans le Header (mï¿½me admin) de WordPress
 	*/
 	add_action('admin_init', array( $view, "add_js" ));
 	add_action('init', array( $view, "add_js" ));
 
 	/**
-	*	Création des tables
+	*	Crï¿½ation des tables
 	**/
 	require_once(ANNONCES_MODULES_PLUGIN_DIR . 'installation/creationTables.php');
 	annonces_creationTables();
-	
+
 	{/* Definition des options */
 		$annonces_options = get_option('annonces_options');
 
@@ -135,7 +135,7 @@
 		define('annonces_email_activation', annonces_options::valeurOption('annonces_email_activation'));
 	}
 
-	{/* Réécriture des URLs */
+	{/* Rï¿½ï¿½criture des URLs */
 		add_filter('rewrite_rules_array','wp_insertMyRewriteRules');
 		add_filter('query_vars','wp_insertMyRewriteQueryVars');
 		add_filter('wp_loaded','flushRules');
@@ -150,7 +150,7 @@
 		function wp_insertMyRewriteRules($rules)
 		{
 			$page_annonce = Eav::recupPageAnnonce();
-		
+
 			$newrules = array();
 			$newrules[$page_annonce.'(.+).html?'] = 'index.php?&pagename='.$page_annonce;
 			$newrules[$page_annonce.'(.+)'] = 'index.php?&pagename='.$page_annonce;

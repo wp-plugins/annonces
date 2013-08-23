@@ -5,50 +5,50 @@ function annonces_insertions($insertions = null)
 	require_once(ANNONCES_LIB_PLUGIN_DIR . 'version/version.class.php');
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	global $wpdb;
-	
+
 		$sujet = htmlentities('Questions sur l\'annonce %id_annonce% de la part de %nom%');
-		$txt = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
-		$html = htmlentities('%message%<br/><br/><br/>Coordonnées du contact :<br/><br/>Nom : %nom%<br/>Téléphone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas répondu, la personne qui vous a contacté ne connaitra pas votre adresse email.');
+		$txt = htmlentities('%message%<br/><br/><br/>Coordonnï¿½es du contact :<br/><br/>Nom : %nom%<br/>Tï¿½lï¿½phone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas rï¿½pondu, la personne qui vous a contactï¿½ ne connaitra pas votre adresse email.');
+		$html = htmlentities('%message%<br/><br/><br/>Coordonnï¿½es du contact :<br/><br/>Nom : %nom%<br/>Tï¿½lï¿½phone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas rï¿½pondu, la personne qui vous a contactï¿½ ne connaitra pas votre adresse email.');
 
 	if(version::getVersion() <= 1)
 	{
-		$sql = "INSERT INTO " . ANNONCES_TABLE_VERSION . " (id, nomVersion, version) VALUES 
+		$sql = "INSERT INTO " . ANNONCES_TABLE_VERSION . " (id, nomVersion, version) VALUES
 			('1', 'annonces_version', 1);";
 		$wpdb->query($sql);
-		
-		$sql = "INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " (idattribut, flagvalidattribut, flagvisibleattribut, typeattribut, labelattribut, nomattribut, measureunit) VALUES 
+
+		$sql = "INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " (idattribut, flagvalidattribut, flagvisibleattribut, typeattribut, labelattribut, nomattribut, measureunit) VALUES
 			(1, 'moderated', 'non', 'CHAR', 'IdentifiantAgence', 'Identifiant agence', NULL),
-			(2, 'moderated', 'oui', 'CHAR', 'ReferenceAgenceDuBien', 'Référence agence du bien', NULL),
+			(2, 'moderated', 'oui', 'CHAR', 'ReferenceAgenceDuBien', 'Rï¿½fï¿½rence agence du bien', NULL),
 			(3, 'moderated', 'oui', 'CHAR', 'TypeAnnonce', 'Type d\'annonce', NULL),
 			(4, 'valid', 'oui', 'CHAR', 'TypeBien', 'Type de bien', NULL),
 			(5, 'moderated', 'non', 'CHAR', 'CP', 'CP', NULL),
 			(6, 'moderated', 'non', 'CHAR', 'Ville', 'Ville', NULL),
 			(7, 'moderated', 'non', 'CHAR', 'Pays', 'Pays', NULL),
 			(8, 'moderated', 'non', 'CHAR', 'Adresse', 'Adresse', NULL),
-			(9, 'moderated', 'non', 'CHAR', 'QuartierProximite', 'Quartier/Proximité', NULL),
-			(10, 'moderated', 'non', 'CHAR', 'ActivitesCommerciales', 'Activités commerciales', NULL),
+			(9, 'moderated', 'non', 'CHAR', 'QuartierProximite', 'Quartier/Proximitï¿½', NULL),
+			(10, 'moderated', 'non', 'CHAR', 'ActivitesCommerciales', 'Activitï¿½s commerciales', NULL),
 			(11, 'valid', 'oui', 'DEC', 'PrixLoyerPrixDeCession', 'Prix/Loyer/Prix de cession', NULL),
 			(12, 'moderated', 'non', 'DEC', 'LoyerMoisMurs', 'Loyer/mois murs', NULL),
 			(13, 'moderated', 'non', 'CHAR', 'LoyerCC', 'Loyer CC', NULL),
 			(14, 'moderated', 'non', 'CHAR', 'LoyerHT', 'Loyer HT', NULL),
 			(15, 'moderated', 'non', 'DEC', 'Honnoraires', 'Honnoraires', NULL),
-			(16, 'moderated', 'non', 'DEC', 'Surface', 'Surface', 'm²'),
-			(17, 'valid', 'oui', 'DEC', 'SFTerrain', 'Surface terrain', 'm²'),
-			(18, 'moderated', 'non', 'INT', 'NBDePieces', 'NB de pièces', NULL),
+			(16, 'moderated', 'non', 'DEC', 'Surface', 'Surface', 'mï¿½'),
+			(17, 'valid', 'oui', 'DEC', 'SFTerrain', 'Surface terrain', 'mï¿½'),
+			(18, 'moderated', 'non', 'INT', 'NBDePieces', 'NB de piï¿½ces', NULL),
 			(19, 'moderated', 'non', 'INT', 'NBDeChambres', 'NB de chambres', NULL),
-			(20, 'moderated', 'non', 'CHAR', 'Libelle', 'Libellé', NULL),
+			(20, 'moderated', 'non', 'CHAR', 'Libelle', 'Libellï¿½', NULL),
 			(21, 'valid', 'oui', 'TEXT', 'Descriptif', 'Descriptif', NULL),
-			(22, 'moderated', 'non', 'DATE', 'DateDeDisponibilite', 'Date de disponibilité', NULL),
+			(22, 'moderated', 'non', 'DATE', 'DateDeDisponibilite', 'Date de disponibilitï¿½', NULL),
 			(23, 'moderated', 'non', 'DEC', 'Charges', 'Charges', NULL),
 			(24, 'moderated', 'non', 'INT', 'Etage', 'Etage', NULL),
 			(25, 'moderated', 'non', 'INT', 'NBEtages', 'NB d', NULL),
-			(26, 'moderated', 'non', 'CHAR', 'Meuble', 'Meublé', NULL),
-			(27, 'moderated', 'non', 'INT', 'AnneeDeConstruction', 'Année de construction', NULL),
-			(28, 'moderated', 'non', 'CHAR', 'RefaitANeuf', 'Refait à neuf', NULL),
+			(26, 'moderated', 'non', 'CHAR', 'Meuble', 'Meublï¿½', NULL),
+			(27, 'moderated', 'non', 'INT', 'AnneeDeConstruction', 'Annï¿½e de construction', NULL),
+			(28, 'moderated', 'non', 'CHAR', 'RefaitANeuf', 'Refait ï¿½ neuf', NULL),
 			(29, 'moderated', 'non', 'INT', 'NBDeSallesDeBain', 'NB de salles de bain', NULL),
 			(30, 'moderated', 'non', 'INT', 'NBDeSallesEau', 'NB de salles d', NULL),
 			(31, 'moderated', 'non', 'INT', 'NBDeWC', 'NB de WC', NULL),
-			(32, 'moderated', 'non', 'CHAR', 'WCSepares', 'WC séparés', NULL),
+			(32, 'moderated', 'non', 'CHAR', 'WCSepares', 'WC sï¿½parï¿½s', NULL),
 			(33, 'moderated', 'non', 'INT', 'TypeDeChauffage', 'Type de chauffage', NULL),
 			(34, 'moderated', 'non', 'INT', 'TypeDeCuisine', 'Type de cuisine', NULL),
 			(35, 'moderated', 'non', 'CHAR', 'OrientationSud', 'Orientation sud', NULL),
@@ -72,34 +72,34 @@ function annonces_insertions($insertions = null)
 			(53, 'moderated', 'non', 'DEC', 'PrixQuinzaineHauteSaison', 'Prix quinzaine / haute saison', NULL),
 			(54, 'moderated', 'non', 'DEC', 'PrixMoisHauteSaison', 'Prix mois / haute saison', NULL),
 			(55, 'moderated', 'non', 'INT', 'NBDePersonnes', 'NB de personnes', NULL),
-			(56, 'moderated', 'non', 'CHAR', 'TypeDeResidence', 'Type de résidence', NULL),
+			(56, 'moderated', 'non', 'CHAR', 'TypeDeResidence', 'Type de rï¿½sidence', NULL),
 			(57, 'moderated', 'non', 'CHAR', 'Situation', 'Situation', NULL),
 			(58, 'moderated', 'non', 'INT', 'NBDeCouverts', 'NB de couverts', NULL),
 			(59, 'moderated', 'non', 'INT', 'NBDeLitsDoubles', 'NB de lits doubles', NULL),
 			(60, 'moderated', 'non', 'INT', 'NBDeLitsSimples', 'NB de lits simples', NULL),
 			(61, 'moderated', 'non', 'CHAR', 'Alarme', 'Alarme', NULL),
-			(62, 'moderated', 'non', 'CHAR', 'CableTV', 'Câble TV', NULL),
+			(62, 'moderated', 'non', 'CHAR', 'CableTV', 'Cï¿½ble TV', NULL),
 			(63, 'moderated', 'non', 'CHAR', 'Calme', 'Calme', NULL),
 			(64, 'moderated', 'non', 'CHAR', 'Climatisation', 'Climatisation', NULL),
 			(65, 'moderated', 'non', 'CHAR', 'Piscine', 'Piscine', NULL),
-			(66, 'moderated', 'non', 'CHAR', 'AmenagementPourHandicapes', 'Aménagement pour handicapés', NULL),
-			(67, 'moderated', 'non', 'CHAR', 'AnimauxAcceptes', 'Animaux acceptés', NULL),
-			(68, 'moderated', 'non', 'CHAR', 'Cheminee', 'Cheminée', NULL),
-			(69, 'moderated', 'non', 'CHAR', 'Congelateur', 'Congélateur', NULL),
+			(66, 'moderated', 'non', 'CHAR', 'AmenagementPourHandicapes', 'Amï¿½nagement pour handicapï¿½s', NULL),
+			(67, 'moderated', 'non', 'CHAR', 'AnimauxAcceptes', 'Animaux acceptï¿½s', NULL),
+			(68, 'moderated', 'non', 'CHAR', 'Cheminee', 'Cheminï¿½e', NULL),
+			(69, 'moderated', 'non', 'CHAR', 'Congelateur', 'Congï¿½lateur', NULL),
 			(70, 'moderated', 'non', 'CHAR', 'Four', 'Four', NULL),
 			(71, 'moderated', 'non', 'CHAR', 'LaveVaisselle', 'Lave-vaisselle', NULL),
 			(72, 'moderated', 'non', 'CHAR', 'MicroOndes', 'Micro-ondes', NULL),
 			(73, 'moderated', 'non', 'CHAR', 'Placards', 'Placards', NULL),
-			(74, 'moderated', 'non', 'CHAR', 'Telephone', 'Téléphone', NULL),
+			(74, 'moderated', 'non', 'CHAR', 'Telephone', 'Tï¿½lï¿½phone', NULL),
 			(75, 'moderated', 'non', 'CHAR', 'ProcheLac', 'Proche lac', NULL),
 			(76, 'moderated', 'non', 'CHAR', 'ProcheTennis', 'Proche tennis', NULL),
 			(77, 'moderated', 'non', 'CHAR', 'ProchePistesDeSki', 'Proche pistes de ski', NULL),
-			(78, 'moderated', 'non', 'CHAR', 'VueDegagee', 'Vue dégagée', NULL),
+			(78, 'moderated', 'non', 'CHAR', 'VueDegagee', 'Vue dï¿½gagï¿½e', NULL),
 			(79, 'moderated', 'non', 'DEC', 'ChiffreAffaire', 'Chiffre d\'affaire', NULL),
-			(80, 'moderated', 'non', 'DEC', 'LongueurFacade', 'Longueur façade (m)', NULL),
+			(80, 'moderated', 'non', 'DEC', 'LongueurFacade', 'Longueur faï¿½ade (m)', NULL),
 			(81, 'moderated', 'non', 'CHAR', 'Duplex', 'Duplex', NULL),
 			(82, 'moderated', 'non', 'CHAR', 'Publications', 'Publications', NULL),
-			(83, 'moderated', 'non', 'CHAR', 'MandatEnExclusivite', 'Mandat en exclusivité', NULL),
+			(83, 'moderated', 'non', 'CHAR', 'MandatEnExclusivite', 'Mandat en exclusivitï¿½', NULL),
 			(84, 'moderated', 'non', 'CHAR', 'CoupDeCoeur', 'Coup de coeur', NULL),
 			(85, 'moderated', 'non', 'CHAR', 'Photo1', 'Photo 1', NULL),
 			(86, 'moderated', 'non', 'CHAR', 'Photo2', 'Photo 2', NULL),
@@ -121,65 +121,65 @@ function annonces_insertions($insertions = null)
 			(102, 'moderated', 'non', 'CHAR', 'TitrePhoto9', 'Titre photo 9', NULL),
 			(103, 'moderated', 'non', 'CHAR', 'PhotoPanoramique', 'Photo panoramique', NULL),
 			(104, 'moderated', 'non', 'CHAR', 'URLVisiteVirtuelle', 'URL visite virtuelle', NULL),
-			(105, 'moderated', 'non', 'CHAR', 'TelephoneAAfficher', 'Téléphone à afficher', NULL),
-			(106, 'moderated', 'non', 'CHAR', 'ContactAAfficher', 'Contact à afficher', NULL),
-			(107, 'moderated', 'non', 'CHAR', 'EmailAAfficher', 'Email à afficher', NULL),
-			(108, 'moderated', 'non', 'CHAR', 'CPReelDuBien', 'CP Réel du bien', NULL),
-			(109, 'moderated', 'non', 'CHAR', 'VilleReelleDuBien', 'Ville réelle du bien', NULL),
+			(105, 'moderated', 'non', 'CHAR', 'TelephoneAAfficher', 'Tï¿½lï¿½phone ï¿½ afficher', NULL),
+			(106, 'moderated', 'non', 'CHAR', 'ContactAAfficher', 'Contact ï¿½ afficher', NULL),
+			(107, 'moderated', 'non', 'CHAR', 'EmailAAfficher', 'Email ï¿½ afficher', NULL),
+			(108, 'moderated', 'non', 'CHAR', 'CPReelDuBien', 'CP Rï¿½el du bien', NULL),
+			(109, 'moderated', 'non', 'CHAR', 'VilleReelleDuBien', 'Ville rï¿½elle du bien', NULL),
 			(110, 'moderated', 'non', 'CHAR', 'Intercabinet', 'Intercabinet', NULL),
 			(111, 'moderated', 'non', 'CHAR', 'IntercabinetPrive', 'Intercabinet prive', NULL),
 			(112, 'moderated', 'non', 'CHAR', 'NDeMandat', 'Numero de mandat', NULL),
 			(113, 'moderated', 'non', 'DATE', 'DateMandat', 'Date mandat', NULL),
 			(114, 'moderated', 'non', 'CHAR', 'NomMandataire', 'Nom mandataire', NULL),
-			(115, 'moderated', 'non', 'CHAR', 'PrenomMandataire', 'Prénom mandataire', NULL),
+			(115, 'moderated', 'non', 'CHAR', 'PrenomMandataire', 'Prï¿½nom mandataire', NULL),
 			(116, 'moderated', 'non', 'CHAR', 'RaisonSocialeMandataire', 'Raison sociale mandataire', NULL),
 			(117, 'moderated', 'non', 'CHAR', 'AdresseMandataire', 'Adresse mandataire', NULL),
 			(118, 'moderated', 'non', 'CHAR', 'CPMandataire', 'CP mandataire', NULL),
 			(119, 'moderated', 'non', 'CHAR', 'VilleMandataire', 'Ville mandataire', NULL),
-			(120, 'moderated', 'non', 'CHAR', 'TelephoneMandataire', 'Téléphone mandataire', NULL),
+			(120, 'moderated', 'non', 'CHAR', 'TelephoneMandataire', 'Tï¿½lï¿½phone mandataire', NULL),
 			(121, 'moderated', 'non', 'TEXT', 'CommentairesMandataire', 'Commentaires mandataire', NULL),
-			(122, 'moderated', 'non', 'TEXT', 'CommentairesPrives', 'Commentaires privés', NULL),
-			(123, 'moderated', 'non', 'CHAR', 'CodeNegociateur', 'Code négociateur', NULL),
+			(122, 'moderated', 'non', 'TEXT', 'CommentairesPrives', 'Commentaires privï¿½s', NULL),
+			(123, 'moderated', 'non', 'CHAR', 'CodeNegociateur', 'Code nï¿½gociateur', NULL),
 			(124, 'moderated', 'non', 'CHAR', 'CodeLangue1', 'Code Langue 1', NULL),
-			(125, 'moderated', 'non', 'CHAR', 'ProximiteLangue1', 'Proximité Langue 1', NULL),
-			(126, 'moderated', 'non', 'CHAR', 'LibelleLangue1', 'Libellé Langue 1', NULL),
+			(125, 'moderated', 'non', 'CHAR', 'ProximiteLangue1', 'Proximitï¿½ Langue 1', NULL),
+			(126, 'moderated', 'non', 'CHAR', 'LibelleLangue1', 'Libellï¿½ Langue 1', NULL),
 			(127, 'moderated', 'non', 'TEXT', 'DescriptifLangue1', 'Descriptif Langue 1', NULL),
 			(128, 'moderated', 'non', 'CHAR', 'CodeLangue2', 'Code Langue 2', NULL),
-			(129, 'moderated', 'non', 'CHAR', 'ProximiteLangue2', 'Proximité Langue 2', NULL),
-			(130, 'moderated', 'non', 'CHAR', 'LibelleLangue2', 'Libellé Langue 2', NULL),
+			(129, 'moderated', 'non', 'CHAR', 'ProximiteLangue2', 'Proximitï¿½ Langue 2', NULL),
+			(130, 'moderated', 'non', 'CHAR', 'LibelleLangue2', 'Libellï¿½ Langue 2', NULL),
 			(131, 'moderated', 'non', 'TEXT', 'DescriptifLangue2', 'Descriptif Langue 2', NULL),
 			(132, 'moderated', 'non', 'CHAR', 'CodeLangue3', 'Code Langue 3', NULL),
-			(133, 'moderated', 'non', 'CHAR', 'ProximiteLangue3', 'Proximité Langue 3', NULL),
-			(134, 'moderated', 'non', 'CHAR', 'LibelleLangue3', 'Libellé Langue 3', NULL),
+			(133, 'moderated', 'non', 'CHAR', 'ProximiteLangue3', 'Proximitï¿½ Langue 3', NULL),
+			(134, 'moderated', 'non', 'CHAR', 'LibelleLangue3', 'Libellï¿½ Langue 3', NULL),
 			(135, 'moderated', 'non', 'TEXT', 'DescriptifLangue3', 'Descriptif Langue 3', NULL),
-			(136, 'moderated', 'non', 'CHAR', 'ChampPersonnalise1', 'Champ personnalisé 1', NULL),
-			(137, 'moderated', 'non', 'CHAR', 'ChampPersonnalise2', 'Champ personnalisé 2', NULL),
-			(138, 'moderated', 'non', 'CHAR', 'ChampPersonnalise3', 'Champ personnalisé 3', NULL),
-			(139, 'moderated', 'non', 'CHAR', 'ChampPersonnalise4', 'Champ personnalisé 4', NULL),
-			(140, 'moderated', 'non', 'CHAR', 'ChampPersonnalise5', 'Champ personnalisé 5', NULL),
-			(141, 'moderated', 'non', 'CHAR', 'ChampPersonnalise6', 'Champ personnalisé 6', NULL),
-			(142, 'moderated', 'non', 'CHAR', 'ChampPersonnalise7', 'Champ personnalisé 7', NULL),
-			(143, 'moderated', 'non', 'CHAR', 'ChampPersonnalise8', 'Champ personnalisé 8', NULL),
-			(144, 'moderated', 'non', 'CHAR', 'ChampPersonnalise9', 'Champ personnalisé 9', NULL),
-			(145, 'moderated', 'non', 'CHAR', 'ChampPersonnalise10', 'Champ personnalisé 10', NULL),
-			(146, 'moderated', 'non', 'CHAR', 'ChampPersonnalise11', 'Champ personnalisé 11', NULL),
-			(147, 'moderated', 'non', 'CHAR', 'ChampPersonnalise12', 'Champ personnalisé 12', NULL),
-			(148, 'moderated', 'non', 'CHAR', 'ChampPersonnalise13', 'Champ personnalisé 13', NULL),
-			(149, 'moderated', 'non', 'CHAR', 'ChampPersonnalise14', 'Champ personnalisé 14', NULL),
-			(150, 'moderated', 'non', 'CHAR', 'ChampPersonnalise15', 'Champ personnalisé 15', NULL),
-			(151, 'moderated', 'non', 'CHAR', 'ChampPersonnalise16', 'Champ personnalisé 16', NULL),
-			(152, 'moderated', 'non', 'CHAR', 'ChampPersonnalise17', 'Champ personnalisé 17', NULL),
-			(153, 'moderated', 'non', 'CHAR', 'ChampPersonnalise18', 'Champ personnalisé 18', NULL),
-			(154, 'moderated', 'non', 'CHAR', 'ChampPersonnalise19', 'Champ personnalisé 19', NULL),
-			(155, 'moderated', 'non', 'CHAR', 'ChampPersonnalise20', 'Champ personnalisé 20', NULL),
-			(156, 'moderated', 'non', 'CHAR', 'ChampPersonnalise21', 'Champ personnalisé 21', NULL),
-			(157, 'moderated', 'non', 'CHAR', 'ChampPersonnalise22', 'Champ personnalisé 22', NULL),
-			(158, 'moderated', 'non', 'CHAR', 'ChampPersonnalise23', 'Champ personnalisé 23', NULL),
-			(159, 'moderated', 'non', 'CHAR', 'ChampPersonnalise24', 'Champ personnalisé 24', NULL),
-			(160, 'moderated', 'non', 'CHAR', 'ChampPersonnalise25', 'Champ personnalisé 25', NULL),
-			(161, 'moderated', 'non', 'DEC', 'DepotDeGarantie', 'Dépôt de garantie', NULL),
-			(162, 'moderated', 'non', 'CHAR', 'Recent', 'Récent', NULL),
-			(163, 'moderated', 'non', 'CHAR', 'TravauxAPrevoir', 'Travaux à prévoir', NULL),
+			(136, 'moderated', 'non', 'CHAR', 'ChampPersonnalise1', 'Champ personnalisï¿½ 1', NULL),
+			(137, 'moderated', 'non', 'CHAR', 'ChampPersonnalise2', 'Champ personnalisï¿½ 2', NULL),
+			(138, 'moderated', 'non', 'CHAR', 'ChampPersonnalise3', 'Champ personnalisï¿½ 3', NULL),
+			(139, 'moderated', 'non', 'CHAR', 'ChampPersonnalise4', 'Champ personnalisï¿½ 4', NULL),
+			(140, 'moderated', 'non', 'CHAR', 'ChampPersonnalise5', 'Champ personnalisï¿½ 5', NULL),
+			(141, 'moderated', 'non', 'CHAR', 'ChampPersonnalise6', 'Champ personnalisï¿½ 6', NULL),
+			(142, 'moderated', 'non', 'CHAR', 'ChampPersonnalise7', 'Champ personnalisï¿½ 7', NULL),
+			(143, 'moderated', 'non', 'CHAR', 'ChampPersonnalise8', 'Champ personnalisï¿½ 8', NULL),
+			(144, 'moderated', 'non', 'CHAR', 'ChampPersonnalise9', 'Champ personnalisï¿½ 9', NULL),
+			(145, 'moderated', 'non', 'CHAR', 'ChampPersonnalise10', 'Champ personnalisï¿½ 10', NULL),
+			(146, 'moderated', 'non', 'CHAR', 'ChampPersonnalise11', 'Champ personnalisï¿½ 11', NULL),
+			(147, 'moderated', 'non', 'CHAR', 'ChampPersonnalise12', 'Champ personnalisï¿½ 12', NULL),
+			(148, 'moderated', 'non', 'CHAR', 'ChampPersonnalise13', 'Champ personnalisï¿½ 13', NULL),
+			(149, 'moderated', 'non', 'CHAR', 'ChampPersonnalise14', 'Champ personnalisï¿½ 14', NULL),
+			(150, 'moderated', 'non', 'CHAR', 'ChampPersonnalise15', 'Champ personnalisï¿½ 15', NULL),
+			(151, 'moderated', 'non', 'CHAR', 'ChampPersonnalise16', 'Champ personnalisï¿½ 16', NULL),
+			(152, 'moderated', 'non', 'CHAR', 'ChampPersonnalise17', 'Champ personnalisï¿½ 17', NULL),
+			(153, 'moderated', 'non', 'CHAR', 'ChampPersonnalise18', 'Champ personnalisï¿½ 18', NULL),
+			(154, 'moderated', 'non', 'CHAR', 'ChampPersonnalise19', 'Champ personnalisï¿½ 19', NULL),
+			(155, 'moderated', 'non', 'CHAR', 'ChampPersonnalise20', 'Champ personnalisï¿½ 20', NULL),
+			(156, 'moderated', 'non', 'CHAR', 'ChampPersonnalise21', 'Champ personnalisï¿½ 21', NULL),
+			(157, 'moderated', 'non', 'CHAR', 'ChampPersonnalise22', 'Champ personnalisï¿½ 22', NULL),
+			(158, 'moderated', 'non', 'CHAR', 'ChampPersonnalise23', 'Champ personnalisï¿½ 23', NULL),
+			(159, 'moderated', 'non', 'CHAR', 'ChampPersonnalise24', 'Champ personnalisï¿½ 24', NULL),
+			(160, 'moderated', 'non', 'CHAR', 'ChampPersonnalise25', 'Champ personnalisï¿½ 25', NULL),
+			(161, 'moderated', 'non', 'DEC', 'DepotDeGarantie', 'Dï¿½pï¿½t de garantie', NULL),
+			(162, 'moderated', 'non', 'CHAR', 'Recent', 'Rï¿½cent', NULL),
+			(163, 'moderated', 'non', 'CHAR', 'TravauxAPrevoir', 'Travaux ï¿½ prï¿½voir', NULL),
 			(164, 'moderated', 'non', 'CHAR', 'Photo10', 'Photo 10', NULL),
 			(165, 'moderated', 'non', 'CHAR', 'Photo11', 'Photo 11', NULL),
 			(166, 'moderated', 'non', 'CHAR', 'Photo12', 'Photo 12', NULL),
@@ -192,35 +192,35 @@ function annonces_insertions($insertions = null)
 			(173, 'moderated', 'non', 'CHAR', 'Photo19', 'Photo 19', NULL),
 			(174, 'moderated', 'non', 'CHAR', 'Photo20', 'Photo 20', NULL),
 			(175, 'moderated', 'non', 'CHAR', 'IdentifiantTechnique', 'Identifiant technique', NULL),
-			(176, 'moderated', 'non', 'INT', 'ConsommationEnergie', 'Consommation énergie', NULL),
-			(177, 'moderated', 'non', 'CHAR', 'BilanConsommationEnergie', 'Bilan consommation énergie', NULL),
+			(176, 'moderated', 'non', 'INT', 'ConsommationEnergie', 'Consommation ï¿½nergie', NULL),
+			(177, 'moderated', 'non', 'CHAR', 'BilanConsommationEnergie', 'Bilan consommation ï¿½nergie', NULL),
 			(178, 'moderated', 'non', 'INT', 'EmissionsGES', 'Emissions GES', NULL),
-			(179, 'moderated', 'non', 'CHAR', 'BilanEmissionGES', 'Bilan émission GES', NULL),
+			(179, 'moderated', 'non', 'CHAR', 'BilanEmissionGES', 'Bilan ï¿½mission GES', NULL),
 			(180, 'moderated', 'non', 'INT', 'IdentifiantQuartier', 'Identifiant quartier', NULL),
 			(181, 'moderated', 'non', 'CHAR', 'SousTypeDeBien', 'Sous type de bien', NULL),
-			(182, 'moderated', 'non', 'CHAR', 'PeriodesDeDisponibilite', 'Périodes de disponibilité', NULL),
-			(183, 'moderated', 'non', 'CHAR', 'PeriodesBasseSaison', 'Périodes basse saison', NULL),
-			(184, 'moderated', 'non', 'DEC', 'RenteMensuelle', 'Périodes haute saison', NULL),
+			(182, 'moderated', 'non', 'CHAR', 'PeriodesDeDisponibilite', 'Pï¿½riodes de disponibilitï¿½', NULL),
+			(183, 'moderated', 'non', 'CHAR', 'PeriodesBasseSaison', 'Pï¿½riodes basse saison', NULL),
+			(184, 'moderated', 'non', 'DEC', 'RenteMensuelle', 'Pï¿½riodes haute saison', NULL),
 			(185, 'moderated', 'non', 'CHAR', 'PeriodesHauteSaison', 'Prix du bouquet', NULL),
 			(186, 'moderated', 'non', 'DEC', 'PrixDuBouquet', 'Rente mensuelle', NULL),
 			(187, 'moderated', 'non', 'INT', 'AgeDehomme', 'Age de l\'homme', NULL),
 			(188, 'moderated', 'non', 'INT', 'AgeDeLaFemme', 'Age de la femme', NULL),
-			(189, 'moderated', 'non', 'CHAR', 'Entree', 'Entrée', NULL),
-			(190, 'moderated', 'non', 'CHAR', 'Residence', 'Résidence', NULL),
+			(189, 'moderated', 'non', 'CHAR', 'Entree', 'Entrï¿½e', NULL),
+			(190, 'moderated', 'non', 'CHAR', 'Residence', 'Rï¿½sidence', NULL),
 			(191, 'moderated', 'non', 'CHAR', 'Parquet', 'Parquet', NULL),
-			(192, 'moderated', 'non', 'CHAR', 'VisAVis', 'Vis-à-vis', NULL),
+			(192, 'moderated', 'non', 'CHAR', 'VisAVis', 'Vis-ï¿½-vis', NULL),
 			(193, 'moderated', 'non', 'CHAR', 'TransportLigne', 'Transport : Ligne', NULL),
 			(194, 'moderated', 'non', 'CHAR', 'TransportStation', 'Transport : Station', NULL),
-			(195, 'moderated', 'non', 'INT', 'DureeBail', 'Durée bail', NULL),
+			(195, 'moderated', 'non', 'INT', 'DureeBail', 'Durï¿½e bail', NULL),
 			(196, 'moderated', 'non', 'INT', 'PlacesEnSalle', 'Places en salle', NULL),
 			(197, 'moderated', 'non', 'CHAR', 'MonteCharge', 'Monte charge', NULL),
 			(198, 'moderated', 'non', 'CHAR', 'Quai', 'Quai', NULL),
 			(199, 'moderated', 'non', 'INT', 'NombreDeBureaux', 'Nombre de bureaux', NULL),
-			(200, 'moderated', 'non', 'DEC', 'PrixDuDroitEntree', 'Prix du droit d\'entrée', NULL),
-			(201, 'moderated', 'non', 'CHAR', 'PrixMasque', 'Prix masqué', NULL),
+			(200, 'moderated', 'non', 'DEC', 'PrixDuDroitEntree', 'Prix du droit d\'entrï¿½e', NULL),
+			(201, 'moderated', 'non', 'CHAR', 'PrixMasque', 'Prix masquï¿½', NULL),
 			(202, 'moderated', 'non', 'DEC', 'LoyerAnnuelGlobal', 'Loyer annuel global', NULL),
 			(203, 'moderated', 'non', 'DEC', 'ChargesAnnuellesGlobales', 'Charges annuelles globales', NULL),
-			(204, 'moderated', 'non', 'DEC', 'LoyerAnnuelAuM2', 'Loyer annuel au m²', NULL),
+			(204, 'moderated', 'non', 'DEC', 'LoyerAnnuelAuM2', 'Loyer annuel au mï¿½', NULL),
 			(205, 'moderated', 'non', 'DEC', 'ChargesAnnuellesAuM2', 'Charges annuelles au m2', NULL),
 			(206, 'moderated', 'non', 'CHAR', 'ChargesMensuellesHT', 'Charges mensuelles HT', NULL),
 			(207, 'moderated', 'non', 'CHAR', 'LoyerAnnuelCC', 'Loyer annuel CC', NULL),
@@ -233,13 +233,13 @@ function annonces_insertions($insertions = null)
 			(214, 'moderated', 'non', 'DEC', 'SurfaceDivisibleMinimale', 'Surface divisible minimale', NULL),
 			(215, 'moderated', 'non', 'DEC', 'SurfaceDivisibleMaximale', 'Surface divisible maximale', NULL);";
 		$wpdb->query($wpdb->prepare($sql));
-		
-		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUT . " (idgroupeattribut, flagvalidgroupeattribut, nomgroupeattribut, descriptiongroupeattribut) VALUES 
+
+		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUT . " (idgroupeattribut, flagvalidgroupeattribut, nomgroupeattribut, descriptiongroupeattribut) VALUES
 			(1, 'valid', 'Immobilier', 'Annonce Immobili&egrave;re'),
 			(2, 'moderated', 'Vehicule', 'Annonce Automobile');";
 		$wpdb->query($wpdb->prepare($sql));
-		
-		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " (idattribut, idgroupeattribut, flagvalidgroupeattribut_attribut) VALUES 
+
+		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " (idattribut, idgroupeattribut, flagvalidgroupeattribut_attribut) VALUES
 			(1, 1, 'valid'),
 			(2, 1, 'valid'),
 			(3, 1, 'valid'),
@@ -456,11 +456,11 @@ function annonces_insertions($insertions = null)
 			(214, 1, 'valid'),
 			(215, 1, 'valid');";
 		$wpdb->query($sql);
-		
-		$sql = "INSERT INTO " . ANNONCES_TABLE_TEMPPHOTO . " (`numphoto`) VALUES 
+
+		$sql = "INSERT INTO " . ANNONCES_TABLE_TEMPPHOTO . " (`numphoto`) VALUES
 			(0);";
-		$wpdb->query($sql);		
-		
+		$wpdb->query($sql);
+
 		$sql = "INSERT INTO " . ANNONCES_TABLE_OPTION . " (idoption, flagvalidoption, labeloption, nomoption) VALUES
 			(1, 'valid', 'annonces_api_key', ''),
 			(2, 'valid', 'annonces_maps_activation', '1'),
@@ -483,57 +483,57 @@ function annonces_insertions($insertions = null)
 			(19, 'valid', 'url_superficie_theme_defaut', 'surface_default.png'),
 			(20, 'valid', 'url_recherche_theme_defaut', 'recherche_default.png')";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
-	
+
 	if(version::getVersion() <= 2)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvalidattribut='valid' WHERE labelattribut='BilanEmissionGES'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvisibleattribut='oui' WHERE labelattribut='BilanEmissionGES'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvalidattribut='valid' WHERE labelattribut='BilanConsommationEnergie'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvisibleattribut='oui' WHERE labelattribut='BilanConsommationEnergie'";
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
-	
+
 	if(version::getVersion() <= 3)
 	{
 		$sql = "ALTER TABLE " . PREFIXE_ANNONCES . " ADD urlannonce varchar(200)";
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
-	
+
 	if(version::getVersion() <= 4)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET annonces_expression_url = '%titre_annonce%_%idpetiteannonce%.html'";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET measureunit = '&euro;' where labelattribut='PrixLoyerPrixDeCession'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET measureunit = 'm&sup2;' where labelattribut='Surface'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET measureunit = 'm&sup2;' where labelattribut='SFTerrain'";
 		$wpdb->query($sql);
-		
+
 		annonces_options::majUrlAnnonces();
-		
+
 		version::majVersion();
 	}
-	
+
 	if(version::getVersion() <= 5)
 	{
-		
+
 		$sql = "INSERT INTO " . ANNONCES_TABLE_OPTION . " (idoption, flagvalidoption, labeloption, nomoption) VALUES
 			(21, 'valid', 'annonces_email_reception', 'achanger@achanger.achanger'),
 			(22, 'valid', 'annonces_sujet_reception', \"" . $sujet . "\"),
@@ -544,103 +544,103 @@ function annonces_insertions($insertions = null)
 			(27, 'valid', 'annonces_page_install', 'annonces'),
 			(28, 'valid', 'annonces_url_activation', '0')";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
-	
+
 	if(version::getVersion() <= 6)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET flagvalidoption='deleted' where labeloption='annonces_page_install'";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		$sql = "INSERT INTO " . ANNONCES_TABLE_OPTION . " (idoption, flagvalidoption, labeloption, nomoption) VALUES
 			(29, 'valid', 'annonces_suffix', '.html')";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
-	
+
 	if (version::getVersion() <= 7)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET nomattribut = 'Bilan consommation &eacute;nergie' where labelattribut='BilanConsommationEnergie'";
 		$wpdb->query($sql);
-		
+
 		$sql = "UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET nomattribut  = 'Bilan &eacute;mission GES' where labelattribut='BilanEmissionGES'";
 		$wpdb->query($sql);
-		
+
 		$sql = "INSERT INTO " . ANNONCES_TABLE_PASSERELLE . " (`idpasserelle`, `flagvalidpasserelle`, `typeexport`, `nompasserelle`, `nomexport`, `host`, `user`, `pass`, `structure`, `separateurtexte`, `separateurchamp`, `separateurligne`) VALUES
 			('', 'valid', 'csv', 'SeLoger.com', 'nomExportSeLoger', 'transferts.seloger.com', 'loginSeLoger', 'passSeLoger', 'IdentifiantAgence,ReferenceAgenceDuBien,TypeAnnonce,TypeBien,CP,Ville,Pays,Adresse,QuartierProximite,ActivitesCommerciales,PrixLoyerPrixDeCession,LoyerMoisMurs,LoyerCC,LoyerHT,Honnoraires,Surface,SFTerrain,NBDePieces,NBDeChambres,Libelle,Descriptif,DateDeDisponibilite,Charges,Etage,NBEtages,Meuble,AnneeDeConstruction,RefaitANeuf,NBDeSallesDeBain,NBDeSallesEau,NBDeWC,WCSepares,TypeDeChauffage,TypeDeCuisine,OrientationSud,OrientationEst,OrientationOuest,OrientationNord,NBBalcons,SFBalcon,Ascenseur,Cave,NBDeParkings,NBDeBoxes,Digicode,Interphone,Gardien,Terrasse,PrixSemaineBasseSaison,PrixQuinzaineBasseSaison,PrixMoisBasseSaison,PrixSemaineHauteSaison,PrixQuinzaineHauteSaison,PrixMoisHauteSaison,NBDePersonnes,TypeDeResidence,Situation,NBDeCouverts,NBDeLitsDoubles,NBDeLitsSimples,Alarme,CableTV,Calme,Climatisation,Piscine,AmenagementPourHandicapes,AnimauxAcceptes,Cheminee,Congelateur,Four,LaveVaisselle,MicroOndes,Placards,Telephone,ProcheLac,ProcheTennis,ProchePistesDeSki,VueDegagee,ChiffreAffaire,LongueurFacade,Duplex,Publications,MandatEnExclusivite,CoupDeCoeur,Photo1,Photo2,Photo3,Photo4,Photo5,Photo6,Photo7,Photo8,Photo9,TitrePhoto1,TitrePhoto2,TitrePhoto3,TitrePhoto4,TitrePhoto5,TitrePhoto6,TitrePhoto7,TitrePhoto8,TitrePhoto9,PhotoPanoramique,URLVisiteVirtuelle,TelephoneAAfficher,ContactAAfficher,EmailAAfficher,CPReelDuBien,VilleReelleDuBien,Intercabinet,IntercabinetPrive,NDeMandat,DateMandat,NomMandataire,PrenomMandataire,RaisonSocialeMandataire,AdresseMandataire,CPMandataire,VilleMandataire,TelephoneMandataire,CommentairesMandataire,CommentairesPrives,CodeNegociateur,CodeLangue1,ProximiteLangue1,LibelleLangue1,DescriptifLangue1,CodeLangue2,ProximiteLangue2,LibelleLangue2,DescriptifLangue2,CodeLangue3,ProximiteLangue3,LibelleLangue3,DescriptifLangue3,ChampPersonnalise1,ChampPersonnalise2,ChampPersonnalise3,ChampPersonnalise4,ChampPersonnalise5,ChampPersonnalise6,ChampPersonnalise7,ChampPersonnalise8,ChampPersonnalise9,ChampPersonnalise10,ChampPersonnalise11,ChampPersonnalise12,ChampPersonnalise13,ChampPersonnalise14,ChampPersonnalise15,ChampPersonnalise16,ChampPersonnalise17,ChampPersonnalise18,ChampPersonnalise19,ChampPersonnalise20,ChampPersonnalise21,ChampPersonnalise22,ChampPersonnalise23,ChampPersonnalise24,ChampPersonnalise25,DepotDeGarantie,Recent,TravauxAPrevoir,Photo10,Photo11,Photo12,Photo13,Photo14,Photo15,Photo16,Photo17,Photo18,Photo19,Photo20,IdentifiantTechnique,ConsommationEnergie,BilanConsommationEnergie,EmissionsGES,BilanEmissionGES,IdentifiantQuartier,SousTypeDeBien,PeriodesDeDisponibilite,PeriodesBasseSaison,RenteMensuelle,PeriodesHauteSaison,PrixDuBouquet,AgeDehomme,AgeDeLaFemme,Entree,Residence,Parquet,VisAVis,TransportLigne,TransportStation,DureeBail,PlacesEnSalle,MonteCharge,Quai,NombreDeBureaux,PrixDuDroitEntree,PrixMasque,LoyerAnnuelGlobal,ChargesAnnuellesGlobales,LoyerAnnuelAuM2,ChargesAnnuellesAuM2,ChargesMensuellesHT,LoyerAnnuelCC,LoyerAnnuelHT,ChargesAnnuellesHT,LoyerAnnuelAuM2CC,LoyerAnnuelAuM2HT,ChargesAnnuellesAuM2HT,Divisible,SurfaceDivisibleMinimale,SurfaceDivisibleMaximale', '\"', '!#', '\\r\\n'),
-			('', 'valid', 'csv', 'Lesclesdumidi.com', 'nomExportLesClesDuMidi', 'ftp.passimmopro.com', 'loginClesDuMidi', 'âssClesDuMidi', 'IdentifiantAgence,ReferenceAgenceDuBien,TypeAnnonce,TypeBien,CP,Ville,Pays,Adresse,QuartierProximite,ActivitesCommerciales,PrixLoyerPrixDeCession,LoyerMoisMurs,LoyerCC,LoyerHT,Honnoraires,Surface,SFTerrain,NBDePieces,NBDeChambres,Libelle,Descriptif,DateDeDisponibilite,Charges,Etage,NBEtages,Meuble,AnneeDeConstruction,RefaitANeuf,NBDeSallesDeBain,NBDeSallesEau,NBDeWC,WCSepares,TypeDeChauffage,TypeDeCuisine,OrientationSud,OrientationEst,OrientationOuest,OrientationNord,NBBalcons,SFBalcon,Ascenseur,Cave,NBDeParkings,NBDeBoxes,Digicode,Interphone,Gardien,Terrasse,PrixSemaineBasseSaison,PrixQuinzaineBasseSaison,PrixMoisBasseSaison,PrixSemaineHauteSaison,PrixQuinzaineHauteSaison,PrixMoisHauteSaison,NBDePersonnes,TypeDeResidence,Situation,NBDeCouverts,NBDeLitsDoubles,NBDeLitsSimples,Alarme,CableTV,Calme,Climatisation,Piscine,AmenagementPourHandicapes,AnimauxAcceptes,Cheminee,Congelateur,Four,LaveVaisselle,MicroOndes,Placards,Telephone,ProcheLac,ProcheTennis,ProchePistesDeSki,VueDegagee,ChiffreAffaire,LongueurFacade,Duplex,Publications,MandatEnExclusivite,CoupDeCoeur,Photo1,Photo2,Photo3,Photo4,Photo5,Photo6,Photo7,Photo8,Photo9,TitrePhoto1,TitrePhoto2,TitrePhoto3,TitrePhoto4,TitrePhoto5,TitrePhoto6,TitrePhoto7,TitrePhoto8,TitrePhoto9,PhotoPanoramique,URLVisiteVirtuelle,TelephoneAAfficher,ContactAAfficher,EmailAAfficher,CPReelDuBien,VilleReelleDuBien,Intercabinet,IntercabinetPrive,NDeMandat,DateMandat,NomMandataire,PrenomMandataire,RaisonSocialeMandataire,AdresseMandataire,CPMandataire,VilleMandataire,TelephoneMandataire,CommentairesMandataire,CommentairesPrives,CodeNegociateur,CodeLangue1,ProximiteLangue1,LibelleLangue1,DescriptifLangue1,CodeLangue2,ProximiteLangue2,LibelleLangue2,DescriptifLangue2,CodeLangue3,ProximiteLangue3,LibelleLangue3,DescriptifLangue3,ChampPersonnalise1,ChampPersonnalise2,ChampPersonnalise3,ChampPersonnalise4,ChampPersonnalise5,ChampPersonnalise6,ChampPersonnalise7,ChampPersonnalise8,ChampPersonnalise9,ChampPersonnalise10,ChampPersonnalise11,ChampPersonnalise12,ChampPersonnalise13,ChampPersonnalise14,ChampPersonnalise15,ChampPersonnalise16,ChampPersonnalise17,ChampPersonnalise18,ChampPersonnalise19,ChampPersonnalise20,ChampPersonnalise21,ChampPersonnalise22,ChampPersonnalise23,ChampPersonnalise24,ChampPersonnalise25,DepotDeGarantie,Recent,TravauxAPrevoir,Photo10,Photo11,Photo12,Photo13,Photo14,Photo15,Photo16,Photo17,Photo18,Photo19,Photo20,IdentifiantTechnique,ConsommationEnergie,BilanConsommationEnergie,EmissionsGES,BilanEmissionGES,IdentifiantQuartier,SousTypeDeBien,PeriodesDeDisponibilite,PeriodesBasseSaison,RenteMensuelle,PeriodesHauteSaison,PrixDuBouquet,AgeDehomme,AgeDeLaFemme,Entree,Residence,Parquet,VisAVis,TransportLigne,TransportStation,DureeBail,PlacesEnSalle,MonteCharge,Quai,NombreDeBureaux,PrixDuDroitEntree,PrixMasque,LoyerAnnuelGlobal,ChargesAnnuellesGlobales,LoyerAnnuelAuM2,ChargesAnnuellesAuM2,ChargesMensuellesHT,LoyerAnnuelCC,LoyerAnnuelHT,ChargesAnnuellesHT,LoyerAnnuelAuM2CC,LoyerAnnuelAuM2HT,ChargesAnnuellesAuM2HT,Divisible,SurfaceDivisibleMinimale,SurfaceDivisibleMaximale', '\"', '!#', '\\r\\n'),
+			('', 'valid', 'csv', 'Lesclesdumidi.com', 'nomExportLesClesDuMidi', 'ftp.passimmopro.com', 'loginClesDuMidi', 'ï¿½ssClesDuMidi', 'IdentifiantAgence,ReferenceAgenceDuBien,TypeAnnonce,TypeBien,CP,Ville,Pays,Adresse,QuartierProximite,ActivitesCommerciales,PrixLoyerPrixDeCession,LoyerMoisMurs,LoyerCC,LoyerHT,Honnoraires,Surface,SFTerrain,NBDePieces,NBDeChambres,Libelle,Descriptif,DateDeDisponibilite,Charges,Etage,NBEtages,Meuble,AnneeDeConstruction,RefaitANeuf,NBDeSallesDeBain,NBDeSallesEau,NBDeWC,WCSepares,TypeDeChauffage,TypeDeCuisine,OrientationSud,OrientationEst,OrientationOuest,OrientationNord,NBBalcons,SFBalcon,Ascenseur,Cave,NBDeParkings,NBDeBoxes,Digicode,Interphone,Gardien,Terrasse,PrixSemaineBasseSaison,PrixQuinzaineBasseSaison,PrixMoisBasseSaison,PrixSemaineHauteSaison,PrixQuinzaineHauteSaison,PrixMoisHauteSaison,NBDePersonnes,TypeDeResidence,Situation,NBDeCouverts,NBDeLitsDoubles,NBDeLitsSimples,Alarme,CableTV,Calme,Climatisation,Piscine,AmenagementPourHandicapes,AnimauxAcceptes,Cheminee,Congelateur,Four,LaveVaisselle,MicroOndes,Placards,Telephone,ProcheLac,ProcheTennis,ProchePistesDeSki,VueDegagee,ChiffreAffaire,LongueurFacade,Duplex,Publications,MandatEnExclusivite,CoupDeCoeur,Photo1,Photo2,Photo3,Photo4,Photo5,Photo6,Photo7,Photo8,Photo9,TitrePhoto1,TitrePhoto2,TitrePhoto3,TitrePhoto4,TitrePhoto5,TitrePhoto6,TitrePhoto7,TitrePhoto8,TitrePhoto9,PhotoPanoramique,URLVisiteVirtuelle,TelephoneAAfficher,ContactAAfficher,EmailAAfficher,CPReelDuBien,VilleReelleDuBien,Intercabinet,IntercabinetPrive,NDeMandat,DateMandat,NomMandataire,PrenomMandataire,RaisonSocialeMandataire,AdresseMandataire,CPMandataire,VilleMandataire,TelephoneMandataire,CommentairesMandataire,CommentairesPrives,CodeNegociateur,CodeLangue1,ProximiteLangue1,LibelleLangue1,DescriptifLangue1,CodeLangue2,ProximiteLangue2,LibelleLangue2,DescriptifLangue2,CodeLangue3,ProximiteLangue3,LibelleLangue3,DescriptifLangue3,ChampPersonnalise1,ChampPersonnalise2,ChampPersonnalise3,ChampPersonnalise4,ChampPersonnalise5,ChampPersonnalise6,ChampPersonnalise7,ChampPersonnalise8,ChampPersonnalise9,ChampPersonnalise10,ChampPersonnalise11,ChampPersonnalise12,ChampPersonnalise13,ChampPersonnalise14,ChampPersonnalise15,ChampPersonnalise16,ChampPersonnalise17,ChampPersonnalise18,ChampPersonnalise19,ChampPersonnalise20,ChampPersonnalise21,ChampPersonnalise22,ChampPersonnalise23,ChampPersonnalise24,ChampPersonnalise25,DepotDeGarantie,Recent,TravauxAPrevoir,Photo10,Photo11,Photo12,Photo13,Photo14,Photo15,Photo16,Photo17,Photo18,Photo19,Photo20,IdentifiantTechnique,ConsommationEnergie,BilanConsommationEnergie,EmissionsGES,BilanEmissionGES,IdentifiantQuartier,SousTypeDeBien,PeriodesDeDisponibilite,PeriodesBasseSaison,RenteMensuelle,PeriodesHauteSaison,PrixDuBouquet,AgeDehomme,AgeDeLaFemme,Entree,Residence,Parquet,VisAVis,TransportLigne,TransportStation,DureeBail,PlacesEnSalle,MonteCharge,Quai,NombreDeBureaux,PrixDuDroitEntree,PrixMasque,LoyerAnnuelGlobal,ChargesAnnuellesGlobales,LoyerAnnuelAuM2,ChargesAnnuellesAuM2,ChargesMensuellesHT,LoyerAnnuelCC,LoyerAnnuelHT,ChargesAnnuellesHT,LoyerAnnuelAuM2CC,LoyerAnnuelAuM2HT,ChargesAnnuellesAuM2HT,Divisible,SurfaceDivisibleMinimale,SurfaceDivisibleMaximale', '\"', '!#', '\\r\\n'),
 			('', 'valid', 'csv', 'Refleximmo', 'nomExportRefleximo', 'ftp.refleximmo.com', 'loginRefleximo', 'passRefleximo', 'IdentifiantAgence,ReferenceAgenceDuBien,TypeAnnonce,TypeBien,CP,Ville,Pays,Adresse,QuartierProximite,ActivitesCommerciales,PrixLoyerPrixDeCession,LoyerMoisMurs,LoyerCC,LoyerHT,Honnoraires,Surface,SFTerrain,NBDePieces,NBDeChambres,Libelle,Descriptif,DateDeDisponibilite,Charges,Etage,NBEtages,Meuble,AnneeDeConstruction,RefaitANeuf,NBDeSallesDeBain,NBDeSallesEau,NBDeWC,WCSepares,TypeDeChauffage,TypeDeCuisine,OrientationSud,OrientationEst,OrientationOuest,OrientationNord,NBBalcons,SFBalcon,Ascenseur,Cave,NBDeParkings,NBDeBoxes,Digicode,Interphone,Gardien,Terrasse,PrixSemaineBasseSaison,PrixQuinzaineBasseSaison,PrixMoisBasseSaison,PrixSemaineHauteSaison,PrixQuinzaineHauteSaison,PrixMoisHauteSaison,NBDePersonnes,TypeDeResidence,Situation,NBDeCouverts,NBDeLitsDoubles,NBDeLitsSimples,Alarme,CableTV,Calme,Climatisation,Piscine,AmenagementPourHandicapes,AnimauxAcceptes,Cheminee,Congelateur,Four,LaveVaisselle,MicroOndes,Placards,Telephone,ProcheLac,ProcheTennis,ProchePistesDeSki,VueDegagee,ChiffreAffaire,LongueurFacade,Duplex,Publications,MandatEnExclusivite,CoupDeCoeur,Photo1,Photo2,Photo3,Photo4,Photo5,Photo6,Photo7,Photo8,Photo9,TitrePhoto1,TitrePhoto2,TitrePhoto3,TitrePhoto4,TitrePhoto5,TitrePhoto6,TitrePhoto7,TitrePhoto8,TitrePhoto9,PhotoPanoramique,URLVisiteVirtuelle,TelephoneAAfficher,ContactAAfficher,EmailAAfficher,CPReelDuBien,VilleReelleDuBien,Intercabinet,IntercabinetPrive,NDeMandat,DateMandat,NomMandataire,PrenomMandataire,RaisonSocialeMandataire,AdresseMandataire,CPMandataire,VilleMandataire,TelephoneMandataire,CommentairesMandataire,CommentairesPrives,CodeNegociateur,CodeLangue1,ProximiteLangue1,LibelleLangue1,DescriptifLangue1,CodeLangue2,ProximiteLangue2,LibelleLangue2,DescriptifLangue2,CodeLangue3,ProximiteLangue3,LibelleLangue3,DescriptifLangue3,ChampPersonnalise1,ChampPersonnalise2,ChampPersonnalise3,ChampPersonnalise4,ChampPersonnalise5,ChampPersonnalise6,ChampPersonnalise7,ChampPersonnalise8,ChampPersonnalise9,ChampPersonnalise10,ChampPersonnalise11,ChampPersonnalise12,ChampPersonnalise13,ChampPersonnalise14,ChampPersonnalise15,ChampPersonnalise16,ChampPersonnalise17,ChampPersonnalise18,ChampPersonnalise19,ChampPersonnalise20,ChampPersonnalise21,ChampPersonnalise22,ChampPersonnalise23,ChampPersonnalise24,ChampPersonnalise25,DepotDeGarantie,Recent,TravauxAPrevoir,Photo10,Photo11,Photo12,Photo13,Photo14,Photo15,Photo16,Photo17,Photo18,Photo19,Photo20,IdentifiantTechnique,ConsommationEnergie,BilanConsommationEnergie,EmissionsGES,BilanEmissionGES,IdentifiantQuartier,SousTypeDeBien,PeriodesDeDisponibilite,PeriodesBasseSaison,RenteMensuelle,PeriodesHauteSaison,PrixDuBouquet,AgeDehomme,AgeDeLaFemme,Entree,Residence,Parquet,VisAVis,TransportLigne,TransportStation,DureeBail,PlacesEnSalle,MonteCharge,Quai,NombreDeBureaux,PrixDuDroitEntree,PrixMasque,LoyerAnnuelGlobal,ChargesAnnuellesGlobales,LoyerAnnuelAuM2,ChargesAnnuellesAuM2,ChargesMensuellesHT,LoyerAnnuelCC,LoyerAnnuelHT,ChargesAnnuellesHT,LoyerAnnuelAuM2CC,LoyerAnnuelAuM2HT,ChargesAnnuellesAuM2HT,Divisible,SurfaceDivisibleMinimale,SurfaceDivisibleMaximale', '\"', '!#', '\\r\\n'),
 			('', 'valid', 'xml', 'Midi libre', 'nomExportMidiLibre', 'ftp.ubiflow.net', 'loginMidiLibre', 'passMidiLibre', 'IdentifiantAgence,ReferenceAgenceDuBien,TypeAnnonce,TypeBien,CP,Ville,Pays,Adresse,QuartierProximite,ActivitesCommerciales,PrixLoyerPrixDeCession,LoyerMoisMurs,LoyerCC,LoyerHT,Honnoraires,Surface,SFTerrain,NBDePieces,NBDeChambres,Libelle,Descriptif,DateDeDisponibilite,Charges,Etage,NBEtages,Meuble,AnneeDeConstruction,RefaitANeuf,NBDeSallesDeBain,NBDeSallesEau,NBDeWC,WCSepares,TypeDeChauffage,TypeDeCuisine,OrientationSud,OrientationEst,OrientationOuest,OrientationNord,NBBalcons,SFBalcon,Ascenseur,Cave,NBDeParkings,NBDeBoxes,Digicode,Interphone,Gardien,Terrasse,PrixSemaineBasseSaison,PrixQuinzaineBasseSaison,PrixMoisBasseSaison,PrixSemaineHauteSaison,PrixQuinzaineHauteSaison,PrixMoisHauteSaison,NBDePersonnes,TypeDeResidence,Situation,NBDeCouverts,NBDeLitsDoubles,NBDeLitsSimples,Alarme,CableTV,Calme,Climatisation,Piscine,AmenagementPourHandicapes,AnimauxAcceptes,Cheminee,Congelateur,Four,LaveVaisselle,MicroOndes,Placards,Telephone,ProcheLac,ProcheTennis,ProchePistesDeSki,VueDegagee,ChiffreAffaire,LongueurFacade,Duplex,Publications,MandatEnExclusivite,CoupDeCoeur,Photo1,Photo2,Photo3,Photo4,Photo5,Photo6,Photo7,Photo8,Photo9,TitrePhoto1,TitrePhoto2,TitrePhoto3,TitrePhoto4,TitrePhoto5,TitrePhoto6,TitrePhoto7,TitrePhoto8,TitrePhoto9,PhotoPanoramique,URLVisiteVirtuelle,TelephoneAAfficher,ContactAAfficher,EmailAAfficher,CPReelDuBien,VilleReelleDuBien,Intercabinet,IntercabinetPrive,NDeMandat,DateMandat,NomMandataire,PrenomMandataire,RaisonSocialeMandataire,AdresseMandataire,CPMandataire,VilleMandataire,TelephoneMandataire,CommentairesMandataire,CommentairesPrives,CodeNegociateur,CodeLangue1,ProximiteLangue1,LibelleLangue1,DescriptifLangue1,CodeLangue2,ProximiteLangue2,LibelleLangue2,DescriptifLangue2,CodeLangue3,ProximiteLangue3,LibelleLangue3,DescriptifLangue3,ChampPersonnalise1,ChampPersonnalise2,ChampPersonnalise3,ChampPersonnalise4,ChampPersonnalise5,ChampPersonnalise6,ChampPersonnalise7,ChampPersonnalise8,ChampPersonnalise9,ChampPersonnalise10,ChampPersonnalise11,ChampPersonnalise12,ChampPersonnalise13,ChampPersonnalise14,ChampPersonnalise15,ChampPersonnalise16,ChampPersonnalise17,ChampPersonnalise18,ChampPersonnalise19,ChampPersonnalise20,ChampPersonnalise21,ChampPersonnalise22,ChampPersonnalise23,ChampPersonnalise24,ChampPersonnalise25,DepotDeGarantie,Recent,TravauxAPrevoir,Photo10,Photo11,Photo12,Photo13,Photo14,Photo15,Photo16,Photo17,Photo18,Photo19,Photo20,IdentifiantTechnique,ConsommationEnergie,BilanConsommationEnergie,EmissionsGES,BilanEmissionGES,IdentifiantQuartier,SousTypeDeBien,PeriodesDeDisponibilite,PeriodesBasseSaison,RenteMensuelle,PeriodesHauteSaison,PrixDuBouquet,AgeDehomme,AgeDeLaFemme,Entree,Residence,Parquet,VisAVis,TransportLigne,TransportStation,DureeBail,PlacesEnSalle,MonteCharge,Quai,NombreDeBureaux,PrixDuDroitEntree,PrixMasque,LoyerAnnuelGlobal,ChargesAnnuellesGlobales,LoyerAnnuelAuM2,ChargesAnnuellesAuM2,ChargesMensuellesHT,LoyerAnnuelCC,LoyerAnnuelHT,ChargesAnnuellesHT,LoyerAnnuelAuM2CC,LoyerAnnuelAuM2HT,ChargesAnnuellesAuM2HT,Divisible,SurfaceDivisibleMinimale,SurfaceDivisibleMaximale', '\"', '!#', '\\r\\n');";
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 8)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_TEMPPHOTO . "SET numphoto = (SELECT MAX(idpetiteannonce) FROM " . PREFIXE_ANNONCES . ")");
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 9)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . "SET nomption = '%date_publication%/%type_bien%/%ville%-%departement%/%idpetiteannonce%' WHERE labeloption = 'annonces_expression_url'");
 		//	NOT USED FROM DB VERSION 18
-		
+
 		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " VALUES ('216', '1', 'valid')");
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <=10)
 	{
 		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " VALUES ('216', 'valid', 'oui', 'CHAR', 'UrlPersonnalisee', 'Url personnalis&eacute;e', '')");
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <=12)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvalidattribut = 'moderated'  WHERE labelattribut = 'UrlPersonnalisee'");
 		$wpdb->query($sql);
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 13)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='' where labeloption = 'annonces_suffix'");
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 14)
 	{
 		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url'");
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 15)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='ee' where labeloption = 'annonces_expression_url' ";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 16)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='ee' where labeloption = 'annonces_expression_url' ";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 17)
 	{
 		$sql = "UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url' ";
 		//	NOT USED FROM DB VERSION 18
-		
+
 		version::majVersion();
 	}
 	if (version::getVersion() <= 18)
@@ -735,7 +735,7 @@ function annonces_insertions($insertions = null)
 					case 'theme_activation':
 					case 'annonces_page_install':
 					case 'url_marqueur_defaut':
-						
+
 					break;
 					case 'url_radio_maisons_theme_courant':
 					case 'url_radio_terrains_theme_courant':
@@ -849,11 +849,11 @@ function annonces_insertions($insertions = null)
 			$annonceWPOptionEmail['annonces_html_reception'] = $html;
 			$annonceWPOptionEmail['annonces_email_activation'] = 'non';
 		}
-		
+
 		/*	Add new options	*/
 		$annonceWPOption['annonce_map_marker_size'] = '32';
 		$annonceWPOption['annonce_currency'] = '&euro;';
-		$annonceWPOption['annonce_frontend_listing_order'] = 'date';
+		$annonceWPOption['annonce_frontend_listing_order'] = 'autoinsert';
 
 		/*	Set option into wordpress table	*/
 		add_option('annonces_options', $annonceWPOption);

@@ -6,7 +6,7 @@
 *	GENERATE MENU FOR ADMIN PANEL                  *
 ***************************************************/
 
-class admin 
+class admin
 {
 
 	/*	ADD AN ADMIN MENU IN ADMIN PANEL 	*/
@@ -28,7 +28,7 @@ class admin
 		}
 	}
 
-	function add_admin_header() 
+	function add_admin_header()
 	{
 		wp_register_style('annonces_css_main', ANNONCES_CSS_URL . 'annonce.css', '', ANNONCE_PLUGIN_VERSION);
 		wp_enqueue_style('annonces_css_main');
@@ -36,7 +36,7 @@ class admin
 		wp_enqueue_style('annonces_css_admin');
 		wp_register_style('annonces_css_fileuploader', ANNONCES_CSS_URL . 'fileuploader.css', '', ANNONCE_PLUGIN_VERSION);
 		wp_enqueue_style('annonces_css_fileuploader');
-		wp_register_style('annonces_jquery_custom', ANNONCES_CSS_URL . 'jquery/jquery-ui-1.7.2.custom.css', '', EVA_PLUGIN_VERSION);
+		wp_register_style('annonces_jquery_custom', ANNONCES_CSS_URL . 'jquery/jquery-ui-1.7.2.custom.css', '', ANNONCE_PLUGIN_VERSION);
 		wp_enqueue_style('annonces_jquery_custom');
 	}
 

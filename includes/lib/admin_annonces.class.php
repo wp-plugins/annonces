@@ -233,10 +233,10 @@ class annonce
 			elseif(array_key_exists($field_name,$attribute_array) && !in_array($field_name,$geolocalisation_field) && ( $field_name != 'unique_token'))
 			{
 				$eav_array[count($eav_array)] = $field_name;
-				$sql_att[] = 
-						"INSERT INTO " . $table_name_by_type[$attribute_array[$field_name]['type']] . " 
+				$sql_att[] =
+						"INSERT INTO " . $table_name_by_type[$attribute_array[$field_name]['type']] . "
 							(idpetiteannonce, idattribut, " . $field_name_value_by_type[$attribute_array[$field_name]['type']] . ")
-						VALUES 
+						VALUES
 							('#IDPETITEANNONCE#', '" . $attribute_array[$field_name]['id'] . "', '" . mysql_real_escape_string($tools->IsValid_Variable($field_value)) . "') ";
 			}
 			elseif(in_array($field_name,$geolocalisation_field) && ( $field_name != 'unique_token'))
@@ -259,7 +259,7 @@ class annonce
 			{
 				$idAnnonce = $data[0];
 			}
-			
+
 			$sql = "INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " (".$fields.")
 				VALUES
 				(".$content.")";
@@ -269,11 +269,11 @@ class annonce
 				$this->error_message = __('Cr&eacute;ation effectu&eacute; avec succ&eacute;s','annonces');
 				$this->class_admin_notice = 'admin_notices_class_ok';
 
-				//	ADD PHOTO 
+				//	ADD PHOTO
 				if($picture_token_to_update != 0)
 				{
 					$sql =
-						"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos 
+						"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos
 							SET idpetiteannonce = '" . mysql_real_escape_string($idpetiteannonce) . "'
 							WHERE token = '" . mysql_real_escape_string($picture_token_to_update) . "' AND idpetiteannonce = '-1'";
 					if( !$wpdb->query( $sql ) && (mysql_error() != ''))
@@ -322,7 +322,7 @@ class annonce
 
 	function clearDir($chemin)
 	{
-        // vérifie si le nom du repertoire contient "/" à la fin
+        // vï¿½rifie si le nom du repertoire contient "/" ï¿½ la fin
         if ($chemin[strlen($chemin)-1] != '/') // place le pointeur en fin d'url
            { $chemin .= '/'; } // rajoute '/'
 
@@ -333,13 +333,13 @@ class annonce
              {
              $fichier = $chemin.$f; // chemin fichier
              if (is_dir($fichier))
-             {sup_repertoire($fichier);} // rapel la fonction de manière récursive
+             {sup_repertoire($fichier);} // rapel la fonction de maniï¿½re rï¿½cursive
              else
              {unlink($fichier);} // sup le fichier
              }
                 }
                 closedir($sq);
-                rmdir($chemin); // sup le répertoire
+                rmdir($chemin); // sup le rï¿½pertoire
                              }
         else {
                 unlink($chemin);  // sup le fichier
@@ -353,7 +353,7 @@ class annonce
 		global $attribut_annonce;
 		global $field_name_value_by_type;
 		global $geolocalisation_field;
-		
+
 		$the_act = $flag = '';
 		$sql = "  ";
 		$sql_att = $geoloc_value = array();
@@ -385,7 +385,7 @@ class annonce
 					// $field_value = str_replace('!', '', $field_value);
 					// $field_value = str_replace('@', '', $field_value);
 					$field_value = preg_replace('([^0-9a-zA-Z-_])', '-', $field_value);
-					
+
 					$sql .= " ".$field_name." = '".mysql_real_escape_string($tools->IsValid_Variable($field_value))."', ";
 				}
 				else
@@ -416,7 +416,7 @@ class annonce
 		$sql = substr($sql,0,-2);
 		if(($sql != "") && ($idtoupdate!=0))
 		{
-			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
+			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
 				SET ".$sql." WHERE idpetiteannonce = '" . mysql_real_escape_string($idtoupdate) . "' ";
 			if( $wpdb->query( ($sql) ))
 			{
@@ -434,11 +434,11 @@ class annonce
 				$the_act = 'add';
 			}
 
-			//	ADD PHOTO 
+			//	ADD PHOTO
 			if($picture_token_to_update != 0)
 			{
 				$sql =
-					"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos 
+					"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos
 						SET idpetiteannonce = '" . mysql_real_escape_string($idtoupdate) . "'
 						WHERE token = '" . mysql_real_escape_string($picture_token_to_update) . "' AND idpetiteannonce = '-1'";
 				if( !$wpdb->query( $sql ) && (mysql_error() != ''))
@@ -472,9 +472,9 @@ class annonce
 
 		if(($idtoupdate != "") && ($field_to_update != "") && ($values != ""))
 		{
-			$sql = 
-				"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
-					SET " . $field_to_update . " = '" . $values . "' 
+			$sql =
+				"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
+					SET " . $field_to_update . " = '" . $values . "'
 					WHERE idpetiteannonce IN (".$idtoupdate.") ";
 			if( $wpdb->query( ($sql) ))
 			{
@@ -497,9 +497,9 @@ class annonce
 	function delete_annonce($id_to_delete)
 	{
 		global $wpdb;
-		$sql = 
-			"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
-				SET flagvalidpetiteannonce = 'deleted' 
+		$sql =
+			"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
+				SET flagvalidpetiteannonce = 'deleted'
 				WHERE idpetiteannonce IN (".$id_to_delete.") ";
 		if( $wpdb->query( ($sql) ))
 		{
@@ -513,110 +513,108 @@ class annonce
 			$this->class_admin_notice = 'admin_notices_class_notok';
 		}
 	}
-	function export_annonce($id_to_export)
-	{
+	function export_annonce($id_to_export) {
 		global $wpdb;
 		global $current_user;
-		
+
 		$eav_value = new Eav();
-		
+
 		foreach ($id_to_export as $id_annonce) {
-		
+
 			$titre_annonce = $eav_value->get_titre($id_annonce);
 			$autoinsert = $eav_value->get_autoinsert($id_annonce);
 			$autolastmodif = $eav_value->get_autolastmodif($id_annonce);
 			$description = $eav_value->getDescription(null, 'valid', null, $id_annonce);
 			$attributs = $eav_value->getAnnoncesAttributs(null, 'valid', null, $id_annonce, 'oui');
-			
+
 			$description = (array)$description;
-			
+
 			$description[0] = (array)$description[0];
-			
-			if($description[0]['valueattributtextlong'] == 0) {
+
+			if ($description[0]['valueattributtextlong'] == 0) {
 				$description_value = $description[0]['valueattributtextcourt'];
 			}
-			else{
+			else {
 				$description_value = $description[0]['valueattributtextlong'];
 			}
-			
-			// echo '<pre>'; print_r($description); echo '</pre>';exit;
-		
-	$trans = array(" " => "-", "é" => "e", "è" => "e", "ç" => "c", "à" => "a", "â" => "a", "ê" => "e");
-	$name_annonce = strtolower(strtr(trim($titre_annonce, "/'"), $trans));
-		
-		$post = array(
-		  'comment_status' => 'open', // 'closed' means no comments.
-		  'ping_status' => 'open',  // 'closed' means pingbacks or trackbacks turned off
-		  'pinged' => '', //?
-		  'post_author' => $current_user->ID, //The user ID number of the author.
-		  'post_content' => $description_value, //The full text of the post.
-		  'post_date' => $autoinsert, //The time post was made.
-		  'post_date_gmt' => $autoinsert, //The time post was made, in GMT.
-		  'post_modified' => $autolastmodif,
-		  'post_name' => $name_annonce, // The name (slug) for your post
-		  'post_status' => 'publish', //Set the status of the new post. 
-		  'post_title' => $titre_annonce, //The title of your post.
-		  'post_type' => WPSHOP_NEWTYPE_IDENTIFIER_PRODUCT //You may want to insert a regular post, page, link, a menu item or some custom post type
-		);  
+			$trans = array(" " => "-", "ï¿½" => "e", "ï¿½" => "e", "ï¿½" => "c", "ï¿½" => "a", "ï¿½" => "a", "ï¿½" => "e");
+			$name_annonce = strtolower(strtr(trim($titre_annonce, "/'"), $trans));
+
+			$post = array(
+			  'comment_status' => 'open', // 'closed' means no comments.
+			  'ping_status' => 'open',  // 'closed' means pingbacks or trackbacks turned off
+			  'pinged' => '', //?
+			  'post_author' => $current_user->ID, //The user ID number of the author.
+			  'post_content' => $description_value, //The full text of the post.
+			  'post_date' => $autoinsert, //The time post was made.
+			  'post_date_gmt' => $autoinsert, //The time post was made, in GMT.
+			  'post_modified' => $autolastmodif,
+			  'post_name' => $name_annonce, // The name (slug) for your post
+			  'post_status' => 'publish', //Set the status of the new post.
+			  'post_title' => $titre_annonce, //The title of your post.
+			  'post_type' => WPSHOP_NEWTYPE_IDENTIFIER_PRODUCT //You may want to insert a regular post, page, link, a menu item or some custom post type
+			);
 			$last_post = wp_insert_post( $post );
 			$this->error_message = __('Exportation effectu&eacute; avec succes','annonces');
 			$this->class_admin_notice = 'admin_notices_class_ok';
-			
+
 			foreach ($attributs as $attribut) {
-			$attribut = (array)$attribut;
-			$myattribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE . " WHERE code = '" . $attribut['labelattribut'] . "'");
-				if ($myattribute->frontend_input == 'select') {
-					switch ($attribut['typeattribut']) {
-						case 'CHAR' :
-							$myoption_value = $attribut['valueattributchar'];
-						break;
-						
-						case 'DEC' :
-							$myoption_value = $attribut['valueattributdec'];
-						break;
-						
-						case 'INT' :
-							$myoption_value = $attribut['valueattributint'];
-						break;
-						
-						case 'TEXT' :
-							$myoption_value = $attribut['valueattributtextcourt'];
-						break;
-						
-						case 'DATE' :
-							$myoption_value = $attribut['valueattributdate'];
-						break;
+				$attribut = (array)$attribut;
+				$myattribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE . " WHERE code = '" . $attribut['labelattribut'] . "'");
+				if ( !empty($myattribute) ) {
+					if ($myattribute->frontend_input == 'select') {
+						switch ($attribut['typeattribut']) {
+							case 'CHAR' :
+								$myoption_value = $attribut['valueattributchar'];
+							break;
+
+							case 'DEC' :
+								$myoption_value = $attribut['valueattributdec'];
+							break;
+
+							case 'INT' :
+								$myoption_value = $attribut['valueattributint'];
+							break;
+
+							case 'TEXT' :
+								$myoption_value = $attribut['valueattributtextcourt'];
+							break;
+
+							case 'DATE' :
+								$myoption_value = $attribut['valueattributdate'];
+							break;
+						}
+
+						$myoption_attribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE_VALUE_OPTIONS . " WHERE attribute_id = '" . $myattribute->id . "' AND ((value = '" . $myoption_value ."')||(label = '" . $myoption_value ."'))");
+						$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => 0, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $myoption_attribute->id));
 					}
-						
-					$myoption_attribute = $wpdb->get_row("SELECT * FROM " . WPSHOP_DBT_ATTRIBUTE_VALUE_OPTIONS . " WHERE attribute_id = '" . $myattribute->id . "' AND ((value = '" . $myoption_value ."')||(label = '" . $myoption_value ."'))");
-					$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => 0, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $myoption_attribute->id));
-				}
-				else {
-					switch ($attribut['typeattribut']) {
-						case 'CHAR' :
-							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_VARCHAR, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributchar']));
-						break;
-						
-						case 'DEC' :
-							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DECIMAL, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdec']));
-						break;
-						
-						case 'INT' :
-							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributint']));
-						break;
-						
-						case 'TEXT' :
-							if ($attribut['valueattributtextlong'] == 0) {
-								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextcourt']));
-							}
-							else {
-								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextlong']));
-							}
-						break;
-						
-						case 'DATE' :
-							$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DATETIME, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdate']));
-						break;
+					else {
+						switch ($attribut['typeattribut']) {
+							case 'CHAR' :
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_VARCHAR, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributchar']));
+							break;
+
+							case 'DEC' :
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DECIMAL, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdec']));
+							break;
+
+							case 'INT' :
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_INTEGER, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributint']));
+							break;
+
+							case 'TEXT' :
+								if ($attribut['valueattributtextlong'] == 0) {
+									$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextcourt']));
+								}
+								else {
+									$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_TEXT, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributtextlong']));
+								}
+							break;
+
+							case 'DATE' :
+								$wpdb->insert(WPSHOP_DBT_ATTRIBUTE_VALUES_DATETIME, array('entity_type_id' => 1,  'attribute_id' => $myattribute->id, 'entity_id' => $last_post, 'unit_id' => $myattribute->_default_unit, 'user_id' => $current_user->ID, 'creation_date_value' => current_time('mysql', 0), 'language' => 'fr_FR', 'value' => $attribut['valueattributdate']));
+							break;
+						}
 					}
 				}
 			}
@@ -630,9 +628,9 @@ class annonce
 		$autolocalisation = '';
 
 		$ok = 0;
-		$sql = 
-			"SELECT COUNT(idsrc) 
-			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__geolocalisation 
+		$sql =
+			"SELECT COUNT(idsrc)
+			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__geolocalisation
 			WHERE iddest = '".mysql_real_escape_string($id)."' ";
 		if($wpdb->get_var($sql) == 0)
 		{
@@ -647,10 +645,10 @@ class annonce
 				}
 				$ok = 1;
 			}
-			$sql = 
-				"INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__geolocalisation 
+			$sql =
+				"INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__geolocalisation
 					(idsrc, iddest, flagvalidgeolocalisation, token, autolocalisation, " . substr($fields,0,-2) . ")
-				VALUES 
+				VALUES
 					('" . mysql_real_escape_string($user_info->ID) . "','" . mysql_real_escape_string($id) . "', 'valid', '" . mysql_real_escape_string($user_info->ID.date('YmdHis').$id) . "', '" . $autolocalisation . "', " . substr($field_values,0,-2) . ")";
 		}
 		else
@@ -666,7 +664,7 @@ class annonce
 				$ok = 1;
 			}
 			$sql = substr($sql,0,-2) . ", autolocalisation = '" . $autolocalisation . "' WHERE iddest = '".mysql_real_escape_string($id)."' ";
-		}	
+		}
 
 		if($ok == 1)
 		{
@@ -689,23 +687,23 @@ class annonce
 		{
 			foreach($attribute_type_content as $attribute_id => $attribute_type_definition)
 			{
-				$sql = 
-					"SELECT COUNT(" . $id_attribute_by_type[$attribute_type] . ") 
-					FROM " . $table_name_by_type[$attribute_type] . " 
-					WHERE idattribut = '" . mysql_real_escape_string($attribute_id) . "' 
+				$sql =
+					"SELECT COUNT(" . $id_attribute_by_type[$attribute_type] . ")
+					FROM " . $table_name_by_type[$attribute_type] . "
+					WHERE idattribut = '" . mysql_real_escape_string($attribute_id) . "'
 						AND idpetiteannonce = " . mysql_real_escape_string($id) . "";
 				if($wpdb->get_var($sql) == 0)
 				{
-					$sql = 
-						"INSERT INTO " . $table_name_by_type[$attribute_type] . " 
-							(" . $id_attribute_by_type[$attribute_type] . ", idpetiteannonce, idattribut, " . stripslashes($attribute_type_definition['name']) . ") 
-						VALUES 
+					$sql =
+						"INSERT INTO " . $table_name_by_type[$attribute_type] . "
+							(" . $id_attribute_by_type[$attribute_type] . ", idpetiteannonce, idattribut, " . stripslashes($attribute_type_definition['name']) . ")
+						VALUES
 							('', '" . mysql_real_escape_string($id) . "', '" . mysql_real_escape_string($attribute_id) . "', '" . mysql_real_escape_string($attribute_type_definition['value']) . "') ;";
 				}
 				else
 				{
-					$sql = 
-						"UPDATE " . $table_name_by_type[$attribute_type] . " 
+					$sql =
+						"UPDATE " . $table_name_by_type[$attribute_type] . "
 							SET " . $attribute_type_definition['name'] . " = '" . mysql_real_escape_string($attribute_type_definition['value']) . "'
 						WHERE idpetiteannonce = '" . mysql_real_escape_string($id) . "' AND idattribut = '" . mysql_real_escape_string($attribute_id) . "' ;";
 				}
@@ -732,7 +730,7 @@ class annonce
 		$TheSelect = " ANN.* , ATT.* , IF( ATT.typeattribut = 'CHAR' , ATT_CHAR.valueattributchar , IF( ATT.typeattribut = 'DATE' , ATT_DATE.valueattributdate , IF( ATT.typeattribut = 'DEC' , ATT_DEC.valueattributdec , IF( ATT.typeattribut = 'INT' , ATT_INT.valueattributint , IF( ATT.typeattribut = 'TEXT' , ATT_TEXT.valueattributtextcourt , '' ) ) )) ) AS ATTRIBUT_VALUE, GEOLOC.* ";
 		if($option == 'count')$TheSelect = "COUNT(ANN.idpetiteannonce) ";
 
-		$sql = 
+		$sql =
 			"SELECT ".$TheSelect."
 			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " AS ANN
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__groupeattribut AS GRP_ATT ON (( ANN.idgroupeattribut = GRP_ATT.idgroupeattribut ) AND (GRP_ATT.flagvalidgroupeattribut = 'valid'))
@@ -775,14 +773,14 @@ class annonce
 		$sql =
 			"SELECT ATT.labelattribut AS ATTRIBUT_NAME, IF( ATT.typeattribut = 'CHAR' , ATT_CHAR.valueattributchar , IF( ATT.typeattribut = 'DATE' , ATT_DATE.valueattributdate , IF( ATT.typeattribut = 'DEC' , ATT_DEC.valueattributdec , IF( ATT.typeattribut = 'INT' , ATT_INT.valueattributint , IF( ATT.typeattribut = 'TEXT' , ATT_TEXT.valueattributtextcourt , '' ) ) )) ) AS ATTRIBUT_VALUE, IF( ATT.typeattribut = 'CHAR' , ATT_CHAR.idpetiteannonce , IF( ATT.typeattribut = 'DATE' , ATT_DATE.idpetiteannonce , IF( ATT.typeattribut = 'DEC' , ATT_DEC.idpetiteannonce , IF( ATT.typeattribut = 'INT' , ATT_INT.idpetiteannonce , IF( ATT.typeattribut = 'TEXT' , ATT_TEXT.idpetiteannonce , '0' ) ) )) ) AS ID_ANNONCE
 			FROM ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__groupeattribut AS CAT
-				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__groupeattribut_attribut AS LINK_CAT ON (CAT.idgroupeattribut = LINK_CAT.idgroupeattribut) 
+				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__groupeattribut_attribut AS LINK_CAT ON (CAT.idgroupeattribut = LINK_CAT.idgroupeattribut)
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attribut AS ATT ON (LINK_CAT.idattribut = ATT.idattribut )
-				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributchar AS ATT_CHAR ON (ATT_CHAR.idattribut = ATT.idattribut) 
+				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributchar AS ATT_CHAR ON (ATT_CHAR.idattribut = ATT.idattribut)
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributdate AS ATT_DATE ON (ATT_DATE.idattribut = ATT.idattribut )
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributdec AS ATT_DEC ON (ATT_DEC.idattribut = ATT.idattribut )
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributint AS ATT_INT ON (ATT_INT.idattribut = ATT.idattribut )
 				LEFT JOIN ". $wpdb->prefix . small_ad_table_prefix_AOS ."petiteannonce__attributtext AS ATT_TEXT ON (ATT_TEXT.idattribut = ATT.idattribut )
-			WHERE  flagvalidgroupeattribut = 'valid' 
+			WHERE  flagvalidgroupeattribut = 'valid'
 				AND flagvalidattribut IN (" . $flag . ")
 				".$tag_visible."
 				AND (ATT_CHAR.idpetiteannonce IN (".$idannonce.")
@@ -797,9 +795,9 @@ class annonce
 	function get_photos_for_annonce($idpetiteannonce, $morequery = "")
 	{
 		global $wpdb;
-		
-		$sql = 
-			"SELECT * 
+
+		$sql =
+			"SELECT *
 			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__photos
 			WHERE (idpetiteannonce IN (" . $idpetiteannonce . ") ".$morequery." )
 				AND flagvalidphotos = 'valid' ";
@@ -812,17 +810,17 @@ class annonce
 		global $flag_visible_attribut_possibilities;
 		global $flag_a_exporter_possibilities;
 		global $flag_possibilities;
-		// $entête =	'<script type="text/javascript" charset="utf-8">
+		// $entï¿½te =	'<script type="text/javascript" charset="utf-8">
 						// annoncejquery(document).ready(function() {
 							// var oTable = annoncejquery(\'#example\').dataTable({
 							// "aaSorting": [[ 4, "desc" ]]
-							// });						
+							// });
 						// });
 					// </script>';
-		// $entête .='<div id="container">
+		// $entï¿½te .='<div id="container">
 					// <div id="demo">
 					// <div id="example_wrapper" class="dataTables_wrapper">';
-		// $output = 
+		// $output =
 			// '<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
 				// <thead><tr class="titre_listing">
 					// <th class="sorting" >'.__('Validit&eacute; de l\'annonce','annonces').'</th>
@@ -838,7 +836,7 @@ class annonce
 			// $output .= '<tbody>';
 			// foreach($annonce_to_show as $key => $annonce_content)
 			// {
-				// $output .= 
+				// $output .=
 				// '<tr>
 					// <td>'.$flag_possibilities[$annonce_content->flagvalidpetiteannonce].'</td>
 					// <td>'.$flag_a_exporter_possibilities[$annonce_content->aexporter].'</td>
@@ -858,12 +856,12 @@ class annonce
 		// {
 			// $output .= '<tr><td colspan="20" class="no_result" >'.__('Aucun r&eacute;sultat','annonces').'</td></tr>';
 		// }
-		
+
 		// $output .= '</tbody></table></div></div></div>';
 
-		// return $entête.$output;
+		// return $entï¿½te.$output;
 	// }
-		$output = 
+		$output =
 			'<table summary="annonce listing" cellpadding="2" cellspacing="1" class="listing" >
 				<tr>
 					<td class="listing_header" >'.__('Validit&eacute; de l\'annonce','annonces').'</td>
@@ -877,7 +875,7 @@ class annonce
 		{
 			foreach($annonce_to_show as $key => $annonce_content)
 			{
-				$output .= 
+				$output .=
 				'<tr>
 					<td>'.$flag_possibilities[$annonce_content->flagvalidpetiteannonce].'</td>
 					<td>'.$flag_a_exporter_possibilities[$annonce_content->aexporter].'</td>

@@ -11,7 +11,7 @@ $annonce_form = new annonce_form();
 $annonce = new annonce();
 $annonce_filters_form = new annonce_filters_form();
 
-$morequery = $on_edit_load_map = '';
+$morequery = $on_edit_load_map = $error = '';
 $geoloc['adresse'] = $geoloc['ville'] = $geoloc['cp'] = $geoloc['region'] = $geoloc['departement'] = $geoloc['pays'] = $geoloc['latitude'] = $geoloc['longitude'] = '';
 $flag = DEFAULT_FLAG_ADMIN_AOS;
 $act = isset($_REQUEST['act']) ? $tools->IsValid_Variable($_REQUEST['act']) : '' ;
@@ -39,13 +39,13 @@ else
 if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act != ''))
 {
 	$annonce_form->bind($_POST['annonce_form']);
-	
+
 	$values = $annonce_form->getValues();
-	
+
 		$idAnnonce = Eav::getLatestIDAnnonce()+1;
-		
+
 		$values[urlannonce] = stripslashes($values[urlannonce]);
-		
+
 		if (empty($values[urlannonce]))
 		{
 			$values[urlannonce] = Eav::set_type_url($values[urlannonce], $idAnnonce, $values);
@@ -60,23 +60,23 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 			$values[urlannonce] = str_replace('!', '', $values[urlannonce]);
 			$values[urlannonce] = str_replace('@', '', $values[urlannonce]);
 		}
-		
+
 		$is_Url = $values[urlannonce];
-		
-	
+
+
 		$isId = Eav::url_exist($is_Url);
-	
+
 	if ($annonce_form->isValid() && $isId == '')
 	{
 		$values = $annonce_form->getValues();
 		$values[urlannonce] = $is_Url;
-		
+
 		if ($act == 'add')
 		{
-			
-			
+
+
 			$annonce->create_annonce($values);
-			
+
 			echo '<form name="form_ajout" action="admin.php?page=' . ANNONCES_PLUGIN_DIR . '/admin/annonce_listing.php" method="post">';
 			echo '<input type="hidden" name="id_to_treat" id="id_to_treat" value="' . Eav::getLatestIDAnnonce() . '"/>';
 			echo '<input type="hidden" name="act" id="act" value="edit"/>';
@@ -127,26 +127,26 @@ elseif($act == 'edit')
 <script type="text/javascript">
 	annoncejquery(document).ready(function() {
 	annoncejquery('#annonce_form_titre').bind('keyup', function() {
-	
+
 			annoncejquery('#annonce_form_urlannonce').val(annoncejquery('#annonce_form_titre').val());
-			
+
 			var txt = annoncejquery('#annonce_form_urlannonce').val();
-			
+
 				txt = txt.replace(new RegExp("[ ]", "g"),"-");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('èéêë'); ?>]", "g"),"e");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('àáâãäå'); ?>]", "g"),"a");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('æ'); ?>]", "g"),"ae");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ç'); ?>]", "g"),"c");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ìíîï'); ?>]", "g"),"i");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ñ'); ?>]", "g"),"n");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('òóôõö'); ?>]", "g"),"o");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('œ'); ?>]", "g"),"oe");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ùúûü'); ?>]", "g"),"u");
-				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ýÿ'); ?>]", "g"),"y");
-			
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"e");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"a");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"ae");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"c");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"i");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"n");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"o");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"oe");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"u");
+				txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½'); ?>]", "g"),"y");
+
 			var reg = new RegExp("[^0-9a-zA-Z-_]", "g");
 			txt = txt.replace(reg,"");
-			
+
 			annoncejquery('#annonce_form_urlannonce').val(txt.toLowerCase());
 		});
 	});
@@ -164,7 +164,7 @@ elseif($act == 'edit')
 	<input type="hidden" name="act" id="act" value="<?php echo $act; ?>" />
 	<input type="hidden" name="actual_page" id="actual_page" value="<?php echo $actual_page; ?>" />
 	<input type="hidden" name="encours" id="encours" value="<?php echo $encours; ?>" />
-	
+
 <?php
 if(($act == 'add') || ($act == 'edit'))
 {
@@ -181,8 +181,8 @@ if(($act == 'add') || ($act == 'edit'))
 					<tr>
 						<th colspan="2" >
 							<div class="ajout_effectue" id="ajout_effectue" >
-								
-<?php  
+
+<?php
 	if($encours != '' &&  $act != 'edit')
 	{
 		_e('Cr&eacute;ation effectu&eacute; avec succ&eacute;s','annonces');
@@ -190,7 +190,7 @@ if(($act == 'add') || ($act == 'edit'))
 	elseif ($act != 'add')
 	{
 		_e('Modification effectu&eacute; avec succ&eacute;s','annonces');
-	} 
+	}
 ?>
 							</div>
 						</th>
@@ -228,7 +228,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_adresse" ><?php _e('Adresse','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" /> 
+							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -236,7 +236,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_ville" ><?php _e('Ville','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" /> 
+							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" />
 						</td>
 					</tr>
 					<tr>
@@ -244,15 +244,15 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_cp" ><?php _e('Code Postal','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" /> 
+							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" />
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
-				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
-				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" /> 
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" /> 
+				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
+				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
+				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" />
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" />
       </td>
     </tr>
 		<tr><td><hr/></td></tr>
@@ -263,7 +263,7 @@ if(($act == 'add') || ($act == 'edit'))
 					if ($act == 'edit')
 					{
 						$id_to_treat = Eav::getLatestIDAnnonce();
-						
+
 						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
 					}
 				?>
@@ -285,7 +285,7 @@ if(($act == 'add') || ($act == 'edit'))
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="cmd" value="_s-xclick" />
 		<input type="hidden" name="hosted_button_id" value="10265740" />
-		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !" />
+		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sï¿½curisï¿½e !" />
 		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1" />
 	</form>
 </div>

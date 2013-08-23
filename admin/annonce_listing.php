@@ -10,7 +10,7 @@ $annonce_form = new annonce_form();
 $annonce = new annonce();
 $annonce_filters_form = new annonce_filters_form();
 
-$morequery = $on_edit_load_map = '';
+$morequery = $on_edit_load_map = $error = '';
 $geoloc['adresse'] = $geoloc['ville'] = $geoloc['cp'] = $geoloc['region'] = $geoloc['departement'] = $geoloc['pays'] = $geoloc['latitude'] = $geoloc['longitude'] = '';
 $flag = DEFAULT_FLAG_ADMIN_AOS;
 $act = isset($_REQUEST['act']) ? $tools->IsValid_Variable($_REQUEST['act']) : '' ;
@@ -27,7 +27,7 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 	if ($annonce_form->isValid())
 	{
 		$values = $annonce_form->getValues();
-		if ($values[urlannonce] == Eav::get_link($values[idpetiteannonce]))
+		if ($values['urlannonce'] == Eav::get_link($values['idpetiteannonce']))
 		{
 			if($values['idpetiteannonce'] == '')$annonce->create_annonce($values);
 			elseif($values['idpetiteannonce'] != '')$annonce->update_annonce($values);
@@ -51,9 +51,9 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 				$geo_loc->pays =$values[pays];
 				$geo_loc->longitude =$values[longitude];
 				$geo_loc->latitude =$values[latitude];
-				
+
 				$id_to_treat = $values['idpetiteannonce'];
-				
+
 				$error = __('L\'Url personnalis&eacute;e choisie : ', 'annonces');
 				$error .= $values[urlannonce];
 				$error .= __(' est d&eacute;j&agrave; utilis&eacute;e', 'annonces');
@@ -69,7 +69,7 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 //	IF WE ASK TO EDIT A SMALL AD
 elseif($act == 'edit')
 {
-	$geo_loc = Eav::get_geoloc($_POST[id_to_treat]);
+	$geo_loc = Eav::get_geoloc($_POST['id_to_treat']);
 	$annonce_to_treat = $annonce->admin_get_annonce(" AND ANN.idpetiteannonce = '".$id_to_treat."'",DEFAULT_FLAG_ADMIN_AOS,0,'nolimit');
 
 	$annonce_form->setDefault('idpetiteannonce', stripslashes($annonce_to_treat[0]->idpetiteannonce));
@@ -94,7 +94,7 @@ elseif($act == 'edit')
 	{
 		$annonce_form->setDefault($annonce_definition->labelattribut, stripslashes($annonce_definition->ATTRIBUT_VALUE));
 	}
-	
+
 	$idAnnonce = $id_to_treat;
 }
 
@@ -177,10 +177,9 @@ if($current_user->user_level >= 5)
 		<input type="hidden" name="razLesUrl" id="razLesUrl" value="raz" />
 		<input  name="razurl" type="button" value="<?php echo __('R&eacute;initaliser les URLs', 'annonces') ?>" onclick="var check = confirm('&Ecirc;tes vous s&ucirc;r de vouloir remettre par d&eacute;faut selon l\'url type toutes les URLs y compris celles personnalis&eacute;es ?'); if (check ==true) document.forms.raz_url.submit();" />
 	</form>
-<?php 
+<?php
 }
-if ($_POST['aj'] != '')
-{
+if ( !empty($_POST['aj']) ) {
 ?>
 	<div class="ajout_effectue" id="ajout_ok"><?php echo __('Votre annonce a &eacute;t&eacute; ajout&eacute;.','annonces') ?></div><br/>
 <?php
@@ -245,7 +244,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_adresse" ><?php _e('Adresse','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php echo stripslashes($geo_loc->adresse) ?>" /> 
+							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php echo stripslashes($geo_loc->adresse) ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -253,7 +252,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_ville" ><?php _e('Ville','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php echo stripslashes($geo_loc->ville) ?>" onblur="javascript:getCoordonnees();" /> 
+							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php echo stripslashes($geo_loc->ville) ?>" onblur="javascript:getCoordonnees();" />
 						</td>
 					</tr>
 					<tr>
@@ -261,15 +260,15 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_cp" ><?php _e('Code Postal','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php echo stripslashes($geo_loc->cp) ?>" onkeyup="javascript:getCoordonnees() ;" /> 
+							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php echo stripslashes($geo_loc->cp) ?>" onkeyup="javascript:getCoordonnees() ;" />
 						</td>
 					</tr>
 				</table>
 				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php echo stripslashes($geo_loc->region) ?>" />
 				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php echo stripslashes($geo_loc->departement) ?>" />
 				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php echo stripslashes($geo_loc->pays) ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo stripslashes($geo_loc->latitude) ?>" /> 
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo stripslashes($geo_loc->longitude) ?>" /> 
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo stripslashes($geo_loc->latitude) ?>" />
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo stripslashes($geo_loc->longitude) ?>" />
       </td>
     </tr>
 		<tr><td><hr/></td></tr>
@@ -298,11 +297,11 @@ if(($act == 'add') || ($act == 'edit'))
 elseif($act == 'export_to_wpshop')
 {
 	$eav_value = new Eav();
-	
+
 	echo '<h2>' . __('Exporter vos annonces vers WP-Shop','annonces') . '</h2>';
 
 	// echo '<pre>'; print_r($_REQUEST); echo '</pre>';
-	
+
 	if (count($_REQUEST['annonce']) > 0) {
 		echo "<input type='hidden' name='act' value='export_annonce'/>";
 		foreach ($_REQUEST['annonce'] as $id_annonce) {
@@ -318,15 +317,15 @@ elseif($act == 'export_to_wpshop')
 					case 'CHAR' :
 						echo $attribut['valueattributchar'];
 					break;
-					
+
 					case 'DEC' :
 						echo $attribut['valueattributdec'];
 					break;
-					
+
 					case 'INT' :
 						echo $attribut['valueattributint'];
 					break;
-					
+
 					case 'TEXT' :
 						if ($attribut['valueattributtextlong'] == 0) {
 							echo $attribut['valueattributtextcourt'];
@@ -335,7 +334,7 @@ elseif($act == 'export_to_wpshop')
 							echo $attribut['valueattributtextlong'];
 						}
 					break;
-					
+
 					case 'DATE' :
 						echo $attribut['valueattributdate'];
 					break;
@@ -355,16 +354,16 @@ else
 $nb_total_items = 0;$nb_total_items = $eav_annonce->getAnnoncesEntete($morequery,$flag,'autolastmodif',$actual_page,'nolimit','count');
 $Pagination = '';
 if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS_LISTING) > 1)$Pagination = $tools->DoPagination(' onclick="javascript:document.getElementById(\'actual_page\').value=\'#PAGE#\';document.forms.treat_annonce.submit()" ',$nb_total_items,$actual_page,NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS_LISTING,PAGINATION_OFFSET_ADMIN_AOS,'','','#CCCCCC','#FFFFFF');
-?>		
+?>
 		<div id="annonce_filter" class="margin18px" >
 			<table summary="annonce filters" cellpadding="0" cellspacing="0" class="floatright margin18px" style="border:1px solid #333333;" >
-				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher des annonces','annonces') ?></td></tr> 
+				<tr><td colspan="2" style="text-align:center;background-color:#333333;color:#FFFFFF;font-weight:bold;font-size:14px;" ><?php _e('Rechercher des annonces','annonces') ?></td></tr>
 				<?php echo $annonce_filters_form ;?>
 				<tr>
-					<td colspan="2" > 
-						<input type="button" value="<?php _e('Filtrer les r&eacute;sultats','annonces') ?>" class="floatright" 
-							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();" /> 
-						<input type="button" value="<?php _e('Tout afficher','annonces') ?>" class="floatright" 
+					<td colspan="2" >
+						<input type="button" value="<?php _e('Filtrer les r&eacute;sultats','annonces') ?>" class="floatright"
+							onclick="javascript:document.getElementById('act').value='filter';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();" />
+						<input type="button" value="<?php _e('Tout afficher','annonces') ?>" class="floatright"
 							onclick="javascript:document.getElementById('act').value='';document.getElementById('actual_page').value='';document.forms.treat_annonce.submit();" />
 					</td>
 				</tr>
@@ -378,7 +377,7 @@ if(ceil($nb_total_items/NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS_LISTING) > 1)$Paginati
 				?>
 				</div>
 				<div class="floatright margin18px" style="width:40%;" >
-					<input type="button" name="general_submit" value="<?php _e('Effectuer','annonces') ?>" id="general_submit" 
+					<input type="button" name="general_submit" value="<?php _e('Effectuer','annonces') ?>" id="general_submit"
 						onclick="javascript:document.getElementById('act').value = document.getElementById('general_action').options[document.getElementById('general_action').selectedIndex].value;document.forms.treat_annonce.submit();" class="floatright" />
 					<select name="general_action" id="general_action" class="floatright" >
 						<option value="" ><?php _e('Pour la s&eacute;lection','annonces') ?>&nbsp;</option>

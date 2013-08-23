@@ -8,9 +8,9 @@
 class annonces_options
 {
 	/**
-	*	Declare the different options for the plugin	
+	*	Declare the different options for the plugin
 	*/
-	function add_options() 
+	function add_options()
 	{
 		register_setting('annonces_options', 'annonces_options', array('annonces_options', 'options_validator'));
 		// register_setting('annonces_email_options', 'annonces_email_options', array('annonces_options', 'options_validator'));
@@ -111,7 +111,7 @@ class annonces_options
 	*/
 	function options_output()
 	{
-		
+
 	}
 	/**
 	*	Define the output for the field. Get the option value to put the good value by default
@@ -134,7 +134,7 @@ class annonces_options
 		$options = get_option('annonces_options');
 		echo '<input type="text" name="annonces_options[annonce_map_marker_size]" id="annonce_map_marker_size" value="' . $options['annonce_map_marker_size']. '" />
 		<p class="optionFieldHelper" >' . __('Cette option permet de d&eacute;finir la taille de l\'ic&ocirc;ne qui sera affich&eacute;e sur la carte dans la page d\'une annonce.', 'annonces') . '</p>';
-	}	
+	}
 	function annonce_map_marker()
 	{
 		$options = get_option('annonces_options');
@@ -171,7 +171,7 @@ class annonces_options
 	{
 		global $optionOrderSideList;
 		$options = get_option('annonces_options');
-		echo annonces_display::createComboBox('annonce_frontend_listing_order_side', 'annonces_options[annonce_frontend_listing_order_side]', $optionOrderSideList, $options['annonce_frontend_listing_order_side']);
+		echo annonces_display::createComboBox('annonce_frontend_listing_order_side', 'annonces_options[annonce_frontend_listing_order_side]', $optionOrderSideList, (!empty($options) && !empty($options['annonce_frontend_listing_order_side']) ? $options['annonce_frontend_listing_order_side'] : ''));
 	}
 
 	function annonce_currency()
@@ -180,12 +180,12 @@ class annonces_options
 		$options = get_option('annonces_options');
 		echo annonces_display::createComboBox('annonce_currency', 'annonces_options[annonce_currency]', $optionCurrencyList, $options['annonce_currency']) . '
 		<p class="optionFieldHelper" >' . __('Cette option permet de configurer la devise qui sera effective sur le site.', 'annonces') . '</p>';
-	}	
+	}
 	function annonce_export_picture()
 	{
 		global $optionPictureExportTypeList;
 		$options = get_option('annonces_options');
-		echo annonces_display::createComboBox('annonce_export_picture', 'annonces_options[annonce_export_picture]', $optionPictureExportTypeList, $options['annonce_export_picture']) . '
+		echo annonces_display::createComboBox('annonce_export_picture', 'annonces_options[annonce_export_picture]', $optionPictureExportTypeList, (!empty($options) && !empty($options['annonce_export_picture']) ? $options['annonce_export_picture'] : '')) . '
 		<p class="optionFieldHelper" >' . __('Cette option permet de d&eacute;finir comment les photos des annonces seront export&eacute;es. Soit les fichiers sont envoy&eacute;s, soit l\'export contiendra uniquement les liens vers les photos', 'annonces') . '</p>';
 	}
 
@@ -324,11 +324,11 @@ class annonces_options
 	</div>
 	<script type="text/javascript" >
 		annoncejquery(document).ready(function(){
-			jQuery("#annoncePictoChangerContainer").dialog({ 
+			jQuery("#annoncePictoChangerContainer").dialog({
 				autoOpen: false,
 				height: 350,
 				width: 350,
-				modal: true, 
+				modal: true,
 				buttons:{
 					"<?php _e('Utiliser', 'annonces'); ?>": function(){
 						var choosenPicto;
@@ -337,13 +337,13 @@ class annonces_options
 								choosenPicto = jQuery(this).val();
 							}
 						});
-						jQuery("#" + jQuery("#fieldToUpdate").val()).val(choosenPicto); 
+						jQuery("#" + jQuery("#fieldToUpdate").val()).val(choosenPicto);
 						jQuery("#" + jQuery("#previewToUpdate").val()).attr("src", "<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS; ?>" + choosenPicto);
 						jQuery(this).dialog("close");
-					}, 
+					},
 					"<?php _e('Annuler', 'annonces'); ?>": function(){
 						jQuery(this).dialog("close");
-					}				
+					}
 				},
 				close:function(){
 					jQuery("#annoncePictoChanger").html(jQuery("#loadingImg").html());
@@ -352,17 +352,17 @@ class annonces_options
 			});
 
 			jQuery(".searchPictoManager").click(function(){
-				jQuery("#annoncePictoChangerContainer").dialog("open"); 
-				jQuery("#annoncePictoChanger").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { 
-					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureUploadForm" 
+				jQuery("#annoncePictoChangerContainer").dialog("open");
+				jQuery("#annoncePictoChanger").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", {
+					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureUploadForm"
 				});
 				jQuery("#annoncePictoChangerContent").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", {
-					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureDirContent" 
+					"post": "true", "elementCode": jQuery(this).parent("div").attr("id").replace("change_", ""), "action": "loadPictureDirContent"
 				});
 			});
 
 			jQuery("#urlFormatterContainer").dialog({
-				autoOpen: false, height: 400, width: 800, modal:  true, 
+				autoOpen: false, height: 400, width: 800, modal:  true,
 				buttons: {
 					"<?php _e('Utiliser', 'annonces'); ?>": function(){
 						jQuery("#annonce_url_rewrite_template").val(jQuery("#urlRewriteFormat").val());
@@ -371,15 +371,15 @@ class annonces_options
 						}
 						else{
 							jQuery("#IDPAContainer").show();
-						} 
+						}
 						jQuery(this).dialog("close");
-					}, 
+					},
 					"<?php _e('Annuler', 'annonces'); ?>": function(){
 						jQuery(this).dialog("close");
 					}
-				} 
+				}
 			});
-			
+
 			jQuery("#urlConfigurator").click(function(){
 				jQuery("#urlFormatterContainer").dialog("open");
 				jQuery("#urlFormatter").load("<?php echo ANNONCES_INC_PLUGIN_URL; ?>ajax.php", { "post": "true", "elementCode": "urlRewriteFormat", "action": "loadUrlPossibleParams" });
@@ -405,7 +405,7 @@ class annonces_options
 
 	function slugify_noaccent($text)
 	{
-		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/","/é/", "/è/", "/ê/", "/ç/", "/à/", "/â/", "/î/", "/ï/", "/ù/", "/ô/", "/È/", "/É/", "/Ê/", "/Ë/", "/Ì/", "/Í/", "/Î/", "/Ï/", "/Ö/", "/Ù/", "/Û/", "/Ü/");
+		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/","/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/");
 		$rep_pat = Array("e", "e", "e", "c", "a", "a", "i", "i", "u", "o", "E", "E", "E", "E", "I", "I", "I", "I", "O", "U", "U", "U","e", "e", "e", "c", "a", "a", "i", "i", "u", "o", "E", "E", "E", "E", "I", "I", "I", "I", "O", "U", "U", "U");
 		if ($text == '')
 		{
@@ -420,7 +420,7 @@ class annonces_options
 
 	function slugify_noaccent_no_utf8decode($text)
 	{
-		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/","/é/", "/è/", "/ê/", "/ç/", "/à/", "/â/", "/î/", "/ï/", "/ù/", "/ô/", "/È/", "/É/", "/Ê/", "/Ë/", "/Ì/", "/Í/", "/Î/", "/Ï/", "/Ö/", "/Ù/", "/Û/", "/Ü/");
+		$pattern  = Array("/&eacute;/", "/&egrave;/", "/&ecirc;/", "/&ccedil;/", "/&agrave;/", "/&acirc;/", "/&icirc;/", "/&iuml;/", "/&ucirc;/", "/&ocirc;/", "/&Egrave;/", "/&Eacute;/", "/&Ecirc;/", "/&Euml;/", "/&Igrave;/", "/&Iacute;/", "/&Icirc;/", "/&Iuml;/", "/&Ouml;/", "/&Ugrave;/", "/&Ucirc;/", "/&Uuml;/","/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/", "/ï¿½/");
 		$rep_pat = Array("e", "e", "e", "c", "a", "a", "i", "i", "u", "o", "E", "E", "E", "E", "I", "I", "I", "I", "O", "U", "U", "U","e", "e", "e", "c", "a", "a", "i", "i", "u", "o", "E", "E", "E", "E", "I", "I", "I", "I", "O", "U", "U", "U");
 		if ($text == '')
 		{
@@ -430,7 +430,7 @@ class annonces_options
 		{
 			$text = preg_replace($pattern, $rep_pat, $text);
 		}
-		
+
 		return $text;
 	}
 
@@ -438,16 +438,16 @@ class annonces_options
 	{
 		$eav_value = new Eav();
 		global $wpdb;
-		
+
 		$annonces = $eav_value->getLesAnnonces();
 		$sizei = count($annonces);
-		
+
 		for($i = 0; $i < $sizei; $i++)
 		{
 			$eav_mode = new Eav();
-			
+
 			$recup_link = annonces_expression_url;
-			
+
 			$recup_link = str_replace('%idpetiteannonce%', $annonces[$i]->idpetiteannonce, $recup_link);
 			$recup_link = str_replace('%titre_annonce%', $annonces[$i]->titre, $recup_link);
 			$recup_link = str_replace('%referenceagencedubien%', $annonces[$i]->referenceagencedubien, $recup_link);
@@ -460,14 +460,14 @@ class annonces_options
 			$recup_link = str_replace('%pays%', str_replace("'", '-', $annonces[$i]->pays), $recup_link);
 			$recup_link = str_replace('%date_publication%', date("d/m/Y",strtotime($annonces[$i]->autoinsert)), $recup_link);
 			$recup_link = str_replace('%type_bien%', str_replace('/','-',$eav_mode->getBien($annonces[$i]->idpetiteannonce)), $recup_link);
-			
+
 			$recup_link = annonces_options::slugify_noaccent($recup_link);
 			$recup_link = trim($recup_link);
 			$recup_link = str_replace(' ', '-', $recup_link);
 			$recup_link = mb_strtolower($recup_link);
-			
+
 			$recup_link = $recup_link . annonce_url_rewrite_template_suffix;
-			
+
 			$maj_annonce = $wpdb->prepare('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce`
 								SET urlannonce ="'. $recup_link .'"
 								WHERE idpetiteannonce="' . $annonces[$i]->idpetiteannonce . '"');
@@ -478,7 +478,7 @@ class annonces_options
 	function recupNumImage()
 	{
 		global $wpdb;
-			
+
 			$sqlbudget = "SELECT numphoto FROM " . ANNONCES_TABLE_TEMPPHOTO . "";
 			$reqbudget = mysql_query($sqlbudget) or die(mysql_error());
 			while($data = mysql_fetch_array($reqbudget))
@@ -488,19 +488,23 @@ class annonces_options
 			return $budget_theme;
 	}
 
-	function valeurOption($nomOption)
-	{
+	function valeurOption($nomOption) {
 		global $annonces_options;
 
-		return $annonces_options[$nomOption];
+		$valeur = '';
+		if ( !empty($annonces_options) && !empty($annonces_options[$nomOption]) ) {
+			$valeur = $annonces_options[$nomOption];
+		}
+
+		return $valeur;
 	}
-	
+
 
 
 	function recupinfo($lbloption)
 	{
 		global $wpdb;
-		
+
 		$sqlbudget = "SELECT nomoption FROM `".$wpdb->prefix.small_ad_table_prefix_AOS."petiteannonce__option` WHERE labeloption='".$lbloption."'";
 		$reqbudget = mysql_query($sqlbudget) or die(mysql_error());
 		while($data = mysql_fetch_array($reqbudget))
@@ -512,11 +516,11 @@ class annonces_options
 	function updateoption($lbldefaut,$lblcourant)
 	{
 		global $wpdb;
-		
+
 		$query = $wpdb->prepare(
-			'UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` 
-			SET nomoption ="%s" 
-			WHERE labeloption="%s"', 
+			'UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option`
+			SET nomoption ="%s"
+			WHERE labeloption="%s"',
 				annonces_options::recupinfo($lbldefaut), $lblcourant);
 		$wpdb->query($query);
 	}
@@ -524,7 +528,7 @@ class annonces_options
 	function monnaie()
 	{
 		global $wpdb;
-		
+
 		$query = $wpdb->prepare('select measureunit from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attribut where labelattribut = "PrixLoyerPrixDeCession"');
 		$reqmonnaie = $wpdb->get_row($query);
 		$monnaie = $reqmonnaie->measureunit;

@@ -1,23 +1,16 @@
 <?php
 /*
 Installation de l'extension
-	- Création des tables
+	- Crï¿½ation des tables
 */
-function annonces_creationTables()
-{// Création des tables lors de l'installation
-	
-	require_once(ANNONCES_LIB_PLUGIN_DIR . 'version/version.class.php');
-	require_once('insertions.php');
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	global $wpdb;
-	
+
 	function createTable($table,$champ)
 	{
 		global $wpdb;
-		
+
 		if( $wpdb->get_var("show tables like '" . $table . "'") != $table) {
-			// On construit la requete SQL de création de table
-			$sql = 
+			// On construit la requete SQL de crï¿½ation de table
+			$sql =
 				"CREATE TABLE " . $table . " (
 					" . $champ . "
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
@@ -25,25 +18,34 @@ function annonces_creationTables()
 			$wpdb->query($wpdb->prepare($sql));
 		}
 	}
-	
+
+
+function annonces_creationTables()
+{// Crï¿½ation des tables lors de l'installation
+
+	require_once(ANNONCES_LIB_PLUGIN_DIR . 'version/version.class.php');
+	require_once('insertions.php');
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	global $wpdb;
+
 		$champversion = "id INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 					nomVersion VARCHAR( 255 ) NOT NULL UNIQUE,
 					version INT( 10 ) NOT NULL";
-		// On vérifie si la table petiteannonce n'existe pas
+		// On vï¿½rifie si la table petiteannonce n'existe pas
 		createTable(ANNONCES_TABLE_VERSION,$champversion);
-			
+
 		{// Various tables
-		
-			
+
+
 			$champattatt = "`idattribut` int(11) NOT NULL default '0',
 						idgroupeattribut int(11) NOT NULL default '0',
 						flagvalidgroupeattribut_attribut enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						PRIMARY KEY  (idattribut,idgroupeattribut),
 						KEY idgroupeattribut (idgroupeattribut)";
-			// On vérifie si la table petiteannonce n'existe pas
+			// On vï¿½rifie si la table petiteannonce n'existe pas
 			createTable(ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT,$champattatt);
-			
-			
+
+
 			$champpetiteannonce = "idpetiteannonce int(11) NOT NULL auto_increment,
 						flagvalidpetiteannonce enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						idgroupeattribut int(11) NOT NULL default '0',
@@ -55,10 +57,10 @@ function annonces_creationTables()
 						urlannonce varchar(200) collate utf8_unicode_ci,
 						PRIMARY KEY  (idpetiteannonce),
 						KEY idgroupeattribut_idx (idgroupeattribut)";
-			// On vérifie si la table petiteannonce n'existe pas
+			// On vï¿½rifie si la table petiteannonce n'existe pas
 			createTable(ANNONCES_TABLE_ANNONCES,$champpetiteannonce);
-			
-			
+
+
 			$champattribut = "idattribut int(11) NOT NULL auto_increment,
 						flagvalidattribut enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						flagvisibleattribut enum('oui','non') collate utf8_unicode_ci default NULL,
@@ -67,10 +69,10 @@ function annonces_creationTables()
 						nomattribut char(70) collate utf8_unicode_ci default NULL,
 						measureunit char(10) collate utf8_unicode_ci default NULL,
 						PRIMARY KEY  (idattribut)";
-			// On vérifie si la table attribut n'existe pas
+			// On vï¿½rifie si la table attribut n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUT,$champattribut);
-			
-			
+
+
 			$champattributchar = "idattributchar int(11) NOT NULL auto_increment,
 						flagvalidattributchar enum('deleted','moderated','valid') collate utf8_unicode_ci default 'valid',
 						idpetiteannonce int(11) NOT NULL default '0',
@@ -79,10 +81,10 @@ function annonces_creationTables()
 						PRIMARY KEY  (idattributchar),
 						KEY idpetiteannonce_idx (idpetiteannonce),
 						KEY idattribut_idx (idattribut)";
-			// On vérifie si la table attributchar n'existe pas
+			// On vï¿½rifie si la table attributchar n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUTCHAR,$champattributchar);
-			
-			
+
+
 			$champattributdate = "idattributdate int(11) NOT NULL auto_increment,
 						flagvalidattributdate enum('deleted','moderated','valid') collate utf8_unicode_ci default 'valid',
 						idpetiteannonce int(11) NOT NULL default '0',
@@ -91,10 +93,10 @@ function annonces_creationTables()
 						PRIMARY KEY  (idattributdate),
 						KEY idpetiteannonce_idx (idpetiteannonce),
 						KEY idattribut_idx (idattribut)";
-			// On vérifie si la table attributdate n'existe pas
+			// On vï¿½rifie si la table attributdate n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUTDATE,$champattributdate);
-			
-			
+
+
 			$champattributdec = "idattributdec int(11) NOT NULL auto_increment,
 						flagvalidattributdec enum('deleted','moderated','valid') collate utf8_unicode_ci default 'valid',
 						idpetiteannonce int(11) NOT NULL default '0',
@@ -103,10 +105,10 @@ function annonces_creationTables()
 						PRIMARY KEY  (idattributdec),
 						KEY idpetiteannonce_idx (idpetiteannonce),
 						KEY idattribut_idx (idattribut)";
-			// On vérifie si la table attributdec n'existe pas
+			// On vï¿½rifie si la table attributdec n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUTDEC,$champattributdec);
-			
-			
+
+
 			$champattributint = "idattributint int(11) NOT NULL auto_increment,
 						flagvalidattributint enum('deleted','moderated','valid') collate utf8_unicode_ci default 'valid',
 						idpetiteannonce int(11) NOT NULL default '0',
@@ -115,10 +117,10 @@ function annonces_creationTables()
 						PRIMARY KEY  (idattributint),
 						KEY idpetiteannonce_idx (idpetiteannonce),
 						KEY idattribut_idx (idattribut)";
-			// On vérifie si la table attributint n'existe pas
+			// On vï¿½rifie si la table attributint n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUTINT,$champattributint);
-			
-			
+
+
 			$champattributtext = "idattributtext int(11) NOT NULL auto_increment,
 						flagvalidattributtext enum('deleted','moderated','valid') collate utf8_unicode_ci default 'valid',
 						idpetiteannonce int(11) NOT NULL default '0',
@@ -129,10 +131,10 @@ function annonces_creationTables()
 						KEY idpetiteannonce_idx (idpetiteannonce),
 						KEY idattribut_idx (idattribut),
 						KEY valueattributtextlong_idx (valueattributtextlong)";
-			// On vérifie si la table attributtext n'existe pas
+			// On vï¿½rifie si la table attributtext n'existe pas
 			createTable(ANNONCES_TABLE_ATTRIBUTTEXT,$champattributtext);
-			
-			
+
+
 			$champgeolocalisation = "idsrc int(11) NOT NULL auto_increment,
 						iddest int(11) NOT NULL default '0',
 						autolocalisation char(255) collate utf8_unicode_ci default NULL,
@@ -149,37 +151,37 @@ function annonces_creationTables()
 						PRIMARY KEY  (idsrc,iddest),
 						UNIQUE KEY token (token),
 						KEY iddest (iddest)";
-			// On vérifie si la table geolocalisation n'existe pas
+			// On vï¿½rifie si la table geolocalisation n'existe pas
 			createTable(ANNONCES_TABLE_GEOLOCALISATION,$champgeolocalisation);
-			
-			
+
+
 			$champgroupeattribut = "idgroupeattribut int(11) NOT NULL auto_increment,
 						flagvalidgroupeattribut enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						nomgroupeattribut char(50) collate utf8_unicode_ci default NULL,
 						descriptiongroupeattribut char(255) collate utf8_unicode_ci default NULL,
 						PRIMARY KEY  (idgroupeattribut)";
-			// On vérifie si la table groupeattribut n'existe pas
+			// On vï¿½rifie si la table groupeattribut n'existe pas
 			createTable(ANNONCES_TABLE_GROUPEATTRIBUT,$champgroupeattribut);
-			
-			
+
+
 			$champgroupeattributattribut = "idattribut int(11) NOT NULL default '0',
 						idgroupeattribut int(11) NOT NULL default '0',
 						flagvalidgroupeattribut_attribut enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						PRIMARY KEY  (idattribut,idgroupeattribut),
 						KEY `idgroupeattribut (idgroupeattribut)";
-			// On vérifie si la table groupeattributattribut n'existe pas
+			// On vï¿½rifie si la table groupeattributattribut n'existe pas
 			createTable(ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT,$champgroupeattributattribut);
-			
-			
+
+
 			$champoption = "idoption int(11) NOT NULL auto_increment,
 					flagvalidoption enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 					labeloption char(50) collate utf8_unicode_ci default NULL,
 					nomoption varchar(1000) collate utf8_unicode_ci default NULL,
 					PRIMARY KEY  (idoption)";
-			// On vérifie si la table option n'existe pas
+			// On vï¿½rifie si la table option n'existe pas
 		//	NOT USED FROM DB VERSION 18
-			
-			
+
+
 			$champpasserelle = "idpasserelle int(11) NOT NULL auto_increment,
 						flagvalidpasserelle enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						typeexport enum('csv','xml') collate utf8_unicode_ci NOT NULL default 'csv',
@@ -195,10 +197,10 @@ function annonces_creationTables()
 						PRIMARY KEY  (idpasserelle),
 						UNIQUE KEY nompasserelle (nompasserelle),
 						KEY typeexport (typeexport)";
-			// On vérifie si la table passerelle n'existe pas
+			// On vï¿½rifie si la table passerelle n'existe pas
 			createTable(ANNONCES_TABLE_PASSERELLE,$champpasserelle);
-			
-			
+
+
 			$champphotos = "idphotos int(11) NOT NULL auto_increment,
 						flagvalidphotos enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
 						idpetiteannonce int(11) default NULL,
@@ -210,43 +212,43 @@ function annonces_creationTables()
 						token varchar(255) collate utf8_unicode_ci NOT NULL,
 						PRIMARY KEY  (idphotos),
 						KEY idpetiteannonce_idx (idpetiteannonce)";
-			// On vérifie si la table photos n'existe pas
+			// On vï¿½rifie si la table photos n'existe pas
 			createTable(ANNONCES_TABLE_PHOTOS,$champphotos);
-			
-			
+
+
 			$champtempphoto = "numphoto int(11),
 						PRIMARY KEY  (numphoto)";
-			// On vérifie si la table tempphoto n'existe pas
+			// On vï¿½rifie si la table tempphoto n'existe pas
 			createTable(ANNONCES_TABLE_TEMPPHOTO,$champtempphoto);
-			
-			
+
+
 			$champtxt = "idtxt int(11) NOT NULL auto_increment,
 						flagvalidtxt enum('deleted','moderated','valid') collate utf8_unicode_ci default NULL,
 						txtlong text collate utf8_unicode_ci,
 						PRIMARY KEY  (idtxt)";
-			// On vérifie si la table txt n'existe pas
+			// On vï¿½rifie si la table txt n'existe pas
 			createTable(ANNONCES_TABLE_TXT,$champtxt);
 		}
 		annonces_insertions();
 
 	$geoloc_table = "
-CREATE TABLE `wp_ctlg_petiteannonce__geolocalisation` (
-  `idsrc` int(11) NOT NULL auto_increment,
-  `iddest` int(11) NOT NULL default '0',
-  `autolocalisation` char(255) collate utf8_unicode_ci default NULL,
-  `adresse` char(255) collate utf8_unicode_ci default NULL,
-  `ville` char(255) collate utf8_unicode_ci default NULL,
-  `departement` char(255) collate utf8_unicode_ci default NULL,
-  `region` char(255) collate utf8_unicode_ci default NULL,
-  `cp` char(20) default NULL,
-  `pays` char(255) collate utf8_unicode_ci default NULL,
-  `token` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `flagvalidgeolocalisation` enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
-  `latitude` decimal(32,16) default NULL,
-  `longitude` decimal(32,16) default NULL,
-  PRIMARY KEY  (`idsrc`,`iddest`),
-  UNIQUE KEY `token` (`token`),
-  KEY `iddest` (`iddest`)
+CREATE TABLE wp_ctlg_petiteannonce__geolocalisation (
+  idsrc int(11) NOT NULL auto_increment,
+  iddest int(11) NOT NULL default '0',
+  autolocalisation char(255) collate utf8_unicode_ci default NULL,
+  adresse char(255) collate utf8_unicode_ci default NULL,
+  ville char(255) collate utf8_unicode_ci default NULL,
+  departement char(255) collate utf8_unicode_ci default NULL,
+  region char(255) collate utf8_unicode_ci default NULL,
+  cp char(20) default NULL,
+  pays char(255) collate utf8_unicode_ci default NULL,
+  token varchar(255) collate utf8_unicode_ci NOT NULL,
+  flagvalidgeolocalisation enum('deleted','moderated','valid') collate utf8_unicode_ci default 'moderated',
+  latitude decimal(32,16) default NULL,
+  longitude decimal(32,16) default NULL,
+  PRIMARY KEY (idsrc,iddest),
+  UNIQUE KEY token (token),
+  KEY iddest (iddest)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 	dbDelta($geoloc_table);
 }
