@@ -20,7 +20,7 @@ class annonces_options
 			add_settings_section('annonces_geolocalisation_options', __('Options pour la g&eacute;olocalisation', 'annonces'), array('annonces_options', 'options_output'), 'annonces_options_settings');
 			/*	Add the different field for geolocalisation	*/
 			add_settings_field('annonce_activate_map', __('Activer la g&eacute;olicalisation', 'annonces'), array('annonces_options', 'annonce_activate_map'), 'annonces_options_settings', 'annonces_geolocalisation_options');
-			add_settings_field('annonce_gmap_api_key', __('Cl&eacute; api pour Google maps', 'annonces'), array('annonces_options', 'annonce_gmap_api_key'), 'annonces_options_settings', 'annonces_geolocalisation_options');
+		//	add_settings_field('annonce_gmap_api_key', __('Cl&eacute; api pour Google maps', 'annonces'), array('annonces_options', 'annonce_gmap_api_key'), 'annonces_options_settings', 'annonces_geolocalisation_options');
 			add_settings_field('annonce_map_marker_size', __('Taille du marqueur sur la carte', 'annonces'), array('annonces_options', 'annonce_map_marker_size'), 'annonces_options_settings', 'annonces_geolocalisation_options');
 			add_settings_field('annonce_map_marker', __('Marqueur a afficher sur la carte', 'annonces'), array('annonces_options', 'annonce_map_marker'), 'annonces_options_settings', 'annonces_geolocalisation_options');
 		}
@@ -178,7 +178,7 @@ class annonces_options
 	{
 		global $optionCurrencyList;
 		$options = get_option('annonces_options');
-		echo annonces_display::createComboBox('annonce_currency', 'annonces_options[annonce_currency]', $optionCurrencyList, $options['annonce_currency']) . '
+		echo annonces_display::createComboBox('annonce_currency', 'annonces_options[annonce_currency]', $optionCurrencyList, htmlentities( $options['annonce_currency'], ENT_NOQUOTES, 'UTF-8' )) . '
 		<p class="optionFieldHelper" >' . __('Cette option permet de configurer la devise qui sera effective sur le site.', 'annonces') . '</p>';
 	}
 	function annonce_export_picture()
@@ -470,7 +470,7 @@ class annonces_options
 
 			$maj_annonce = $wpdb->prepare('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce`
 								SET urlannonce ="'. $recup_link .'"
-								WHERE idpetiteannonce="' . $annonces[$i]->idpetiteannonce . '"');
+								WHERE idpetiteannonce="' . $annonces[$i]->idpetiteannonce . '"', array());
 			$wpdb->query($maj_annonce);
 		}
 	}
@@ -529,7 +529,7 @@ class annonces_options
 	{
 		global $wpdb;
 
-		$query = $wpdb->prepare('select measureunit from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attribut where labelattribut = "PrixLoyerPrixDeCession"');
+		$query = $wpdb->prepare('select measureunit from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attribut where labelattribut = "PrixLoyerPrixDeCession"', array() );
 		$reqmonnaie = $wpdb->get_row($query);
 		$monnaie = $reqmonnaie->measureunit;
 

@@ -5,8 +5,12 @@
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.2.0.3
+	Version: 1.2.0.4
 */
+
+
+DEFINE('ANNONCE_PLUGIN_VERSION', '1.2.0.4');
+
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -80,15 +84,6 @@
 	add_action('init', array( $view, "add_css" ));
 
 	/**
-	* Ajoute le Script Javascript de la cle Google Maps dans le Header de Wordpress
-	*/
-	add_action('wp_head', array( $view, "add_gmap" ));
-	/**
-	* Ajoute le Script Javascript de la cle Google Maps dans le Header Admin de Wordpress
-	*/
-	add_action('admin_head', array( $view, "add_gmap" ));
-
-	/**
 	*	Ajoute la bibloth�que JQuery dans le Header (m�me admin) de WordPress
 	*/
 	add_action('admin_init', array( $view, "add_js" ));
@@ -103,7 +98,7 @@
 	{/* Definition des options */
 		$annonces_options = get_option('annonces_options');
 
-		define('annonces_api_key', annonces_options::valeurOption('gmap_api_key'));
+// 		define('annonces_api_key', annonces_options::valeurOption('gmap_api_key'));
 		define('annonces_maps_activation', annonces_options::valeurOption('annonce_activate_map'));
 		define('url_marqueur_courant', annonces_options::valeurOption('annonce_map_marker'));
 		define('annonce_map_marker_size', annonces_options::valeurOption('annonce_map_marker_size'));
@@ -143,6 +138,7 @@
 		// Remember to flush_rules() when adding rules
 		function flushRules(){
 			global $wp_rewrite;
+
 			$wp_rewrite->flush_rules();
 		}
 
@@ -152,15 +148,18 @@
 			$page_annonce = Eav::recupPageAnnonce();
 
 			$newrules = array();
-			$newrules[$page_annonce.'(.+).html?'] = 'index.php?&pagename='.$page_annonce;
-			$newrules[$page_annonce.'(.+)'] = 'index.php?&pagename='.$page_annonce;
-			return $newrules + $rules;
+			$newrules[$page_annonce.'(.+).html?'] = 'index.php?&pagename='.$page_annonce.'&show_annonce=$matches[1]';
+			$newrules[$page_annonce.'(.+)'] = 'index.php?&pagename='.$page_annonce.'&show_annonce=$matches[1]';
+			$finalrules = $newrules + $rules;
+
+			return $finalrules;
 		}
 
 		// Adding the show_annonce var so that WP recognizes it
 		function wp_insertMyRewriteQueryVars($vars)
 		{
 			array_push($vars, 'show_annonce');
+
 			return $vars;
 		}
 	}

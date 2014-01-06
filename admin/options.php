@@ -11,21 +11,21 @@
 	* @author Eoxia <contact@eoxia.com>
 	* @version 1.0.0
 	*/
-	
-	
+
+
 	require_once dirname(__FILE__).'./../includes/lib/options.class.php';
-	
+
 	if (isset($_POST["razLesUrl"]))
 	{
 		annonces_options::majUrlAnnonces();
 	}
-	
+
 	if(isset($_POST["submit"]))
-	{	
+	{
 		global $wpdb;
-		
-		
-		
+
+
+
 		if(isset($_FILES['options']['tmp_name']))
 		{
 			$extensions = array(".png", ".jpg", ".bmp");
@@ -41,12 +41,12 @@
 				}
 			}
 		}
-		
+
 		if(isset($_POST['options']['api_key']))
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$_POST['options']['api_key'].'" WHERE labeloption="annonces_api_key"');
 		}
-		
+
 		if(isset($_POST['options']['page']))
 		{
 			if (preg_match_all('(\?page_id=)', $_POST['options']['page'], $out) == 0)
@@ -58,7 +58,7 @@
 				$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="annonces" WHERE labeloption="annonces_page_install"');
 			}
 		}
-		
+
 		// if (trim($_POST['options']['url_type']) != '')
 			// {
 				// $url = trim($_POST['options']['url_type']);
@@ -66,7 +66,7 @@
 				// $eav_value = new Eav();
 				// $wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="' . $url . '%idpetiteannonce%" WHERE labeloption="annonces_expression_url"');
 			// }
-			
+
 		if (trim($_POST['options']['url_type']) != '')
 			{
 				$url = trim($_POST['options']['url_type']);
@@ -74,7 +74,7 @@
 				$eav_value = new Eav();
 				$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="' . $url . "%idpetiteannonce%" . '" WHERE labeloption="annonces_expression_url"');
 			}
-		
+
 		if(isset($_POST['options']['suffix']) != '')
 		{
 			$suffixx = trim($_POST['options']['suffix']);
@@ -97,7 +97,7 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$_POST['options']['html_reception'].'" WHERE labeloption="annonces_html_reception"');
 		}
-		
+
 		if(isset($_POST['options']['monnaie']))
 		{
 			switch($_POST['options']['monnaie'])
@@ -117,13 +117,13 @@
 			}
 			$query = $wpdb->prepare(
 				"UPDATE ".$wpdb->prefix.small_ad_table_prefix_AOS."petiteannonce__attribut
-				SET measureunit = %s 
-				WHERE labelattribut = 'PrixLoyerPrixDeCession' ", 
+				SET measureunit = %s
+				WHERE labelattribut = 'PrixLoyerPrixDeCession' ",
 				$maMonnaie
 			);
 			$wpdb->query($query);
 		}
-		
+
 		if(isset($_POST['options']['maps_activation']))
 		{
 			if($_POST['options']['maps_activation'] == 1)
@@ -135,7 +135,7 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption =0 WHERE labeloption="annonces_maps_activation"');
 		}
-		
+
 		if(isset($_POST['options']['url_activation']))
 		{
 			if($_POST['options']['url_activation'] == 1)
@@ -147,7 +147,7 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption =0 WHERE labeloption="annonces_url_activation"');
 		}
-		
+
 		if(isset($_POST['options']['photos_activation']))
 		{
 			if($_POST['options']['photos_activation'] == 1)
@@ -159,7 +159,7 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption =0 WHERE labeloption="annonces_photos_activation"');
 		}
-		
+
 		if(isset($_POST['options']['email_activation']))
 		{
 			if($_POST['options']['email_activation'] == 1)
@@ -171,7 +171,7 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption =0 WHERE labeloption="annonces_email_activation"');
 		}
-		
+
 		if(isset($_POST['options']['date_activation']))
 		{
 			if($_POST['options']['date_activation'] == 1)
@@ -188,7 +188,7 @@
 			if($_POST['options']['theme_activation'] == 1)
 			{
 				$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$_POST['options']['theme_activation'].'" WHERE labeloption="theme_activation"');
-				
+
 					annonces_options::updateoption('url_radio_toutes_theme_defaut','url_radio_toutes_theme_courant');
 					annonces_options::updateoption('url_radio_terrains_theme_defaut','url_radio_terrains_theme_courant');
 					annonces_options::updateoption('url_radio_maisons_theme_defaut','url_radio_maisons_theme_courant');
@@ -201,13 +201,13 @@
 		{
 			$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption =0 WHERE labeloption="theme_activation"');
 		}
-		
+
 		if(isset($_POST['options']['marqueur_activation']))
 		{
 			if($_POST['options']['theme_activation'] == 1)
 			{
 				$wpdb->query('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__option` SET nomoption ="'.$_POST['options']['marqueur_activation'].'" WHERE labeloption="annonces_marqueur_activation"');
-			
+
 				annonces_options::updateoption('url_marqueur_defaut','url_marqueur_courant');
 			}
 		}
@@ -236,7 +236,7 @@
 				annoncejquery('#url_part3').hide();
 			}
 			reglages_url();
-			
+
 			if (document.getElementById('email_activation') && document.getElementById('email_activation').checked == true)
 			{
 				annoncejquery('#email_act').show();
@@ -252,10 +252,10 @@
 				annoncejquery('#txt_act').hide();
 				annoncejquery('#html_act').hide();
 				annoncejquery('#email_part1').hide();
-			}	
+			}
 			reglages_email();
 		}
-		
+
 		function reglages_url()
 		{
 			if (document.getElementById('url_activation') && document.getElementById('url_activation').checked == true)
@@ -289,9 +289,9 @@
 				annoncejquery('#txt_act').hide();
 				annoncejquery('#html_act').hide();
 				annoncejquery('#email_part1').hide();
-			}			
+			}
 		}
-		
+
 		function AddSubElement_frame(wheretoadd, input_file_name, form)
 		{
 			id++;
@@ -309,7 +309,7 @@
 			}
 
 			d.appendChild(i);
-			
+
 			var b=document.createElement("input");	// ajout du bouton pour supprimer
 			b.type="button";
 			b.value="<?php _e('Annuler','annonces') ?>";
@@ -321,7 +321,7 @@
 
 			document.getElementById(wheretoadd).appendChild(d);
 		}
-		
+
 		function urlID(id)
 		{
 			document.getElementById('url_type').value += id;
@@ -333,7 +333,7 @@
 	<form name="annonces_options_form" method="post" action="" enctype="multipart/form-data" >
 		<table class="form-table">
 			<tr class="v_align">
-				<th><?php _e('Cl&eacute; Google Maps', 'annonces') ?></th> 
+				<th><?php _e('Cl&eacute; Google Maps', 'annonces') ?></th>
 				<td>
 					<input type="text" id="api_key" name="options[api_key]" value="<?php echo annonces_options::recupinfo('annonces_api_key'); ?>" />
 					<p><small><?php _e('Cette cl&eacute; autorise Google Maps &agrave; afficher une carte pour g&eacute;olocaliser vos annonces.', 'annonces') ?></small></p>
@@ -362,7 +362,7 @@
 					* Ajoute la cle Google Maps dans les options de Wordpress (BD)
 					*/
 				?>
-				<th><?php _e('Activer G&eacute;olocalisation', 'annonces') ?></th> 
+				<th><?php _e('Activer G&eacute;olocalisation', 'annonces') ?></th>
 				<td>
 					<input type="checkbox" id="maps_activation" name="options[maps_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_maps_activation')? 'checked': '') ?> />
 					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, utilise Google Maps pour g&eacute;olocaliser vos annonces sur une carte.', 'annonces') ?></small></p>
@@ -374,7 +374,7 @@
 					* Active l'affichage des photos dans les options de Wordpress (BD)
 					*/
 				?>
-				<th><?php _e('Activer Photos', 'annonces') ?></th> 
+				<th><?php _e('Activer Photos', 'annonces') ?></th>
 				<td>
 					<input type="checkbox" id="photos_activation" name="options[photos_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_photos_activation')? 'checked': '') ?> />
 					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, affiche les photos de vos annonces si celles-ci sont d&eacute;finies.', 'annonces') ?></small></p>
@@ -386,7 +386,7 @@
 					* Active l'affichage de la date dans les options de Wordpress (BD)
 					*/
 				?>
-				<th><?php _e('Activer Date', 'annonces') ?></th> 
+				<th><?php _e('Activer Date', 'annonces') ?></th>
 				<td>
 					<input type="checkbox" id="date_activation" name="options[date_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_date_activation')? 'checked': '') ?> />
 					<p><small><?php _e('Cette option lorsqu\'elle est activ&eacute;e, affiche la date de derni&egrave;re modification de vos annonces.', 'annonces') ?></small></p>
@@ -398,7 +398,7 @@
 					* Marqueur qui sera afficher dans la carte Google Maps
 					*/
 				?>
-				<th><?php _e('Marqueur', 'annonces') ?></th> 
+				<th><?php _e('Marqueur', 'annonces') ?></th>
 				<td class="preview_marker">
 					<img onclick="AddSubElement_frame('btn_marker', 'options[change_marqueur]' , document.forms.annonces_options_form);this.style.display='none'" id="preview_marker" src="<?php echo WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/medias/images/'.annonces_options::recupinfo('url_marqueur_courant'); ?>" alt="marqueur actif"/>
 					<div id="btn_marker"></div>
@@ -410,10 +410,10 @@
 			<tr class="v_align">
 				<?php
 					/**
-					* Changer le thème du plugin: cette option change les boutons du listing des annonces
+					* Changer le thï¿½me du plugin: cette option change les boutons du listing des annonces
 					*/
 				?>
-				<th><?php echo __('Th&egrave;me', 'annonces') ?></th> 
+				<th><?php echo __('Th&egrave;me', 'annonces') ?></th>
 				<td>
 					<a rel="theme" rev="<?php echo WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR ?>/admin/theme.php" id="option_theme" title="<?php _e('Changer le th&egrave;me des boutons', 'annonces') ?>"><?php _e('Changer...','annonces') ?></a>
 					<br/>
@@ -428,7 +428,7 @@
 				</td>
 			</tr>
 			<tr class="v_align">
-				<th><?php _e('Activer la r&eacute;&eacute;criture', 'annonces') ?></th> 
+				<th><?php _e('Activer la r&eacute;&eacute;criture', 'annonces') ?></th>
 				<td>
 					<input type="checkbox" id="url_activation" onclick="reglages_url()" name="options[url_activation]" value="1" <?php echo (annonces_options::recupinfo('annonces_url_activation')? 'checked': '') ?> />
 					<p><small><?php echo __('Cette option, lorsqu\'elle est activ&eacute;e, permet de personnaliser les URLs pour visionner les annonces. N\'oublier pas d\'activer des permaliens autre que "Valeur par d&eacute;faut" si vous souhaitez que vos liens soit r&eacute;&eacute;crits. De plus, veuillez enlever le dernier slash de votre structure personnalis&eacute;e dans les permaliens pour ne pas qu\'il se r&eacute;percute sur vos URLs.', 'annonces') ?></small></p>
@@ -484,7 +484,7 @@
 				<h3><?php echo __('Personnalisation des liens','annonces') ?></h3></td>
 			</tr>
 			<tr class="v_align" id="url_part3">
-				<th><?php echo __('Url Type<br/>', 'annonces') ?></th> 
+				<th><?php echo __('Url Type<br/>', 'annonces') ?></th>
 				<td>
 					<input type="text" size="50" id="url_type" name="options[url_type]" value="<?php echo substr(annonces_options::recupinfo('annonces_expression_url'), 0, -17); ?>" />
 					<label>%idpetiteannonce%</label>
@@ -522,7 +522,7 @@
 					*	Activation ou non du formulaire de contact par email
 					*/
 				?>
-				<th><?php _e('Activer Contact', 'annonces') ?></th> 
+				<th><?php _e('Activer Contact', 'annonces') ?></th>
 				<td>
 					<input type="checkbox" id="email_activation" name="options[email_activation]" onclick="reglages_email()" value="1" <?php echo (annonces_options::recupinfo('annonces_email_activation')? 'checked': '') ?> />
 					<p><small><?php echo __('Cette option lorsqu\'elle est activ&eacute;e, affiche un lien "Contacter le vendeur par email" sur chaque annonce et affiche un formulaire de contact comprenant Nom, T&eacute;l&eacute;phone, Email et Message sur la page de l\'annonce s&eacute;lectionn&eacute;e. V&eacute;rifiez auparavant que votre h&eacute;bergement permet l\'utilisation de la fonction "mail()" obligatoire pour le formulaire de contact, sans cela, n\'activez pas cette fonctionnalit&eacute;.', 'annonces') ?></small></p>
@@ -549,7 +549,7 @@
 					*	Adresse email chargée de recevoir les demandes d'informations
 					*/
 				?>
-				<th><?php echo __('Email', 'annonces') ?></th> 
+				<th><?php echo __('Email', 'annonces') ?></th>
 				<td>
 					<input size="40" type="text" id="email_reception" name="options[email_reception]" value="<?php echo annonces_options::recupinfo('annonces_email_reception'); ?>" />
 					<p><small><?php echo __('Adresse email charg&eacute;e de recevoir les demandes d\'informations.', 'annonces') ?></small></p>
@@ -561,7 +561,7 @@
 					*	Sujet du mail
 					*/
 				?>
-				<th><?php echo __('Sujet du mail', 'annonces') ?></th> 
+				<th><?php echo __('Sujet du mail', 'annonces') ?></th>
 				<td>
 					<input type="text" size="76" id="sujet_reception" name="options[sujet_reception]" value="<?php echo str_replace('"','\'', annonces_options::recupinfo('annonces_sujet_reception')); ?>" />
 					<p><small><?php echo __('Sujet du mail visible lors de la r&eacute;ception des demandes d\'informations.', 'annonces') ?></small></p>
@@ -573,7 +573,7 @@
 					*	Modèle de mail TXT qui sera envoyé pour la réception des demandes d'informations
 					*/
 				?>
-				<th><?php echo __('Mod&egrave;le mail TXT', 'annonces') ?></th> 
+				<th><?php echo __('Mod&egrave;le mail TXT', 'annonces') ?></th>
 				<td>
 					<textarea cols="63" rows="10" id="txt_reception" name="options[txt_reception]"><?php echo str_replace('"','\'', annonces_options::recupinfo('annonces_txt_reception')); ?></textarea>
 					<p><small><?php echo __('C\'est la version texte (TXT) du mod&egrave;le du formulaire qui sera envoy&eacute; &agrave; l\'adresse mail de r&eacute;ception des demandes d\'informations si votre client mail ne lit pas les formes HTML.', 'annonces') ?></small></p>
@@ -585,7 +585,7 @@
 					*	Modèle de mail HTML qui sera envoyé pour la réception des demandes d'informations
 					*/
 				?>
-				<th><?php echo __('Mod&egrave;le mail HTML', 'annonces') ?></th> 
+				<th><?php echo __('Mod&egrave;le mail HTML', 'annonces') ?></th>
 				<td>
 					<textarea cols="63" rows="10" id="html_reception" name="options[html_reception]"><?php echo str_replace('"','\'', annonces_options::recupinfo('annonces_html_reception')); ?></textarea>
 					<p><small><?php echo __('C\'est la version HTML du mod&egrave;le du formulaire qui sera envoy&eacute; &agrave; l\'adresse mail de r&eacute;ception des demandes d\'informations. Vous pouvez y ajouter images ou figures de style.', 'annonces') ?></small></p>
@@ -602,7 +602,7 @@
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="cmd" value="_s-xclick" />
 		<input type="hidden" name="hosted_button_id" value="10265740" />
-		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !" />
+		<input type="image" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sï¿½curisï¿½e !" />
 		<img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1" />
 	</form>
 </center>

@@ -85,7 +85,7 @@ elseif($act == 'edit')
 	{
 		$geoloc[$geoloc_attribute_name] = stripslashes($annonce_to_treat[0]->$geoloc_attribute_name);
 	}
-	$on_edit_load_map = 'the_new_coord = new GLatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map,geocoder);';
+	$on_edit_load_map = 'the_new_coord = new google.maps.LatLng('.$geoloc['latitude'].','.$geoloc['longitude'].'); generateMarker(the_new_coord,map);';
 
 	unset($annonce_to_treat[0]);
 
@@ -216,23 +216,21 @@ if(($act == 'add') || ($act == 'edit'))
 			</td>
 			<td style="width:18px;" >&nbsp;</td>
       <td rowspan="3" >
-				<div id="annonceGmap" style="width: 512px; height: 400px">
-					<script type="text/javascript">
+      					<script type="text/javascript">
 						var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
-						var input_country = 'annonce_form[pays]';
-						var input_dept = 'annonce_form[departement]';
-						var input_region = 'annonce_form[region]';
-						var adress = 'annonce_form[adresse]';
-						var town = 'annonce_form[ville]';
-						var postal_code = 'annonce_form[cp]';
-						var latitude_input = 'annonce_form[latitude]';
-						var longitude_input = 'annonce_form[longitude]';
-						show_map();
-						<?php
-						echo $on_edit_load_map;
-						?>
+
+						function initialize(){
+					        var mapOptions = {
+					          center: new google.maps.LatLng(43.496768,3.674927),
+					          zoom: 12
+					        };
+				        	map = new google.maps.Map(document.getElementById("annonceGmap"), mapOptions);
+
+							<?php echo $on_edit_load_map; ?>
+				      	}
+				      	google.maps.event.addDomListener(window, "load", initialize);
 					</script>
-				</div>
+				<div id="annonceGmap" style="width: 512px; height: 400px"></div>
       </td>
 		</tr>
     <tr><td><hr/></td></tr>
@@ -278,7 +276,7 @@ if(($act == 'add') || ($act == 'edit'))
 				<?php
 					if(($id_to_treat != '') || ($token != ''))
 					{
-						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
+						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporte pas les frame</p></iframe>';
 					}
 				?>
 				</div>

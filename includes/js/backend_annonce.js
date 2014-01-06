@@ -35,40 +35,29 @@ function _AF_ToggleChildren(node) {
 }
 
 function geocode(){
-	var address = document.getElementById('address_street1').value+' '+document.getElementById('address_street2').value+' '+document.getElementById('address_town').value+' France';
+	var address = document.getElementById('address_street1').value+' '+document.getElementById('address_street2').value+' '+document.getElementById('address_town').value;
 	
-	var geocoder = new GClientGeocoder();
-	geocoder.getLatLng(
-		address,
-		function(point) {
-			if (!point) {
-				map.setZoom(2);
-			} else {
-				document.getElementById('ctlg_petiteannonce_externe_latitude').value = point.y;
-				document.getElementById('ctlg_petiteannonce_externe_longitude').value = point.x;
-				map.setCenter(point, 13);
-				map.clearOverlays(); 
-				
-				var icon = new GIcon();
-				icon.image = "/images/red-dot_default.png";
-				icon.iconSize = new GSize(32, 32);
-				icon.iconAnchor = new GPoint(0, 0);
-				icon.infoWindowAnchor = new GPoint(9, 25);
-				
-				var marker = new GMarker(point,{icon:icon});
-				map.addOverlay(marker);
-				address = document.getElementById('address_street1').value+'<br/>'+document.getElementById('address_street2').value+'<br/>'+document.getElementById('address_town').value+'<br/>France';
-				marker.openInfoWindowHtml(address);
-				auto_completion(marker.getLatLng());
-			}
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode( { 'address': address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+				map: map,
+				position: results[0].geometry.location
+			});
+			address = document.getElementById('address_street1').value+'<br/>'+document.getElementById('address_street2').value+'<br/>'+document.getElementById('address_town').value;
+			marker.openInfoWindowHtml( address );
+			auto_completion( results[0].geometry.location );
 		}
-	);
-	
+		else {
+			alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
 	adresse_completion();
 }
 
 function auto_completion(point){
-	geocoder = new GClientGeocoder();
+	geocoder = new google.maps.Geocoder();
 	geocoder.getLocations(point,showAddress);
 	function showAddress(response) {
 		if (!response || response.Status.code != 200) {
@@ -202,16 +191,16 @@ annoncejquery(document).ready(function(){
 		var txt = annoncejquery('#annonce_form_urlannonce').val();
 
 		txt = txt.replace(new RegExp("[ ]", "g"),"-");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('èéêë'); ?>]", "g"),"e");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('àáâãäå'); ?>]", "g"),"a");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('æ'); ?>]", "g"),"ae");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ç'); ?>]", "g"),"c");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ìíîï'); ?>]", "g"),"i");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ñ'); ?>]", "g"),"n");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('òóôõö'); ?>]", "g"),"o");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('œ'); ?>]", "g"),"oe");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ùúûü'); ?>]", "g"),"u");
-		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ýÿ'); ?>]", "g"),"y");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"e");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"a");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"ae");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"c");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"i");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"n");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"o");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½'); ?>]", "g"),"oe");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½ï¿½ï¿½'); ?>]", "g"),"u");
+		txt = txt.replace(new RegExp("[<?php echo utf8_encode('ï¿½ï¿½'); ?>]", "g"),"y");
 
 		var reg = new RegExp("[^0-9a-zA-Z-_]", "g");
 		txt = txt.replace(reg,"");

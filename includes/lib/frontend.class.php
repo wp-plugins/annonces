@@ -619,23 +619,22 @@ class annonce_frontend {
 	/**
 	* Add the google maps api callback into wordpress header
 	*/
-	function add_gmap()
-	{
-		if(annonces_maps_activation == 'oui')
-		{
-			echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=true&amp;key=' . annonces_api_key . '" type="text/javascript"></script>';
+	function add_gmap() {
+		if (annonces_maps_activation == 'oui') {
+			wp_enqueue_script('annonces_js_maps', 'http://maps.google.com/maps/api/js?sensor=true', '', ANNONCE_PLUGIN_VERSION);
 		}
 	}
+
 	/**
 	* Add the different needed javascript into the header
 	*/
 	function add_js()
 	{
-		if(!wp_script_is('jquery', 'queue'))
-		{
+		if(!wp_script_is('jquery', 'queue')) {
 			wp_enqueue_script('jquery');
 		}
 		wp_enqueue_script('annonces_js_jq_swfobject', ANNONCES_JS_URL . 'swfobject.js', '', ANNONCE_PLUGIN_VERSION);
+		$this->add_gmap();
 	}
 
 	/**
@@ -663,22 +662,27 @@ class annonce_frontend {
 		$sizei = count($annonces);
 		for($i = 0; $i < $sizei; $i++)
 		{
-			$annonce_link_1 = $this->lienUrl($annonces[$i]->idpetiteannonce);
+			$annonce_link_1 = $this->lienUrl( $annonces[$i]->idpetiteannonce );
 
 			if(!is_null($annonces[$i]->latitude) AND !is_null($annonces[$i]->longitude)){
 				$surface = $eav_value->getSurface(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$description = $eav_value->getDescription(null,'valid',null,$annonces[$i]->idpetiteannonce);
 
-				$markers .= 'var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
-				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>'.__('En savoir plus','annonces').'</a>");
+				$markers .= '
+				var marker'.$i.' = new google.maps.Marker({
+						position: new google.maps.LatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),
+						icon: "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '",
+						map: annoncemap,
+					});';
+				$markers .='google.maps.event.addListener(marker'.$i.', "mouseover", function() {
+					infowindow.setContent( "<div class=\"markersgoogle\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>'.__('En savoir plus','annonces').'</a>" );
+		        	infowindow.open(annoncemap, marker'.$i.');
 				});
-				GEvent.addListener(marker'.$i.', "click", function() {
+				google.maps.event.addListener(marker'.$i.', "click", function() {
 						window.location.href = \''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
 
-				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
 
@@ -686,31 +690,20 @@ class annonce_frontend {
 			<script type="text/javascript">
 				<!-- Google map -->
 				var annoncemap;
+				var infowindow = new google.maps.InfoWindow();
+				function initialize(){
+			        var mapOptions = {
+			          center: new google.maps.LatLng(43.496768,3.674927),
+			          zoom: 9
+			        };
+		        	var annoncemap = new google.maps.Map(document.getElementById("annonceGmap"),
+		            	mapOptions);
 
-				function show_map() {
-					if(GBrowserIsCompatible()) {
-						var annoncemap = new GMap2(document.getElementById("annonceGmap"));
-						<!-- controle du zoom -->
-						annoncemap.addControl(new GLargeMapControl());
-						annoncemap.enableScrollWheelZoom();
-						<!-- controle satellite -->
-						annoncemap.addControl(new GMapTypeControl());
-						<!-- longitude, latitude et niveau de zoom initial -->
-						annoncemap.setCenter(new GLatLng(43.604262,3.768311), 8);
-						var icon = new GIcon();
-						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
-						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
-						icon.iconAnchor=new GPoint(16,16);
-
-						'.$markers.'
-					}
-				}
+					'.$markers.'
+		      	}
+		      	google.maps.event.addDomListener(window, "load", initialize);
 			</script>
-			<div id="annonceGmap" class="GMAP1">
-				<script type="text/javascript">
-					show_map();
-				</script>
-			</div>
+			<div id="annonceGmap" class="GMAP1"></div>
 		';
 
 		return $list_map;
@@ -902,46 +895,38 @@ class annonce_frontend {
 				$prix = $eav_value->getPrix(null,'valid',null,$annonces[$i]->idpetiteannonce);
 				$description = $eav_value->getDescription(null,'valid',null,$annonces[$i]->idpetiteannonce);
 
-				$markers .='var marker'.$i.' = new GMarker(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),icon);';
-				$markers .='GEvent.addListener(marker'.$i.', "mouseover", function() {
-							annoncemap.openInfoWindowHtml(new GLatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),  "<div class=\"markersgoogle2\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>En savoir plus</a>");
+				$markers .='var marker'.$i.' = new google.maps.Marker({
+						position: new google.maps.LatLng('.$annonces[$i]->latitude.','.$annonces[$i]->longitude.'),
+						icon: "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '",
+						map: annoncemap,
+					});';
+				$markers .='google.maps.event.addListener(marker'.$i.', "mouseover", function() {
+					infowindow.setContent( "<div class=\"markersgoogle2\" onclick=\"window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\">'.$annonces[$i]->titre.'<br/><b>'.number_format($surface[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$surface[0]->measureunit.'&nbsp;&agrave;&nbsp;<b>'.$annonces[$i]->ville.'</b>,&nbsp;prix&nbsp;<b>'.number_format($prix[0]->valueattributdec,0,',',' ').'</b>&nbsp;'.$prix[0]->measureunit.'</div><br/><a class=\"amarkers\" href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\'>En savoir plus</a>" );
+		        	infowindow.open(annoncemap, marker'.$i.');
 				});
-				GEvent.addListener(marker'.$i.', "click", function() {
+				google.maps.event.addListener(marker'.$i.', "click", function() {
 						window.location.href=\''.Eav::recupPageAnnonce().'/'.$annonce_link_1.'\';
 				});';
-
-				$markers .='annoncemap.addOverlay(marker'.$i.');';
 			}
 		}
 		$generate_map = '
 			<script type="text/javascript">
 				<!-- Google map -->
 				var annoncemap;
+				var infowindow = new google.maps.InfoWindow();
 
-				function show_map() {
-					if(GBrowserIsCompatible()){
-						var annoncemap = new GMap2(document.getElementById("annonceGmap"));
-						<!-- controle du zoom -->
-						annoncemap.addControl(new GLargeMapControl());
-						annoncemap.enableScrollWheelZoom();
-						<!-- controle satellite -->
-						annoncemap.addControl(new GMapTypeControl());
-						<!-- longitude, latitude et niveau de zoom initial -->
-						annoncemap.setCenter(new GLatLng(43.496768,3.674927), 9);
-						var icon = new GIcon();
-						icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
-						icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
-						icon.iconAnchor=new GPoint(16,16);
-
-						'.$markers.'
-					}
-				}
+				function initialize(){
+			        var mapOptions = {
+			          center: new google.maps.LatLng(43.496768,3.674927),
+			          zoom: 9
+			        };
+		        	var annoncemap = new google.maps.Map(document.getElementById("annonceGmap"),
+		            	mapOptions);
+					'.$markers.'
+		      	}
+		      	google.maps.event.addDomListener(window, "load", initialize);
 			</script>
-			<div id="annonceGmap" class="GMAP2">
-				<script type="text/javascript">
-					show_map();
-				</script>
-			</div>
+			<div id="annonceGmap" class="GMAP2" ></div>
 		';
 
 		return $generate_map;
@@ -949,6 +934,7 @@ class annonce_frontend {
 
 	function show_annonce($id = null)
 	{
+
 		if (preg_match_all('(\?page_id=)', $_SERVER['REQUEST_URI'], $match) == 0)
 		{
 			$retour_link = Eav::recupPageAnnonce();
@@ -1080,39 +1066,25 @@ class annonce_frontend {
 			$generate_annonce .= '<center>';
 			if(!is_null($annonce[0]->latitude) AND !is_null($annonce[0]->longitude)){
 				$generate_annonce .= '
-					<script type="text/javascript">
-						<!-- Google map -->
-						var annoncemap;
+				<script type="text/javascript">
+					<!-- Google map -->
+					var annoncemap;
+					function initialize(){
+				        var mapOptions = {
+				          center: new google.maps.LatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),
+				          zoom: 13
+				        };
+			        	var annoncemap = new google.maps.Map(document.getElementById("annonceGmap"), mapOptions);
 
-						function show_map() {
-							if(GBrowserIsCompatible()) {
-								var annoncemap = new GMap2(document.getElementById("annonceGmap"));
-								<!-- controle du zoom -->
-								annoncemap.addControl(new GLargeMapControl());
-								annoncemap.enableScrollWheelZoom();
-								<!-- controle satellite -->
-								annoncemap.addControl(new GMapTypeControl());
-								<!-- longitude, latitude et niveau de zoom initial -->
-								annoncemap.setCenter(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'), 12);
-								var icon = new GIcon();
-								icon.image = "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '";
-								icon.iconSize=new GSize(' . annonce_map_marker_size . ', ' . annonce_map_marker_size . ');
-								icon.iconAnchor=new GPoint(16,16);
-
-								var marker = new GMarker(new GLatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),icon);
-								annoncemap.addOverlay(marker);
-							}
-						}
+						var marker = new google.maps.Marker({
+				          	position: new google.maps.LatLng('.$annonce[0]->latitude.','.$annonce[0]->longitude.'),
+				          	map: annoncemap,
+				          	icon: "' . WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant . '",
+				        });
+			      	}
+			      	google.maps.event.addDomListener(window, "load", initialize);
 				</script>
-				<div id="annonceGmap" class="GMAP3">
-					<script type="text/javascript">
-						show_map();
-					</script>
-					<div id="annonceGmap" class="GMAP4">
-						<script type="text/javascript">
-							show_map();
-						</script>
-					</div>
+				<div id="annonceGmap" class="GMAP4"></div>
 				';
 			}
 			$generate_annonce .= '</center>';

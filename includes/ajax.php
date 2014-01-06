@@ -28,11 +28,11 @@ require_once(ABSPATH . 'wp-admin/includes/admin.php');
 
 
 /**
-*	First thing we define the main directory for our plugin in a super global var	
+*	First thing we define the main directory for our plugin in a super global var
 */
 DEFINE('ANNONCES_PLUGIN_DIR', basename(dirname(__FILE__)));
 /**
-*	Include the different config for the plugin	
+*	Include the different config for the plugin
 */
 require_once(WP_PLUGIN_DIR . '/' . ANNONCES_PLUGIN_DIR . '/includes/config/config.php' );
 /**
@@ -92,7 +92,7 @@ switch($method)
 					break;
 
 					case 'loadPictureUploadForm':
-						$picture_form = '<form action="' . ANNONCES_INC_PLUGIN_URL . 'ajax.php" name="frontend_picto_change_form" id="frontend_picto_change_form" method="post" ><input type="text" name="fieldToUpdate" id="fieldToUpdate" value="' . $elementCode . '" /><input type="text" name="previewToUpdate" id="previewToUpdate" value="preview_' . $elementCode . '" /><input type="hidden" name="post" value="true" /><input type="hidden" name="elementCode" value="' . $elementCode . '" /><input type="hidden" name="action" value="frontend_picto_upload" /><input type="file" name="new_picto_for_frontend" /><input type="button" value="' . __('Envoyer', 'annonces') . '" class="button-primary" id="frontend_picto_change_form_submit" /></form>
+						$picture_form = '<form action="' . ANNONCES_INC_PLUGIN_URL . 'ajax.php" name="frontend_picto_change_form" id="frontend_picto_change_form" method="post" ><input type="hidden" name="fieldToUpdate" id="fieldToUpdate" value="' . $elementCode . '" /><input type="hidden" name="previewToUpdate" id="previewToUpdate" value="preview_' . $elementCode . '" /><input type="hidden" name="post" value="true" /><input type="hidden" name="elementCode" value="' . $elementCode . '" /><input type="hidden" name="action" value="frontend_picto_upload" /><input type="file" name="new_picto_for_frontend" /><input type="button" value="' . __('Envoyer', 'annonces') . '" class="button-primary" id="frontend_picto_change_form_submit" /></form>
 						<script type="text/javascript">
 							annoncejquery(document).ready(function(){
 								jQuery("#frontend_picto_change_form_submit").click(function(){
@@ -101,7 +101,7 @@ switch($method)
 										target:"#annoncePictoChangerContent",
 										success:function(){
 											jQuery("#annoncePictoChangerContent").load("' . ANNONCES_INC_PLUGIN_URL . 'ajax.php",{
-												"post": "true", "elementCode": "' . $elementCode . '", "action": "loadPictureDirContent" 
+												"post": "true", "elementCode": "' . $elementCode . '", "action": "loadPictureDirContent"
 											});
 										}
 									});
@@ -133,7 +133,7 @@ switch($method)
 						}
 
 						$output .= '<script type="text/javascript" >annoncejquery(".qq-upload-list").hide();</script>';
-	
+
 						echo $output;
 					break;
 				}

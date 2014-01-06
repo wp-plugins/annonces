@@ -1,7 +1,5 @@
 <?php
 
-	DEFINE('ANNONCE_PLUGIN_VERSION', '1.1.2.6');
-
 	require_once('configNomTables.php');
 
 

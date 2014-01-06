@@ -253,7 +253,7 @@ class annonce
 		$content = substr($content,0,-2);
 		if(($fields != "") && ($content != ""))
 		{
-			$sql = $wpdb->prepare("SELECT idpetiteannonce+1 FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce = (SELECT MAX(idpetiteannonce) FROM  " . PREFIXE_ANNONCES . " )");
+			$sql = $wpdb->prepare("SELECT idpetiteannonce+1 FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce = (SELECT MAX(idpetiteannonce) FROM  " . PREFIXE_ANNONCES . " )", array() );
 			$reqbudget = mysql_query($sql) or die(mysql_error() . '_' . __FILE__);
 			while($data = mysql_fetch_array($reqbudget))
 			{

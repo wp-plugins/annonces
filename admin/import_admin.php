@@ -249,7 +249,7 @@ if($_POST){
 									if($check_geolocalisation)
 									{
 										$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
+										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml";
 
 										// Retrieve the URL contents*
 										$page = file_get_contents($address);
@@ -365,7 +365,7 @@ if($_POST){
 						if($check_geolocalisation)
 						{
 							$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
+							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml";
 
 							// Retrieve the URL contents*
 							$page = file_get_contents($address);
@@ -487,7 +487,7 @@ if($_POST){
 									if($check_geolocalisation)
 									{
 										$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
+										$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml";
 
 										// Retrieve the URL contents*
 										$page = file_get_contents($address);
@@ -605,7 +605,7 @@ if($_POST){
 						if($check_geolocalisation)
 						{
 							$location = (empty($announcement_data['Adresse'])? '': $tools->slugify_nospace($announcement_data['Adresse']).'+').(empty($announcement_data['ville'])? '': $tools->slugify_nospace($announcement_data['ville']).'+').(empty($announcement_data['CP'])? '': $tools->slugify_nospace($announcement_data['CP']).'+').(empty($announcement_data['Pays'])? '': $tools->slugify_nospace($announcement_data['Pays']));
-							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml&key=".annonces_api_key;
+							$address = "http://maps.google.com/maps/geo?q=".$location."&output=xml";
 
 							// Retrieve the URL contents*
 							$page = file_get_contents($address);

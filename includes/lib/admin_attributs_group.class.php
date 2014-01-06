@@ -105,7 +105,7 @@ class attribut_group
 		$sql = substr($sql,0,-2);
 		if(($sql != "") && ($idtoupdate!=0))
 		{
-			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
+			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
 				SET ".$sql." WHERE idgroupeattribut = '" . $idtoupdate . "' ";
 			if( $wpdb->query( ($sql) ))
 			{
@@ -150,10 +150,10 @@ class attribut_group
 		$TheSelect = "*";
 		if($option == 'count')$TheSelect = "COUNT( idgroupeattribut ) ";
 
-		$sql = 
-			"SELECT ".$TheSelect." 
+		$sql =
+			"SELECT ".$TheSelect."
 			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " AS ATT_GRP
-			WHERE 1 " 
+			WHERE 1 "
 			. $moreflag
 			. $morequery ;
 		if(($option != 'nolimit') && ($option != 'count'))$sql .= "LIMIT " . $debut . "," . NUMBER_OF_ITEM_PAR_PAGE_ADMIN_AOS;
@@ -183,7 +183,7 @@ class attribut_group
 	function show_attribut_group($attribut_group_to_show)
 	{
 		global $flag_possibilities;
-		$entête =	'<script type="text/javascript" charset="utf-8">
+		$entete =	'<script type="text/javascript" charset="utf-8">
 						annoncejquery(document).ready(function() {
 							annoncejquery(\'#example\').dataTable({
 								"oLanguage": {
@@ -192,10 +192,10 @@ class attribut_group
 							});
 						} );
 					</script>';
-		$entête .='<div id="container">
+		$entete .='<div id="container">
 					<div id="demo">
 					<div id="example_wrapper" class="dataTables_wrapper">';
-		$output = 
+		$output =
 			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
 				<thead><tr class="titre_listing">';
 		if(is_admin())$output .= '
@@ -212,7 +212,7 @@ class attribut_group
 			$output .= '<tbody>';
 			foreach($attribut_group_to_show as $key => $attribut_group_content)
 			{
-				$output .= 
+				$output .=
 				'<tr>';
 		if(is_admin())$output .= '
 					<td class="listing_header" >'.$attribut_group_content->idgroupeattribut.'</td>';
@@ -233,7 +233,7 @@ class attribut_group
 
 		$output .= '</tbody></table></div></div></div>';
 
-		return $entête.$output;
+		return $entete.$output;
 	}
-	
+
 }

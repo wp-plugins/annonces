@@ -12,7 +12,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_id = $wpdb->prepare('select idpetiteannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where urlannonce = "' . $url . '"');
+		$recup_id = $wpdb->prepare('select idpetiteannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where urlannonce = "' . $url . '"', array() );
 				$req_id = $wpdb->get_row($recup_id);
 				$id = $req_id->idpetiteannonce;
 		return $id;
@@ -25,7 +25,7 @@ class Eav {
 		$recup_grp = $wpdb->prepare('SELECT nomgroupeattribut, descriptiongroupeattribut
 										FROM '. ANNONCES_TABLE_GROUPEATTRIBUT . '
 										WHERE idgroupeattribut = '. $id .'
-										');
+										', array() );
 				$req_grp = $wpdb->get_row($recup_grp);
 		return $req_grp;
 	}
@@ -34,7 +34,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_adr = $wpdb->prepare('select autolocalisation, adresse, ville, departement, region, cp, pays, latitude, longitude from '.ANNONCES_TABLE_GEOLOCALISATION.' where iddest = "' . $id . '"');
+		$recup_adr = $wpdb->prepare('select autolocalisation, adresse, ville, departement, region, cp, pays, latitude, longitude from '.ANNONCES_TABLE_GEOLOCALISATION.' where iddest = "' . $id . '"', array() );
 				$req_adr = $wpdb->get_row($recup_adr);
 		return $req_adr;
 	}
@@ -43,11 +43,8 @@ class Eav {
 	function recupPageAnnonce() {
 		global $wpdb;
 
-		$recup_page = $wpdb->prepare('SELECT post_name
-										FROM '. $wpdb->prefix . 'posts
-										WHERE post_content LIKE "%<div rel=\"annonces\" id=\"annonces\" ></div>%"
-										AND post_status = "publish"');
-		$page = $wpdb->get_var($recup_page);
+		$query = $wpdb->prepare( "SELECT post_name FROM {$wpdb->posts} WHERE post_status = %s AND post_content LIKE \"%%%s%%\"", "publish", '<div rel="annonces" id="annonces" ></div>' );
+		$page = $wpdb->get_var($query);
 
 		return $page;
 	}
@@ -63,7 +60,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_grp = $wpdb->prepare('select nomgroupeattribut from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_grp = $wpdb->prepare('select nomgroupeattribut from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_grp = $wpdb->get_row($recup_grp);
 				$grp = $req_grp->nomgroupeattribut;
 		return $grp;
@@ -72,7 +69,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_grp = $wpdb->prepare('select descriptiongroupeattribut from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_grp = $wpdb->prepare('select descriptiongroupeattribut from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_grp = $wpdb->get_row($recup_grp);
 				$grp = $req_grp->descriptiongroupeattribut;
 		return $grp;
@@ -112,7 +109,7 @@ class Eav {
 
 		$maj_annonce = $wpdb->prepare('UPDATE `'.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce`
 								SET urlannonce ="'. $recup_link .'"
-								WHERE idpetiteannonce="' . $id . '"');
+								WHERE idpetiteannonce="' . $id . '"', array() );
 		$wpdb->query($maj_annonce);
 	}
 	function set_type_url($url, $id, $values)
@@ -160,7 +157,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_titre = $wpdb->prepare('select titre from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_titre = $wpdb->prepare('select titre from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_titre = $wpdb->get_row($recup_titre);
 				$titre = $req_titre->titre;
 		return $titre;
@@ -170,7 +167,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_autoinsert = $wpdb->prepare('select autoinsert from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_autoinsert = $wpdb->prepare('select autoinsert from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_autoinsert = $wpdb->get_row($recup_autoinsert);
 				$autoinsert = $req_autoinsert->autoinsert;
 		return $autoinsert;
@@ -179,7 +176,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_description = $wpdb->prepare('select valueattributtextcourt from '.$wpdb->prefix . small_ad_table_prefix_AOS .'petiteannonce__attributtext where idpetiteannonce = "' . $id . '"');
+		$recup_description = $wpdb->prepare('select valueattributtextcourt from '.$wpdb->prefix . small_ad_table_prefix_AOS .'petiteannonce__attributtext where idpetiteannonce = "' . $id . '"', array() );
 				$req_desc = $wpdb->get_row($recup_description);
 				$desc = $req_desc->valueattributtextcourt;
 		return $desc;
@@ -189,7 +186,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_autolastmodif = $wpdb->prepare('select autolastmodif from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_autolastmodif = $wpdb->prepare('select autolastmodif from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_autolastmodif = $wpdb->get_row($recup_autolastmodif);
 				$autolastmodif = $req_autolastmodif->autolastmodif;
 		return $autolastmodif;
@@ -199,16 +196,17 @@ class Eav {
 	{
 		global $wpdb;
 
-		$recup_url = $wpdb->prepare('select urlannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"');
+		$recup_url = $wpdb->prepare('select urlannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where idpetiteannonce = "' . $id . '"', array() );
 				$req_url = $wpdb->get_row($recup_url);
 				$url = $req_url->urlannonce;
+
 		return $url;
 	}
 
 	public function get_annonce($url) {
 		global $wpdb;
 
-		$recup_url = $wpdb->prepare('select idpetiteannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where urlannonce = "' . $url . '"');
+		$recup_url = $wpdb->prepare('select idpetiteannonce from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce where urlannonce = "' . $url . '"', array() );
 		$id = $wpdb->get_var($recup_url);
 
 		return $id;
@@ -332,7 +330,7 @@ class Eav {
 	public function getLatestIDAnnonce() {
 		global $wpdb;
 
-		$sql = $wpdb->prepare("SELECT idpetiteannonce FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce= (SELECT MAX(idpetiteannonce) FROM " . PREFIXE_ANNONCES . ") ");
+		$sql = $wpdb->prepare("SELECT idpetiteannonce FROM " . PREFIXE_ANNONCES . " WHERE idpetiteannonce= (SELECT MAX(idpetiteannonce) FROM " . PREFIXE_ANNONCES . ") ", array() );
 		$annonce = $wpdb->get_var($sql);
 
 		return $annonce;
@@ -412,7 +410,7 @@ class Eav {
 	{
 		global $wpdb;
 
-		$query = $wpdb->prepare('select valueattributchar from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attributchar where idpetiteannonce = "'.$id.'"');
+		$query = $wpdb->prepare('select valueattributchar from '.$wpdb->prefix.small_ad_table_prefix_AOS.'petiteannonce__attributchar where idpetiteannonce = "'.$id.'"', array() );
 		$reqid = $wpdb->get_row($query);
 		$idA = $reqid->valueattributchar;
 

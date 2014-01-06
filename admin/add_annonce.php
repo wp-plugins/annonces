@@ -113,7 +113,7 @@ elseif($act == 'edit')
 	{
 		$geoloc[$geoloc_attribute_name] = stripslashes($annonce_to_treat[0]->$geoloc_attribute_name);
 	}
-	$on_edit_load_map = 'the_new_coord = new GLatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map,geocoder);';
+	$on_edit_load_map = 'the_new_coord = new google.maps.LatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map);';
 
 	unset($annonce_to_treat[0]);
 
@@ -200,23 +200,24 @@ if(($act == 'add') || ($act == 'edit'))
 			</td>
 			<td style="width:18px;" >&nbsp;</td>
       <td rowspan="3" >
-				<div id="annonceGmap" style="width: 512px; height: 400px">
-					<script type="text/javascript">
-						var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
-						var input_country = 'annonce_form_pays';
-						var input_dept = 'annonce_form_departement';
-						var input_region = 'annonce_form_region';
-						var adress = 'annonce_form_adresse';
-						var town = 'annonce_form_ville';
-						var postal_code = 'annonce_form_cp';
-						var latitude_input = 'annonce_form_latitude';
-						var longitude_input = 'annonce_form_longitude';
-						show_map();
+      	<script type="text/javascript">
+			var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
+
+			function initialize(){
+		        var mapOptions = {
+		          center: new google.maps.LatLng(43.496768,3.674927),
+		          zoom: 9
+		        };
+		    	map = new google.maps.Map(document.getElementById("annonceGmap"),
+		        	mapOptions);
+		  	}
+		  	google.maps.event.addDomListener(window, "load", initialize);
+
 <?php
-						echo $on_edit_load_map;
+			echo $on_edit_load_map;
 ?>
-					</script>
-				</div>
+		</script>
+		<div id="annonceGmap" style="width: 512px; height: 400px"></div>
       </td>
 		</tr>
     <tr><td><hr/></td></tr>

@@ -71,7 +71,7 @@ class attribut_annonce
 	function slugify_label($text)
 	{
 
-	  $pattern = Array("é", "è", "ê", "ç", "à", "â", "î", "ï", "ù", "ô", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï", "Ö", "Ù", "Û", "Ü");
+	  $pattern = Array("ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½");
 	  $rep_pat = Array("e", "e", "e", "c", "a", "a", "i", "i", "u", "o", "E", "E", "E", "E", "I", "I", "I", "I", "O", "U", "U", "U");
 
 	  if (empty($text))
@@ -120,7 +120,7 @@ class attribut_annonce
 			$sql = "INSERT INTO " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " (".$fields.")
 				VALUES
 				(".$content.")";
-			$wpdb->query( $wpdb->prepare($sql) );
+			$wpdb->query( $wpdb->prepare( $sql, array() ) );
 			$attribute_id = mysql_insert_id($wpdb->dbh);
 
 			if(($attribute_id > 0) && ($attribute_group_id >0)){
@@ -168,7 +168,7 @@ class attribut_annonce
 		$sql = substr($sql,0,-2);
 		if(($sql != "") && ($idtoupdate!=0))
 		{
-			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
+			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
 				SET ".$sql." WHERE idattribut = '" . $idtoupdate . "' ";
 			if( $wpdb->query( ($sql) ))
 			{
@@ -181,8 +181,8 @@ class attribut_annonce
 				if(is_admin())$this->error_message .= '<hr/>'.$sql.'<br/>'.mysql_error().'<hr/>';
 				$this->class_admin_notice = 'admin_notices_class_notok';
 			}
-			
-			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__groupeattribut_attribut 
+
+			$sql = "UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__groupeattribut_attribut
 				SET idgroupeattribut = '".$attribute_group_id."'
 				WHERE idattribut = '".$idtoupdate."' ";
 			if( $wpdb->query( ($sql) ))
@@ -206,9 +206,9 @@ class attribut_annonce
 
 		if(($idtoupdate != "") && ($field_to_update != "") && ($values != ""))
 		{
-			$sql = 
-				"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " 
-					SET " . $field_to_update . " = '" . $values . "' 
+			$sql =
+				"UPDATE " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . "
+					SET " . $field_to_update . " = '" . $values . "'
 					WHERE idattribut IN (".$idtoupdate.") ";
 			if( $wpdb->query( ($sql) ))
 			{
@@ -277,7 +277,7 @@ class attribut_annonce
 		$TheSelect = "ATTRIBUTE.* , LINK_ATT_GRP.idgroupeattribut , ATT_GRP.nomgroupeattribut";
 		if($option == 'count')$TheSelect = "COUNT(ATTRIBUTE.idattribut) ";
 
-		$sql = 
+		$sql =
 			"SELECT ".$TheSelect."
 			FROM " . $wpdb->prefix . small_ad_table_prefix_AOS . self::$table . " AS ATTRIBUTE
 				INNER JOIN " . $wpdb->prefix . small_ad_table_prefix_AOS . "petiteannonce__groupeattribut_attribut AS LINK_ATT_GRP ON ((LINK_ATT_GRP.idattribut = ATTRIBUTE.idattribut) AND (flagvalidgroupeattribut_attribut != 'deleted'))
@@ -303,7 +303,7 @@ class attribut_annonce
 		global $attribute_type_possibilities;
 		global $flag_visible_attribut_possibilities;
 		global $flag_possibilities;
-		$entête =	'<script type="text/javascript" charset="utf-8">
+		$entete =	'<script type="text/javascript" charset="utf-8">
 							annoncejquery(document).ready(function() {
 							annoncejquery(\'#example\').dataTable({
 								"oLanguage": {
@@ -312,15 +312,15 @@ class attribut_annonce
 							});
 						});
 					</script>';
-		$entête .='<div id="container">
+		$entete .='<div id="container">
 					<div id="demo">
 					<div id="example_wrapper" class="dataTables_wrapper">';
-		$output = 
+		$output =
 			'<table class="display" id="example" border="0" cellpadding="0" cellspacing="0">
 				<thead><tr class="titre_listing">';
 		if(is_admin())$output .= '
 					<th class="sorting" >ID</th>';
-		$output .= '          
+		$output .= '
 					<th class="sorting" >'.__('Validit&eacute; de l\'attribut','annonces').'</th>
 					<th class="sorting" >'.__('Visibilit&eacute; de l\'attribut','annonces').'</th>
 					<th class="sorting" >'.__('Nom de l\'attribut','annonces').'</th>
@@ -335,7 +335,7 @@ class attribut_annonce
 			$output .= '<tbody>';
 			foreach($attribut_annonce_to_show as $key => $attribut_annonce_content)
 			{
-				$output .= 
+				$output .=
 				'<tr>';
 		if(is_admin())$output .= '
 					<td class="listing_header" >'.$attribut_annonce_content->idattribut.'</td>';
@@ -360,7 +360,7 @@ class attribut_annonce
 
 		$output .= '</tbody></table></div></div></div>';
 
-		return $entête.$output;
+		return $entete.$output;
 	}
-	
+
 }

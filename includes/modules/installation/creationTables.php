@@ -15,7 +15,7 @@ Installation de l'extension
 					" . $champ . "
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 			// Execution de la requete
-			$wpdb->query($wpdb->prepare($sql));
+			$wpdb->query($wpdb->prepare($sql, array() ));
 		}
 	}
 

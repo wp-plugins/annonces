@@ -7,8 +7,8 @@ function annonces_insertions($insertions = null)
 	global $wpdb;
 
 		$sujet = htmlentities('Questions sur l\'annonce %id_annonce% de la part de %nom%');
-		$txt = htmlentities('%message%<br/><br/><br/>Coordonn�es du contact :<br/><br/>Nom : %nom%<br/>T�l�phone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas r�pondu, la personne qui vous a contact� ne connaitra pas votre adresse email.');
-		$html = htmlentities('%message%<br/><br/><br/>Coordonn�es du contact :<br/><br/>Nom : %nom%<br/>T�l�phone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas r�pondu, la personne qui vous a contact� ne connaitra pas votre adresse email.');
+		$txt = htmlentities('%message%<br/><br/><br/>Coordonnees du contact :<br/><br/>Nom : %nom%<br/>Telephone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas repondu, la personne qui vous a contacte ne connaitra pas votre adresse email.');
+		$html = htmlentities('%message%<br/><br/><br/>Coordonnees du contact :<br/><br/>Nom : %nom%<br/>Telephone : %tel%<br/>Email : %mail%<br/><br/><br/>PS : Tant que vous n\'aurez pas repondu, la personne qui vous a contacte ne connaitra pas votre adresse email.');
 
 	if(version::getVersion() <= 1)
 	{
@@ -18,37 +18,37 @@ function annonces_insertions($insertions = null)
 
 		$sql = "INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " (idattribut, flagvalidattribut, flagvisibleattribut, typeattribut, labelattribut, nomattribut, measureunit) VALUES
 			(1, 'moderated', 'non', 'CHAR', 'IdentifiantAgence', 'Identifiant agence', NULL),
-			(2, 'moderated', 'oui', 'CHAR', 'ReferenceAgenceDuBien', 'R�f�rence agence du bien', NULL),
+			(2, 'moderated', 'oui', 'CHAR', 'ReferenceAgenceDuBien', 'Reference agence du bien', NULL),
 			(3, 'moderated', 'oui', 'CHAR', 'TypeAnnonce', 'Type d\'annonce', NULL),
 			(4, 'valid', 'oui', 'CHAR', 'TypeBien', 'Type de bien', NULL),
 			(5, 'moderated', 'non', 'CHAR', 'CP', 'CP', NULL),
 			(6, 'moderated', 'non', 'CHAR', 'Ville', 'Ville', NULL),
 			(7, 'moderated', 'non', 'CHAR', 'Pays', 'Pays', NULL),
 			(8, 'moderated', 'non', 'CHAR', 'Adresse', 'Adresse', NULL),
-			(9, 'moderated', 'non', 'CHAR', 'QuartierProximite', 'Quartier/Proximit�', NULL),
-			(10, 'moderated', 'non', 'CHAR', 'ActivitesCommerciales', 'Activit�s commerciales', NULL),
+			(9, 'moderated', 'non', 'CHAR', 'QuartierProximite', 'Quartier/Proximite', NULL),
+			(10, 'moderated', 'non', 'CHAR', 'ActivitesCommerciales', 'Activites commerciales', NULL),
 			(11, 'valid', 'oui', 'DEC', 'PrixLoyerPrixDeCession', 'Prix/Loyer/Prix de cession', NULL),
 			(12, 'moderated', 'non', 'DEC', 'LoyerMoisMurs', 'Loyer/mois murs', NULL),
 			(13, 'moderated', 'non', 'CHAR', 'LoyerCC', 'Loyer CC', NULL),
 			(14, 'moderated', 'non', 'CHAR', 'LoyerHT', 'Loyer HT', NULL),
 			(15, 'moderated', 'non', 'DEC', 'Honnoraires', 'Honnoraires', NULL),
-			(16, 'moderated', 'non', 'DEC', 'Surface', 'Surface', 'm�'),
-			(17, 'valid', 'oui', 'DEC', 'SFTerrain', 'Surface terrain', 'm�'),
+			(16, 'moderated', 'non', 'DEC', 'Surface', 'Surface', 'm2'),
+			(17, 'valid', 'oui', 'DEC', 'SFTerrain', 'Surface terrain', 'm2'),
 			(18, 'moderated', 'non', 'INT', 'NBDePieces', 'NB de pi�ces', NULL),
 			(19, 'moderated', 'non', 'INT', 'NBDeChambres', 'NB de chambres', NULL),
-			(20, 'moderated', 'non', 'CHAR', 'Libelle', 'Libell�', NULL),
+			(20, 'moderated', 'non', 'CHAR', 'Libelle', 'Libelle', NULL),
 			(21, 'valid', 'oui', 'TEXT', 'Descriptif', 'Descriptif', NULL),
-			(22, 'moderated', 'non', 'DATE', 'DateDeDisponibilite', 'Date de disponibilit�', NULL),
+			(22, 'moderated', 'non', 'DATE', 'DateDeDisponibilite', 'Date de disponibilite', NULL),
 			(23, 'moderated', 'non', 'DEC', 'Charges', 'Charges', NULL),
 			(24, 'moderated', 'non', 'INT', 'Etage', 'Etage', NULL),
 			(25, 'moderated', 'non', 'INT', 'NBEtages', 'NB d', NULL),
-			(26, 'moderated', 'non', 'CHAR', 'Meuble', 'Meubl�', NULL),
+			(26, 'moderated', 'non', 'CHAR', 'Meuble', 'Meuble', NULL),
 			(27, 'moderated', 'non', 'INT', 'AnneeDeConstruction', 'Ann�e de construction', NULL),
-			(28, 'moderated', 'non', 'CHAR', 'RefaitANeuf', 'Refait � neuf', NULL),
+			(28, 'moderated', 'non', 'CHAR', 'RefaitANeuf', 'Refait a neuf', NULL),
 			(29, 'moderated', 'non', 'INT', 'NBDeSallesDeBain', 'NB de salles de bain', NULL),
 			(30, 'moderated', 'non', 'INT', 'NBDeSallesEau', 'NB de salles d', NULL),
 			(31, 'moderated', 'non', 'INT', 'NBDeWC', 'NB de WC', NULL),
-			(32, 'moderated', 'non', 'CHAR', 'WCSepares', 'WC s�par�s', NULL),
+			(32, 'moderated', 'non', 'CHAR', 'WCSepares', 'WC separes', NULL),
 			(33, 'moderated', 'non', 'INT', 'TypeDeChauffage', 'Type de chauffage', NULL),
 			(34, 'moderated', 'non', 'INT', 'TypeDeCuisine', 'Type de cuisine', NULL),
 			(35, 'moderated', 'non', 'CHAR', 'OrientationSud', 'Orientation sud', NULL),
@@ -72,34 +72,34 @@ function annonces_insertions($insertions = null)
 			(53, 'moderated', 'non', 'DEC', 'PrixQuinzaineHauteSaison', 'Prix quinzaine / haute saison', NULL),
 			(54, 'moderated', 'non', 'DEC', 'PrixMoisHauteSaison', 'Prix mois / haute saison', NULL),
 			(55, 'moderated', 'non', 'INT', 'NBDePersonnes', 'NB de personnes', NULL),
-			(56, 'moderated', 'non', 'CHAR', 'TypeDeResidence', 'Type de r�sidence', NULL),
+			(56, 'moderated', 'non', 'CHAR', 'TypeDeResidence', 'Type de residence', NULL),
 			(57, 'moderated', 'non', 'CHAR', 'Situation', 'Situation', NULL),
 			(58, 'moderated', 'non', 'INT', 'NBDeCouverts', 'NB de couverts', NULL),
 			(59, 'moderated', 'non', 'INT', 'NBDeLitsDoubles', 'NB de lits doubles', NULL),
 			(60, 'moderated', 'non', 'INT', 'NBDeLitsSimples', 'NB de lits simples', NULL),
 			(61, 'moderated', 'non', 'CHAR', 'Alarme', 'Alarme', NULL),
-			(62, 'moderated', 'non', 'CHAR', 'CableTV', 'C�ble TV', NULL),
+			(62, 'moderated', 'non', 'CHAR', 'CableTV', 'Cable TV', NULL),
 			(63, 'moderated', 'non', 'CHAR', 'Calme', 'Calme', NULL),
 			(64, 'moderated', 'non', 'CHAR', 'Climatisation', 'Climatisation', NULL),
 			(65, 'moderated', 'non', 'CHAR', 'Piscine', 'Piscine', NULL),
-			(66, 'moderated', 'non', 'CHAR', 'AmenagementPourHandicapes', 'Am�nagement pour handicap�s', NULL),
-			(67, 'moderated', 'non', 'CHAR', 'AnimauxAcceptes', 'Animaux accept�s', NULL),
-			(68, 'moderated', 'non', 'CHAR', 'Cheminee', 'Chemin�e', NULL),
-			(69, 'moderated', 'non', 'CHAR', 'Congelateur', 'Cong�lateur', NULL),
+			(66, 'moderated', 'non', 'CHAR', 'AmenagementPourHandicapes', 'Amenagement pour handicapes', NULL),
+			(67, 'moderated', 'non', 'CHAR', 'AnimauxAcceptes', 'Animaux acceptes', NULL),
+			(68, 'moderated', 'non', 'CHAR', 'Cheminee', 'Cheminee', NULL),
+			(69, 'moderated', 'non', 'CHAR', 'Congelateur', 'Congelateur', NULL),
 			(70, 'moderated', 'non', 'CHAR', 'Four', 'Four', NULL),
 			(71, 'moderated', 'non', 'CHAR', 'LaveVaisselle', 'Lave-vaisselle', NULL),
 			(72, 'moderated', 'non', 'CHAR', 'MicroOndes', 'Micro-ondes', NULL),
 			(73, 'moderated', 'non', 'CHAR', 'Placards', 'Placards', NULL),
-			(74, 'moderated', 'non', 'CHAR', 'Telephone', 'T�l�phone', NULL),
+			(74, 'moderated', 'non', 'CHAR', 'Telephone', 'Telephone', NULL),
 			(75, 'moderated', 'non', 'CHAR', 'ProcheLac', 'Proche lac', NULL),
 			(76, 'moderated', 'non', 'CHAR', 'ProcheTennis', 'Proche tennis', NULL),
 			(77, 'moderated', 'non', 'CHAR', 'ProchePistesDeSki', 'Proche pistes de ski', NULL),
-			(78, 'moderated', 'non', 'CHAR', 'VueDegagee', 'Vue d�gag�e', NULL),
+			(78, 'moderated', 'non', 'CHAR', 'VueDegagee', 'Vue degagee', NULL),
 			(79, 'moderated', 'non', 'DEC', 'ChiffreAffaire', 'Chiffre d\'affaire', NULL),
-			(80, 'moderated', 'non', 'DEC', 'LongueurFacade', 'Longueur fa�ade (m)', NULL),
+			(80, 'moderated', 'non', 'DEC', 'LongueurFacade', 'Longueur facade (m)', NULL),
 			(81, 'moderated', 'non', 'CHAR', 'Duplex', 'Duplex', NULL),
 			(82, 'moderated', 'non', 'CHAR', 'Publications', 'Publications', NULL),
-			(83, 'moderated', 'non', 'CHAR', 'MandatEnExclusivite', 'Mandat en exclusivit�', NULL),
+			(83, 'moderated', 'non', 'CHAR', 'MandatEnExclusivite', 'Mandat en exclusivite', NULL),
 			(84, 'moderated', 'non', 'CHAR', 'CoupDeCoeur', 'Coup de coeur', NULL),
 			(85, 'moderated', 'non', 'CHAR', 'Photo1', 'Photo 1', NULL),
 			(86, 'moderated', 'non', 'CHAR', 'Photo2', 'Photo 2', NULL),
@@ -121,65 +121,65 @@ function annonces_insertions($insertions = null)
 			(102, 'moderated', 'non', 'CHAR', 'TitrePhoto9', 'Titre photo 9', NULL),
 			(103, 'moderated', 'non', 'CHAR', 'PhotoPanoramique', 'Photo panoramique', NULL),
 			(104, 'moderated', 'non', 'CHAR', 'URLVisiteVirtuelle', 'URL visite virtuelle', NULL),
-			(105, 'moderated', 'non', 'CHAR', 'TelephoneAAfficher', 'T�l�phone � afficher', NULL),
-			(106, 'moderated', 'non', 'CHAR', 'ContactAAfficher', 'Contact � afficher', NULL),
-			(107, 'moderated', 'non', 'CHAR', 'EmailAAfficher', 'Email � afficher', NULL),
-			(108, 'moderated', 'non', 'CHAR', 'CPReelDuBien', 'CP R�el du bien', NULL),
-			(109, 'moderated', 'non', 'CHAR', 'VilleReelleDuBien', 'Ville r�elle du bien', NULL),
+			(105, 'moderated', 'non', 'CHAR', 'TelephoneAAfficher', 'Telephone a afficher', NULL),
+			(106, 'moderated', 'non', 'CHAR', 'ContactAAfficher', 'Contact a afficher', NULL),
+			(107, 'moderated', 'non', 'CHAR', 'EmailAAfficher', 'Email a afficher', NULL),
+			(108, 'moderated', 'non', 'CHAR', 'CPReelDuBien', 'CP Reel du bien', NULL),
+			(109, 'moderated', 'non', 'CHAR', 'VilleReelleDuBien', 'Ville reelle du bien', NULL),
 			(110, 'moderated', 'non', 'CHAR', 'Intercabinet', 'Intercabinet', NULL),
 			(111, 'moderated', 'non', 'CHAR', 'IntercabinetPrive', 'Intercabinet prive', NULL),
 			(112, 'moderated', 'non', 'CHAR', 'NDeMandat', 'Numero de mandat', NULL),
 			(113, 'moderated', 'non', 'DATE', 'DateMandat', 'Date mandat', NULL),
 			(114, 'moderated', 'non', 'CHAR', 'NomMandataire', 'Nom mandataire', NULL),
-			(115, 'moderated', 'non', 'CHAR', 'PrenomMandataire', 'Pr�nom mandataire', NULL),
+			(115, 'moderated', 'non', 'CHAR', 'PrenomMandataire', 'Prenom mandataire', NULL),
 			(116, 'moderated', 'non', 'CHAR', 'RaisonSocialeMandataire', 'Raison sociale mandataire', NULL),
 			(117, 'moderated', 'non', 'CHAR', 'AdresseMandataire', 'Adresse mandataire', NULL),
 			(118, 'moderated', 'non', 'CHAR', 'CPMandataire', 'CP mandataire', NULL),
 			(119, 'moderated', 'non', 'CHAR', 'VilleMandataire', 'Ville mandataire', NULL),
-			(120, 'moderated', 'non', 'CHAR', 'TelephoneMandataire', 'T�l�phone mandataire', NULL),
+			(120, 'moderated', 'non', 'CHAR', 'TelephoneMandataire', 'Telephone mandataire', NULL),
 			(121, 'moderated', 'non', 'TEXT', 'CommentairesMandataire', 'Commentaires mandataire', NULL),
-			(122, 'moderated', 'non', 'TEXT', 'CommentairesPrives', 'Commentaires priv�s', NULL),
-			(123, 'moderated', 'non', 'CHAR', 'CodeNegociateur', 'Code n�gociateur', NULL),
+			(122, 'moderated', 'non', 'TEXT', 'CommentairesPrives', 'Commentaires prives', NULL),
+			(123, 'moderated', 'non', 'CHAR', 'CodeNegociateur', 'Code negociateur', NULL),
 			(124, 'moderated', 'non', 'CHAR', 'CodeLangue1', 'Code Langue 1', NULL),
-			(125, 'moderated', 'non', 'CHAR', 'ProximiteLangue1', 'Proximit� Langue 1', NULL),
-			(126, 'moderated', 'non', 'CHAR', 'LibelleLangue1', 'Libell� Langue 1', NULL),
+			(125, 'moderated', 'non', 'CHAR', 'ProximiteLangue1', 'Proximite Langue 1', NULL),
+			(126, 'moderated', 'non', 'CHAR', 'LibelleLangue1', 'Libelle Langue 1', NULL),
 			(127, 'moderated', 'non', 'TEXT', 'DescriptifLangue1', 'Descriptif Langue 1', NULL),
 			(128, 'moderated', 'non', 'CHAR', 'CodeLangue2', 'Code Langue 2', NULL),
-			(129, 'moderated', 'non', 'CHAR', 'ProximiteLangue2', 'Proximit� Langue 2', NULL),
-			(130, 'moderated', 'non', 'CHAR', 'LibelleLangue2', 'Libell� Langue 2', NULL),
+			(129, 'moderated', 'non', 'CHAR', 'ProximiteLangue2', 'Proximite Langue 2', NULL),
+			(130, 'moderated', 'non', 'CHAR', 'LibelleLangue2', 'Libelle Langue 2', NULL),
 			(131, 'moderated', 'non', 'TEXT', 'DescriptifLangue2', 'Descriptif Langue 2', NULL),
 			(132, 'moderated', 'non', 'CHAR', 'CodeLangue3', 'Code Langue 3', NULL),
-			(133, 'moderated', 'non', 'CHAR', 'ProximiteLangue3', 'Proximit� Langue 3', NULL),
-			(134, 'moderated', 'non', 'CHAR', 'LibelleLangue3', 'Libell� Langue 3', NULL),
+			(133, 'moderated', 'non', 'CHAR', 'ProximiteLangue3', 'Proximite Langue 3', NULL),
+			(134, 'moderated', 'non', 'CHAR', 'LibelleLangue3', 'Libelle Langue 3', NULL),
 			(135, 'moderated', 'non', 'TEXT', 'DescriptifLangue3', 'Descriptif Langue 3', NULL),
-			(136, 'moderated', 'non', 'CHAR', 'ChampPersonnalise1', 'Champ personnalis� 1', NULL),
-			(137, 'moderated', 'non', 'CHAR', 'ChampPersonnalise2', 'Champ personnalis� 2', NULL),
-			(138, 'moderated', 'non', 'CHAR', 'ChampPersonnalise3', 'Champ personnalis� 3', NULL),
-			(139, 'moderated', 'non', 'CHAR', 'ChampPersonnalise4', 'Champ personnalis� 4', NULL),
-			(140, 'moderated', 'non', 'CHAR', 'ChampPersonnalise5', 'Champ personnalis� 5', NULL),
-			(141, 'moderated', 'non', 'CHAR', 'ChampPersonnalise6', 'Champ personnalis� 6', NULL),
-			(142, 'moderated', 'non', 'CHAR', 'ChampPersonnalise7', 'Champ personnalis� 7', NULL),
-			(143, 'moderated', 'non', 'CHAR', 'ChampPersonnalise8', 'Champ personnalis� 8', NULL),
-			(144, 'moderated', 'non', 'CHAR', 'ChampPersonnalise9', 'Champ personnalis� 9', NULL),
-			(145, 'moderated', 'non', 'CHAR', 'ChampPersonnalise10', 'Champ personnalis� 10', NULL),
-			(146, 'moderated', 'non', 'CHAR', 'ChampPersonnalise11', 'Champ personnalis� 11', NULL),
-			(147, 'moderated', 'non', 'CHAR', 'ChampPersonnalise12', 'Champ personnalis� 12', NULL),
-			(148, 'moderated', 'non', 'CHAR', 'ChampPersonnalise13', 'Champ personnalis� 13', NULL),
-			(149, 'moderated', 'non', 'CHAR', 'ChampPersonnalise14', 'Champ personnalis� 14', NULL),
-			(150, 'moderated', 'non', 'CHAR', 'ChampPersonnalise15', 'Champ personnalis� 15', NULL),
-			(151, 'moderated', 'non', 'CHAR', 'ChampPersonnalise16', 'Champ personnalis� 16', NULL),
-			(152, 'moderated', 'non', 'CHAR', 'ChampPersonnalise17', 'Champ personnalis� 17', NULL),
-			(153, 'moderated', 'non', 'CHAR', 'ChampPersonnalise18', 'Champ personnalis� 18', NULL),
-			(154, 'moderated', 'non', 'CHAR', 'ChampPersonnalise19', 'Champ personnalis� 19', NULL),
-			(155, 'moderated', 'non', 'CHAR', 'ChampPersonnalise20', 'Champ personnalis� 20', NULL),
-			(156, 'moderated', 'non', 'CHAR', 'ChampPersonnalise21', 'Champ personnalis� 21', NULL),
-			(157, 'moderated', 'non', 'CHAR', 'ChampPersonnalise22', 'Champ personnalis� 22', NULL),
-			(158, 'moderated', 'non', 'CHAR', 'ChampPersonnalise23', 'Champ personnalis� 23', NULL),
-			(159, 'moderated', 'non', 'CHAR', 'ChampPersonnalise24', 'Champ personnalis� 24', NULL),
-			(160, 'moderated', 'non', 'CHAR', 'ChampPersonnalise25', 'Champ personnalis� 25', NULL),
-			(161, 'moderated', 'non', 'DEC', 'DepotDeGarantie', 'D�p�t de garantie', NULL),
-			(162, 'moderated', 'non', 'CHAR', 'Recent', 'R�cent', NULL),
-			(163, 'moderated', 'non', 'CHAR', 'TravauxAPrevoir', 'Travaux � pr�voir', NULL),
+			(136, 'moderated', 'non', 'CHAR', 'ChampPersonnalise1', 'Champ personnalise 1', NULL),
+			(137, 'moderated', 'non', 'CHAR', 'ChampPersonnalise2', 'Champ personnalise 2', NULL),
+			(138, 'moderated', 'non', 'CHAR', 'ChampPersonnalise3', 'Champ personnalise 3', NULL),
+			(139, 'moderated', 'non', 'CHAR', 'ChampPersonnalise4', 'Champ personnalise 4', NULL),
+			(140, 'moderated', 'non', 'CHAR', 'ChampPersonnalise5', 'Champ personnalise 5', NULL),
+			(141, 'moderated', 'non', 'CHAR', 'ChampPersonnalise6', 'Champ personnalise 6', NULL),
+			(142, 'moderated', 'non', 'CHAR', 'ChampPersonnalise7', 'Champ personnalise 7', NULL),
+			(143, 'moderated', 'non', 'CHAR', 'ChampPersonnalise8', 'Champ personnalise 8', NULL),
+			(144, 'moderated', 'non', 'CHAR', 'ChampPersonnalise9', 'Champ personnalise 9', NULL),
+			(145, 'moderated', 'non', 'CHAR', 'ChampPersonnalise10', 'Champ personnalise 10', NULL),
+			(146, 'moderated', 'non', 'CHAR', 'ChampPersonnalise11', 'Champ personnalise 11', NULL),
+			(147, 'moderated', 'non', 'CHAR', 'ChampPersonnalise12', 'Champ personnalise 12', NULL),
+			(148, 'moderated', 'non', 'CHAR', 'ChampPersonnalise13', 'Champ personnalise 13', NULL),
+			(149, 'moderated', 'non', 'CHAR', 'ChampPersonnalise14', 'Champ personnalise 14', NULL),
+			(150, 'moderated', 'non', 'CHAR', 'ChampPersonnalise15', 'Champ personnalise 15', NULL),
+			(151, 'moderated', 'non', 'CHAR', 'ChampPersonnalise16', 'Champ personnalise 16', NULL),
+			(152, 'moderated', 'non', 'CHAR', 'ChampPersonnalise17', 'Champ personnalise 17', NULL),
+			(153, 'moderated', 'non', 'CHAR', 'ChampPersonnalise18', 'Champ personnalise 18', NULL),
+			(154, 'moderated', 'non', 'CHAR', 'ChampPersonnalise19', 'Champ personnalise 19', NULL),
+			(155, 'moderated', 'non', 'CHAR', 'ChampPersonnalise20', 'Champ personnalise 20', NULL),
+			(156, 'moderated', 'non', 'CHAR', 'ChampPersonnalise21', 'Champ personnalise 21', NULL),
+			(157, 'moderated', 'non', 'CHAR', 'ChampPersonnalise22', 'Champ personnalise 22', NULL),
+			(158, 'moderated', 'non', 'CHAR', 'ChampPersonnalise23', 'Champ personnalise 23', NULL),
+			(159, 'moderated', 'non', 'CHAR', 'ChampPersonnalise24', 'Champ personnalise 24', NULL),
+			(160, 'moderated', 'non', 'CHAR', 'ChampPersonnalise25', 'Champ personnalise 25', NULL),
+			(161, 'moderated', 'non', 'DEC', 'DepotDeGarantie', 'Depot de garantie', NULL),
+			(162, 'moderated', 'non', 'CHAR', 'Recent', 'Recent', NULL),
+			(163, 'moderated', 'non', 'CHAR', 'TravauxAPrevoir', 'Travaux a prevoir', NULL),
 			(164, 'moderated', 'non', 'CHAR', 'Photo10', 'Photo 10', NULL),
 			(165, 'moderated', 'non', 'CHAR', 'Photo11', 'Photo 11', NULL),
 			(166, 'moderated', 'non', 'CHAR', 'Photo12', 'Photo 12', NULL),
@@ -192,35 +192,35 @@ function annonces_insertions($insertions = null)
 			(173, 'moderated', 'non', 'CHAR', 'Photo19', 'Photo 19', NULL),
 			(174, 'moderated', 'non', 'CHAR', 'Photo20', 'Photo 20', NULL),
 			(175, 'moderated', 'non', 'CHAR', 'IdentifiantTechnique', 'Identifiant technique', NULL),
-			(176, 'moderated', 'non', 'INT', 'ConsommationEnergie', 'Consommation �nergie', NULL),
-			(177, 'moderated', 'non', 'CHAR', 'BilanConsommationEnergie', 'Bilan consommation �nergie', NULL),
+			(176, 'moderated', 'non', 'INT', 'ConsommationEnergie', 'Consommation energie', NULL),
+			(177, 'moderated', 'non', 'CHAR', 'BilanConsommationEnergie', 'Bilan consommation energie', NULL),
 			(178, 'moderated', 'non', 'INT', 'EmissionsGES', 'Emissions GES', NULL),
-			(179, 'moderated', 'non', 'CHAR', 'BilanEmissionGES', 'Bilan �mission GES', NULL),
+			(179, 'moderated', 'non', 'CHAR', 'BilanEmissionGES', 'Bilan emission GES', NULL),
 			(180, 'moderated', 'non', 'INT', 'IdentifiantQuartier', 'Identifiant quartier', NULL),
 			(181, 'moderated', 'non', 'CHAR', 'SousTypeDeBien', 'Sous type de bien', NULL),
-			(182, 'moderated', 'non', 'CHAR', 'PeriodesDeDisponibilite', 'P�riodes de disponibilit�', NULL),
-			(183, 'moderated', 'non', 'CHAR', 'PeriodesBasseSaison', 'P�riodes basse saison', NULL),
-			(184, 'moderated', 'non', 'DEC', 'RenteMensuelle', 'P�riodes haute saison', NULL),
+			(182, 'moderated', 'non', 'CHAR', 'PeriodesDeDisponibilite', 'Periodes de disponibilite', NULL),
+			(183, 'moderated', 'non', 'CHAR', 'PeriodesBasseSaison', 'Periodes basse saison', NULL),
+			(184, 'moderated', 'non', 'DEC', 'RenteMensuelle', 'Periodes haute saison', NULL),
 			(185, 'moderated', 'non', 'CHAR', 'PeriodesHauteSaison', 'Prix du bouquet', NULL),
 			(186, 'moderated', 'non', 'DEC', 'PrixDuBouquet', 'Rente mensuelle', NULL),
 			(187, 'moderated', 'non', 'INT', 'AgeDehomme', 'Age de l\'homme', NULL),
 			(188, 'moderated', 'non', 'INT', 'AgeDeLaFemme', 'Age de la femme', NULL),
-			(189, 'moderated', 'non', 'CHAR', 'Entree', 'Entr�e', NULL),
-			(190, 'moderated', 'non', 'CHAR', 'Residence', 'R�sidence', NULL),
+			(189, 'moderated', 'non', 'CHAR', 'Entree', 'Entree', NULL),
+			(190, 'moderated', 'non', 'CHAR', 'Residence', 'Residence', NULL),
 			(191, 'moderated', 'non', 'CHAR', 'Parquet', 'Parquet', NULL),
-			(192, 'moderated', 'non', 'CHAR', 'VisAVis', 'Vis-�-vis', NULL),
+			(192, 'moderated', 'non', 'CHAR', 'VisAVis', 'Vis-a-vis', NULL),
 			(193, 'moderated', 'non', 'CHAR', 'TransportLigne', 'Transport : Ligne', NULL),
 			(194, 'moderated', 'non', 'CHAR', 'TransportStation', 'Transport : Station', NULL),
-			(195, 'moderated', 'non', 'INT', 'DureeBail', 'Dur�e bail', NULL),
+			(195, 'moderated', 'non', 'INT', 'DureeBail', 'Duree bail', NULL),
 			(196, 'moderated', 'non', 'INT', 'PlacesEnSalle', 'Places en salle', NULL),
 			(197, 'moderated', 'non', 'CHAR', 'MonteCharge', 'Monte charge', NULL),
 			(198, 'moderated', 'non', 'CHAR', 'Quai', 'Quai', NULL),
 			(199, 'moderated', 'non', 'INT', 'NombreDeBureaux', 'Nombre de bureaux', NULL),
-			(200, 'moderated', 'non', 'DEC', 'PrixDuDroitEntree', 'Prix du droit d\'entr�e', NULL),
-			(201, 'moderated', 'non', 'CHAR', 'PrixMasque', 'Prix masqu�', NULL),
+			(200, 'moderated', 'non', 'DEC', 'PrixDuDroitEntree', 'Prix du droit d\'entree', NULL),
+			(201, 'moderated', 'non', 'CHAR', 'PrixMasque', 'Prix masque', NULL),
 			(202, 'moderated', 'non', 'DEC', 'LoyerAnnuelGlobal', 'Loyer annuel global', NULL),
 			(203, 'moderated', 'non', 'DEC', 'ChargesAnnuellesGlobales', 'Charges annuelles globales', NULL),
-			(204, 'moderated', 'non', 'DEC', 'LoyerAnnuelAuM2', 'Loyer annuel au m�', NULL),
+			(204, 'moderated', 'non', 'DEC', 'LoyerAnnuelAuM2', 'Loyer annuel au m2', NULL),
 			(205, 'moderated', 'non', 'DEC', 'ChargesAnnuellesAuM2', 'Charges annuelles au m2', NULL),
 			(206, 'moderated', 'non', 'CHAR', 'ChargesMensuellesHT', 'Charges mensuelles HT', NULL),
 			(207, 'moderated', 'non', 'CHAR', 'LoyerAnnuelCC', 'Loyer annuel CC', NULL),
@@ -232,12 +232,12 @@ function annonces_insertions($insertions = null)
 			(213, 'moderated', 'non', 'CHAR', 'Divisible', 'Divisible', NULL),
 			(214, 'moderated', 'non', 'DEC', 'SurfaceDivisibleMinimale', 'Surface divisible minimale', NULL),
 			(215, 'moderated', 'non', 'DEC', 'SurfaceDivisibleMaximale', 'Surface divisible maximale', NULL);";
-		$wpdb->query($wpdb->prepare($sql));
+		$wpdb->query($wpdb->prepare($sql, array() ));
 
 		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUT . " (idgroupeattribut, flagvalidgroupeattribut, nomgroupeattribut, descriptiongroupeattribut) VALUES
 			(1, 'valid', 'Immobilier', 'Annonce Immobili&egrave;re'),
 			(2, 'moderated', 'Vehicule', 'Annonce Automobile');";
-		$wpdb->query($wpdb->prepare($sql));
+		$wpdb->query($wpdb->prepare($sql, array() ));
 
 		$sql = "INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " (idattribut, idgroupeattribut, flagvalidgroupeattribut_attribut) VALUES
 			(1, 1, 'valid'),
@@ -579,45 +579,45 @@ function annonces_insertions($insertions = null)
 	}
 	if (version::getVersion() <= 8)
 	{
-		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_TEMPPHOTO . "SET numphoto = (SELECT MAX(idpetiteannonce) FROM " . PREFIXE_ANNONCES . ")");
+		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_TEMPPHOTO . "SET numphoto = (SELECT MAX(idpetiteannonce) FROM " . PREFIXE_ANNONCES . ")", array() );
 		$wpdb->query($sql);
 
 		version::majVersion();
 	}
 	if (version::getVersion() <= 9)
 	{
-		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . "SET nomption = '%date_publication%/%type_bien%/%ville%-%departement%/%idpetiteannonce%' WHERE labeloption = 'annonces_expression_url'");
+		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . "SET nomption = '%date_publication%/%type_bien%/%ville%-%departement%/%idpetiteannonce%' WHERE labeloption = 'annonces_expression_url'", array() );
 		//	NOT USED FROM DB VERSION 18
 
-		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " VALUES ('216', '1', 'valid')");
+		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_GROUPEATTRIBUTATTRIBUT . " VALUES ('216', '1', 'valid')", array() );
 		$wpdb->query($sql);
 
 		version::majVersion();
 	}
 	if (version::getVersion() <=10)
 	{
-		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " VALUES ('216', 'valid', 'oui', 'CHAR', 'UrlPersonnalisee', 'Url personnalis&eacute;e', '')");
+		$sql = $wpdb->prepare("INSERT INTO " . ANNONCES_TABLE_ATTRIBUT . " VALUES ('216', 'valid', 'oui', 'CHAR', 'UrlPersonnalisee', 'Url personnalis&eacute;e', '')", array() );
 		$wpdb->query($sql);
 
 		version::majVersion();
 	}
 	if (version::getVersion() <=12)
 	{
-		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvalidattribut = 'moderated'  WHERE labelattribut = 'UrlPersonnalisee'");
+		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_ATTRIBUT . " SET flagvalidattribut = 'moderated'  WHERE labelattribut = 'UrlPersonnalisee'", array() );
 		$wpdb->query($sql);
 
 		version::majVersion();
 	}
 	if (version::getVersion() <= 13)
 	{
-		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='' where labeloption = 'annonces_suffix'");
+		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='' where labeloption = 'annonces_suffix'", array() );
 		//	NOT USED FROM DB VERSION 18
 
 		version::majVersion();
 	}
 	if (version::getVersion() <= 14)
 	{
-		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url'");
+		$sql = $wpdb->prepare("UPDATE " . ANNONCES_TABLE_OPTION . " SET nomoption='annonce_%idpetiteannonce%' where labeloption = 'annonces_expression_url'", array() );
 		//	NOT USED FROM DB VERSION 18
 
 		version::majVersion();
@@ -667,7 +667,7 @@ function annonces_insertions($insertions = null)
 		$annonceWPOptionEmail = array();
 		if( $wpdb->get_var("show tables like '" . ANNONCES_TABLE_OPTION . "'") == ANNONCES_TABLE_OPTION)
 		{
-			$query = $wpdb->prepare("SELECT * FROM " . ANNONCES_TABLE_OPTION);
+			$query = $wpdb->prepare("SELECT * FROM " . ANNONCES_TABLE_OPTION, array() );
 			$annonceOption = $wpdb->get_results($query);
 			foreach($annonceOption as $option)
 			{
@@ -776,7 +776,7 @@ function annonces_insertions($insertions = null)
 			}
 
 			/*	Rename annonce option table for future deletion	*/
-			$query = $wpdb->prepare("RENAME TABLE " . ANNONCES_TABLE_OPTION . " TO " . TRASH__ANNONCES_TABLE_OPTION);
+			$query = $wpdb->prepare("RENAME TABLE " . ANNONCES_TABLE_OPTION . " TO " . TRASH__ANNONCES_TABLE_OPTION, array() );
 			$wpdb->query($query);
 		}
 		else
@@ -786,7 +786,7 @@ function annonces_insertions($insertions = null)
 			$annonceWPOption['annonce_map_marker'] = 'gmapMarker/red-dot_default.png';
 			$annonceWPOption['annonce_show_picture'] = 'oui';
 			$annonceWPOption['annonce_show_date'] = 'oui';
-			$annonceWPOption['annonce_activate_url_rewrite'] = 'oui';
+			$annonceWPOption['annonce_activate_url_rewrite'] = 'non';
 			$annonceWPOption['annonce_url_rewrite_template'] = 'annonce_%idpetiteannonce%';
 			$annonceWPOption['annonce_url_rewrite_template_suffix'] = '.html';
 			$annonceWPOption['url_radio_maisons'] = 'searchPicto/maisons/maisons_default.png';

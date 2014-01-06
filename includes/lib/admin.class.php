@@ -40,13 +40,12 @@ class admin
 		wp_enqueue_style('annonces_jquery_custom');
 	}
 
-	function add_admin_js()
-	{
-		if(!wp_script_is('jquery-ui-dialog', 'queue'))
-		{
+	function add_admin_js() {
+		if ( !wp_script_is('jquery-ui-dialog', 'queue') ) {
 			wp_enqueue_script('jquery-ui-dialog');
 		}
-			wp_enqueue_script('jquery-form');
+
+		wp_enqueue_script('jquery-form');
 		wp_enqueue_script('annonces_js_main_admin', ANNONCES_JS_URL . 'admin.js', '', ANNONCE_PLUGIN_VERSION);
 		wp_enqueue_script('annonces_js_main', ANNONCES_JS_URL . 'backend_annonce.js', '', ANNONCE_PLUGIN_VERSION);
 		wp_enqueue_script('annonces_js_jq_fileuploader', ANNONCES_JS_URL . 'fileuploader.js', '', ANNONCE_PLUGIN_VERSION);

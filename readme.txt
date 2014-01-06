@@ -4,7 +4,7 @@ Tags: annonce, passerelle, administration, immobilier, map, carte google maps, g
 Donate link: http://www.eoxia.com/site-web/pluginannonces/
 Requires at least: 2.8.4
 Tested up to: 3.5.2
-Stable tag: 1.2.0.3
+Stable tag: 1.2.0.4
 
 Affiche vos annonces sur votre blog.
 
@@ -42,6 +42,18 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 
 
 == Changelog ==
+
+V1.2.0.4
+
+Am&eacute;liorations
+
+* ST768 - Mise en place de la derni&egrave;re version de l'API google maps / Installation of the last google maps API version
+
+Corrections
+
+* ST766 - Affichage de l'option permettant de s&eacute;lectionner la devise pour le plugin / Display of option for currency choice (La liste d&eacute;roulante n'&eacute;tait pas sur la bonne valeur lors de la r&eacute;&eacute;dition / When editing options the selected value was not the one previously selected)
+* ST767 - Param&egrave;tre manquant pour la fonction wpdb-&gt;prepare() / Missing parameter for wpdb-&gt;prepare function
+* ST776 - R&eacute;&eacute;criture d'url personnalis&eacute;e / Custom url rewriting
 
 v1.2.0.3:
 
