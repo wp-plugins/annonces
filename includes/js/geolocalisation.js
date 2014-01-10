@@ -25,14 +25,21 @@
 					deleteMarkers();
 				}
 				generateMarker(results[0].geometry.location, map);
-				
-				document.getElementById(latitude_input).value = results[0].geometry.location.nb;
-				document.getElementById(longitude_input).value = results[0].geometry.location.ob;
-				
+				if ( results[0].geometry.location.b != "undefined" && results[0].geometry.location.d != "undefined" ) {
+					document.getElementById(latitude_input).value = results[0].geometry.location.b;
+					document.getElementById(longitude_input).value = results[0].geometry.location.d;
+				}
+				else {
+					document.getElementById(latitude_input).value = 0;
+					document.getElementById(longitude_input).value = 0;
+				}
+
 				FillExtraFields( results[0].address_components );
 			}
 			else {
-				alert("Geocode was not successful for the following reason: " + status);
+				document.getElementById(latitude_input).value = 0;
+				document.getElementById(longitude_input).value = 0;
+			//	alert("Geocode was not successful for the following reason: " + status);
 			}
 		});
 	}
@@ -53,14 +60,14 @@
 
 	function FillExtraFields( address_components ) {
 		if(address_components != undefined){
+			if ( ( address_components[4] != undefined ) && ( address_components[4].long_name != undefined ) ) {
+				document.getElementById(input_country).value = address_components[4].long_name;
+			}
 			if ( ( address_components[3] != undefined ) && ( address_components[3].long_name != undefined ) ) {
-				document.getElementById(input_country).value = address_components[3].long_name;
+				document.getElementById(input_region).value = address_components[3].long_name;
 			}
 			if ( ( address_components[2] != undefined ) && ( address_components[2].long_name != undefined ) ) {
-				document.getElementById(input_region).value = address_components[2].long_name;
-			}
-			if ( ( address_components[1] != undefined ) && ( address_components[1].long_name != undefined ) ) {
-				document.getElementById(input_dept).value = address_components[1].long_name;
+				document.getElementById(input_dept).value = address_components[2].long_name;
 			}
 		}
 	}

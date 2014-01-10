@@ -228,7 +228,7 @@ if($_POST){
 							}
 							
 							$size = $data->sheets[0]['numRows'];
-							//Mode intervient lorsque le modulo arrive à 0 et qui nous faisons une redirection
+							//Mode intervient lorsque le modulo arrive ï¿½ 0 et qui nous faisons une redirection
 							//Mode=true empeche la redirection (Prend tout son sens dans le case suivant: 7) 
 							$mode = true;
 							echo '<b>Rapport&nbsp;:</b><br/>';
@@ -346,7 +346,7 @@ if($_POST){
 				}
 				
 				$size = $data->sheets[0]['numRows'];
-				//Mode intervient lorsque le modulo arrive à 0 et qui nous faisons une redirection
+				//Mode intervient lorsque le modulo arrive ï¿½ 0 et qui nous faisons une redirection
 				//Mode=true empeche la redirection 
 				$mode = true;
 				echo '<b>Rapport&nbsp;:</b><br/>';
@@ -466,7 +466,7 @@ if($_POST){
 							}
 							
 							$size = $import_file->getNumberLine();
-							//Mode intervient lorsque le modulo arrive à 0 et qui nous faisons une redirection
+							//Mode intervient lorsque le modulo arrive ï¿½ 0 et qui nous faisons une redirection
 							//Mode=true empeche la redirection (Prend tout son sens dans le case suivant: 7) 
 							$mode = true;
 							echo '<b>Rapport&nbsp;:</b><br/>';
@@ -585,7 +585,7 @@ if($_POST){
 				}
 
 				$size = $import_file->getNumberLine();
-				//Mode intervient lorsque le modulo arrive à 0 et qui nous faisons une redirection
+				//Mode intervient lorsque le modulo arrive ï¿½ 0 et qui nous faisons une redirection
 				//Mode=true empeche la redirection (Prend tout son sens dans le case suivant: 7) 
 				$mode = true;
 				echo '<b>Rapport&nbsp;:</b><br/>';

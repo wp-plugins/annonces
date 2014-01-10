@@ -546,7 +546,7 @@
 			<tr class="v_align" id="email_act">
 				<?php
 					/**
-					*	Adresse email chargée de recevoir les demandes d'informations
+					*	Adresse email chargï¿½e de recevoir les demandes d'informations
 					*/
 				?>
 				<th><?php echo __('Email', 'annonces') ?></th>
@@ -570,7 +570,7 @@
 			<tr class="v_align" id="txt_act">
 				<?php
 					/**
-					*	Modèle de mail TXT qui sera envoyé pour la réception des demandes d'informations
+					*	Modï¿½le de mail TXT qui sera envoyï¿½ pour la rï¿½ception des demandes d'informations
 					*/
 				?>
 				<th><?php echo __('Mod&egrave;le mail TXT', 'annonces') ?></th>
@@ -582,7 +582,7 @@
 			<tr class="v_align" id="html_act">
 				<?php
 					/**
-					*	Modèle de mail HTML qui sera envoyé pour la réception des demandes d'informations
+					*	Modï¿½le de mail HTML qui sera envoyï¿½ pour la rï¿½ception des demandes d'informations
 					*/
 				?>
 				<th><?php echo __('Mod&egrave;le mail HTML', 'annonces') ?></th>

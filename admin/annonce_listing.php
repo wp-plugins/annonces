@@ -221,7 +221,7 @@ if(($act == 'add') || ($act == 'edit'))
 
 						function initialize(){
 					        var mapOptions = {
-					          center: new google.maps.LatLng(43.496768,3.674927),
+					          center: new google.maps.LatLng(43.61,3.88),
 					          zoom: 12
 					        };
 				        	map = new google.maps.Map(document.getElementById("annonceGmap"), mapOptions);
@@ -276,7 +276,7 @@ if(($act == 'add') || ($act == 'edit'))
 				<?php
 					if(($id_to_treat != '') || ($token != ''))
 					{
-						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporte pas les frame</p></iframe>';
+						echo '<iframe src ="'.WP_PLUGIN_URL.'/'.ANNONCES_PLUGIN_DIR.'/includes/lib/image_galery.php?idgallery='.$id_to_treat.'&amp;token='.$token.'" height="21" style="border:0px solid red;margin:0;padding:0;height:300px;width:100%;overflow-y:no-scroll;" ><p>Votre navigateur ne supporter pas les frame</p></iframe>';
 					}
 				?>
 				</div>

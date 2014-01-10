@@ -71,10 +71,7 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 		$values = $annonce_form->getValues();
 		$values[urlannonce] = $is_Url;
 
-		if ($act == 'add')
-		{
-
-
+		if ($act == 'add') {
 			$annonce->create_annonce($values);
 
 			echo '<form name="form_ajout" action="admin.php?page=' . ANNONCES_PLUGIN_DIR . '/admin/annonce_listing.php" method="post">';
@@ -87,12 +84,12 @@ if(!empty($_POST['annonce_form']) && is_array($_POST['annonce_form']) && ($act !
 					</script>';
 		}
 	}
-	else
-	{
-		$error = __('L\'Url personnalis&eacute;e choisie : ', 'annonces');
-		$error .= $is_Url;
-		$error .= __(' est d&eacute;j&agrave; utilis&eacute;e', 'annonces');
-	}
+// 	else
+// 	{
+// 		$error = __('L\'Url personnalis&eacute;e choisie : ', 'annonces');
+// 		$error .= $is_Url;
+// 		$error .= __(' est d&eacute;j&agrave; utilis&eacute;e', 'annonces');
+// 	}
 }
 
 //	IF WE ASK TO EDIT A SMALL AD
@@ -113,7 +110,7 @@ elseif($act == 'edit')
 	{
 		$geoloc[$geoloc_attribute_name] = stripslashes($annonce_to_treat[0]->$geoloc_attribute_name);
 	}
-	$on_edit_load_map = 'the_new_coord = new google.maps.LatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map);';
+	$on_edit_load_map = 'the_new_coord = new GLatLng('.$geoloc['latitude'].','.$geoloc['longitude'].');generateMarker(the_new_coord,map,geocoder);';
 
 	unset($annonce_to_treat[0]);
 
@@ -200,24 +197,21 @@ if(($act == 'add') || ($act == 'edit'))
 			</td>
 			<td style="width:18px;" >&nbsp;</td>
       <td rowspan="3" >
-      	<script type="text/javascript">
-			var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
+      					<script type="text/javascript">
+					var image_icon = '<?php echo WP_CONTENT_URL . WAY_TO_PICTURES_AOS . url_marqueur_courant; ?>';
 
-			function initialize(){
-		        var mapOptions = {
-		          center: new google.maps.LatLng(43.496768,3.674927),
-		          zoom: 9
-		        };
-		    	map = new google.maps.Map(document.getElementById("annonceGmap"),
-		        	mapOptions);
-		  	}
-		  	google.maps.event.addDomListener(window, "load", initialize);
+					function initialize(){
+				        var mapOptions = {
+				          center: new google.maps.LatLng(43.61,3.88),
+				          zoom: 12
+				        };
+			        	map = new google.maps.Map(document.getElementById("annonceGmap"), mapOptions);
 
-<?php
-			echo $on_edit_load_map;
-?>
-		</script>
-		<div id="annonceGmap" style="width: 512px; height: 400px"></div>
+						<?php echo $on_edit_load_map; ?>
+			      	}
+			      	google.maps.event.addDomListener(window, "load", initialize);
+				</script>
+				<div id="annonceGmap" style="width: 512px; height: 400px"></div>
       </td>
 		</tr>
     <tr><td><hr/></td></tr>
@@ -229,7 +223,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_adresse" ><?php _e('Adresse','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse; ?>" />
+							<input type="text" name="annonce_form[adresse]" id="annonce_form_adresse" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->adresse : $_REQUEST[ 'annonce_form' ][ 'adresse' ]); ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -237,7 +231,7 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_ville" ><?php _e('Ville','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville; ?>" onblur="javascript:getCoordonnees();" />
+							<input type="text" name="annonce_form[ville]" id="annonce_form_ville" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->ville : $_REQUEST[ 'annonce_form' ][ 'ville' ]); ?>" onblur="javascript:getCoordonnees();" />
 						</td>
 					</tr>
 					<tr>
@@ -245,15 +239,15 @@ if(($act == 'add') || ($act == 'edit'))
 							<label for="annonce_form_cp" ><?php _e('Code Postal','annonces') ?></label>
 						</th>
 						<td>
-							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp; ?>" onkeyup="javascript:getCoordonnees() ;" />
+							<input type="text" name="annonce_form[cp]" id="annonce_form_cp" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->cp : $_REQUEST[ 'annonce_form' ][ 'cp' ]); ?>" onkeyup="javascript:getCoordonnees() ;" />
 						</td>
 					</tr>
 				</table>
-				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->region; ?>" />
-				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement; ?>" />
-				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays; ?>" />
-				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude; ?>" />
-				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php if ($act != 'add') echo Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude; ?>" />
+				<input type="hidden" name="annonce_form[region]" id="annonce_form_region" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->region : $_REQUEST[ 'annonce_form' ][ 'region' ]); ?>" />
+				<input type="hidden" name="annonce_form[departement]" id="annonce_form_departement" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->departement : $_REQUEST[ 'annonce_form' ][ 'departement' ]); ?>" />
+				<input type="hidden" name="annonce_form[pays]" id="annonce_form_pays" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->pays : $_REQUEST[ 'annonce_form' ][ 'pays' ]); ?>" />
+				<input type="hidden" name="annonce_form[latitude]" id="annonce_form_latitude" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->latitude : $_REQUEST[ 'annonce_form' ][ 'latitude' ]); ?>" />
+				<input type="hidden" name="annonce_form[longitude]" id="annonce_form_longitude" value="<?php echo ($act != 'add' ? Eav::get_geoloc(Eav::getLatestIDAnnonce())->longitude : $_REQUEST[ 'annonce_form' ][ 'longitude' ]); ?>" />
       </td>
     </tr>
 		<tr><td><hr/></td></tr>

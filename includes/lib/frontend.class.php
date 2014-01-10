@@ -693,7 +693,7 @@ class annonce_frontend {
 				var infowindow = new google.maps.InfoWindow();
 				function initialize(){
 			        var mapOptions = {
-			          center: new google.maps.LatLng(43.496768,3.674927),
+			          center: new google.maps.LatLng(43.61,3.88),
 			          zoom: 9
 			        };
 		        	var annoncemap = new google.maps.Map(document.getElementById("annonceGmap"),
@@ -917,7 +917,7 @@ class annonce_frontend {
 
 				function initialize(){
 			        var mapOptions = {
-			          center: new google.maps.LatLng(43.496768,3.674927),
+			          center: new google.maps.LatLng(43.61,3.88),
 			          zoom: 9
 			        };
 		        	var annoncemap = new google.maps.Map(document.getElementById("annonceGmap"),
