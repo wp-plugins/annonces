@@ -5,7 +5,7 @@
 	var marker;
 	var markers = [];
 	var the_new_coord;
-	
+
 	var input_country = 'annonce_form_pays';
 	var input_dept = 'annonce_form_departement';
 	var input_region = 'annonce_form_region';
@@ -20,13 +20,13 @@
 		geocoder.geocode( { 'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				map.setCenter(results[0].geometry.location);
-				
+
 				if ( markers ) {
 					deleteMarkers();
 				}
 				generateMarker(results[0].geometry.location, map);
-				if ( results[0].geometry.location.b != "undefined" && results[0].geometry.location.d != "undefined" ) {
-					document.getElementById(latitude_input).value = results[0].geometry.location.b;
+				if ( (results[0].geometry.location.e != "undefined") && (results[0].geometry.location.d != "undefined") ) {
+					document.getElementById(latitude_input).value = results[0].geometry.location.e;
 					document.getElementById(longitude_input).value = results[0].geometry.location.d;
 				}
 				else {
@@ -46,11 +46,11 @@
 
 	function getDraggedCoordonees(response)
 	{
-		if (!response || response.Status.code != 200)
+		if (!response || (response.Status.code != 200))
 		{
       alert("Status Code:" + response.Status.code);
-    } 
-		else 
+    }
+		else
 		{
       place = response.Placemark[0];
 			document.getElementById(latitude_input).value = place.Point.coordinates[1];
@@ -78,16 +78,16 @@
             map: themap,
             icon: image_icon,
 	    });
-		
+
 		markers.push( marker );
 
 	    google.maps.event.addListener(marker, "dragend", function getAddress(){
 			geocoder.getLocations(marker.getLatLng(), getDraggedCoordonees);
 		});
-			
+
 		themap.setCenter(coordinates, 17);
 	}
-	
+
 	function clearMarkers() {
 	  setAllMap(null);
 	}
@@ -97,7 +97,7 @@
 	    markers[i].setMap(map);
 	  }
 	}
-	
+
 	// Deletes all markers in the array by removing references to them.
 	function deleteMarkers() {
 	  clearMarkers();

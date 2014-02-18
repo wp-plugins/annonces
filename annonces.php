@@ -1,15 +1,15 @@
 <?php
 /*
 	Plugin Name: Annonces
-	Plugin URI: http://www.eoxia.com/site-web/pluginannonces/
+	Plugin URI: http://www.eoxia.com/open-source/extension-annonces-pour-wordpress
 	Description: Annonces est un plugin permettant d'ajouter facilement des annonces immobil&egrave;re sur son blog. Il suffit d'ajouter cette balise <code>&lt;div rel="annonces" id="annonces" &gt;&lt;/div&gt;</code> dans le code html de votre page.
 	Author: Eoxia
 	Author URI: http://www.eoxia.com/
-	Version: 1.2.0.5
+	Version: 1.2.0.6
 */
 
 
-DEFINE('ANNONCE_PLUGIN_VERSION', '1.2.0.5');
+DEFINE('ANNONCE_PLUGIN_VERSION', '1.2.0.6');
 
 /*  Copyright 2011  EOXIA  (email : contact@eoxia.com)
 
