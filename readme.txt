@@ -3,8 +3,8 @@ Contributors: Eoxia
 Tags: annonce, passerelle, administration, immobilier, map, carte google maps, geolocalisation, georeferencement, google maps, gateway, announcement, annonces, carte, maison, batiment, vendre, prix, surface
 Donate link: http://www.eoxia.com/site-web/pluginannonces/
 Requires at least: 2.8.4
-Tested up to: 3.8.1
-Stable tag: 1.2.0.6
+Tested up to: 4.1.1
+Stable tag: 1.2.0.7
 
 Affiche vos annonces sur votre blog.
 
@@ -42,6 +42,13 @@ Nous faisons tout notre possible pour rendre l'extension compatible avec les dif
 
 
 == Changelog ==
+
+V1.2.0.7
+
+Corrections
+
+* Enregistrement des annonces impossible suite &agrave; un probl&egrave;me de retour de l'API google maps pour encodage des adresses
+
 
 V1.2.0.6
 

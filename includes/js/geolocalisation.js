@@ -15,6 +15,7 @@
 	var latitude_input = 'annonce_form_latitude';
 	var longitude_input = 'annonce_form_longitude';
 
+
 	function getCoordonnees() {
 		var address = document.getElementById(adress).value + " " + document.getElementById(town).value + " " + document.getElementById(postal_code).value;
 		geocoder.geocode( { 'address': address}, function(results, status) {
@@ -26,8 +27,8 @@
 				}
 				generateMarker(results[0].geometry.location, map);
 				if ( (results[0].geometry.location.e != "undefined") && (results[0].geometry.location.d != "undefined") ) {
-					document.getElementById(latitude_input).value = results[0].geometry.location.e;
-					document.getElementById(longitude_input).value = results[0].geometry.location.d;
+					document.getElementById(latitude_input).value = results[0].geometry.location.lat();
+					document.getElementById(longitude_input).value = results[0].geometry.location.lng();
 				}
 				else {
 					document.getElementById(latitude_input).value = 0;
